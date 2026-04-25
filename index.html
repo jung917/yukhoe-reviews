@@ -148,6 +148,8 @@ body.theme-light .warn-card .sample { background: rgba(0,0,0,0.04); }
 }
 .chart-box h3 { margin: 0 0 12px; font-size: 14px; font-weight: 600; }
 .chart-box canvas { max-height: 240px; }
+.chart-box.compact { padding: 12px; }
+.chart-box.compact canvas { max-height: 120px; }
 
 /* Filter bar */
 .filter-bar {
@@ -195,6 +197,23 @@ body.theme-light .warn-card .sample { background: rgba(0,0,0,0.04); }
 .store-card .name {
   font-size: 14px; font-weight: 600; margin-bottom: 4px;
   white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  display: flex; align-items: center; gap: 6px;
+}
+.store-card .name .warn-ico {
+  font-size: 13px; font-weight: 700;
+  padding: 1px 6px; border-radius: 4px;
+  flex-shrink: 0;
+}
+.store-card .name .warn-ico.red { background: var(--neg); color: #fff; }
+.store-card .name .warn-ico.yel { background: #facc15; color: #000; }
+.store-card .name .branch-name {
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  flex: 1; min-width: 0;
+}
+.store-card .name .region-tag {
+  font-size: 10px; padding: 1px 6px; border-radius: 8px;
+  background: var(--bg-elev); color: var(--text-secondary);
+  font-weight: 500; flex-shrink: 0;
 }
 .store-card .addr {
   font-size: 11px; color: var(--text-muted); margin-bottom: 10px;
@@ -299,11 +318,11 @@ footer {
 <div class="section">
   <h2>📊 채널별·감성 분포</h2>
   <div class="charts-row">
-    <div class="chart-box">
+    <div class="chart-box compact">
       <h3>채널별 리뷰 수</h3>
       <canvas id="ch-bar"></canvas>
     </div>
-    <div class="chart-box">
+    <div class="chart-box compact">
       <h3>전체 감성 분포</h3>
       <canvas id="sent-pie"></canvas>
     </div>
@@ -315,10 +334,6 @@ footer {
   <h2>🏪 매장별 <span class="count" id="store-count">0</span></h2>
   <div class="filter-bar">
     <input type="text" id="search" placeholder="매장명/주소 검색…">
-    <span class="chip" data-filter="all">전체</span>
-    <span class="chip" data-filter="warn">워닝만</span>
-    <span class="chip" data-filter="data">데이터있음</span>
-    <span class="chip" data-filter="empty">미수집</span>
     <span style="flex: 1"></span>
     <select class="sort-select" id="sort">
       <option value="reviews">리뷰 많은순</option>
@@ -328,6 +343,33 @@ footer {
       <option value="rating_high">평점 높은순</option>
       <option value="branch">매장명순</option>
     </select>
+  </div>
+  <div class="filter-bar" style="margin-top: 8px; gap: 6px;">
+    <span style="font-size:12px;color:var(--text-secondary);margin-right:4px;">지역</span>
+    <span class="chip region-chip" data-region="all">전체</span>
+    <span class="chip region-chip" data-region="서울">서울</span>
+    <span class="chip region-chip" data-region="경기">경기</span>
+    <span class="chip region-chip" data-region="인천">인천</span>
+    <span class="chip region-chip" data-region="부산">부산</span>
+    <span class="chip region-chip" data-region="경상">경상</span>
+    <span class="chip region-chip" data-region="전라">전라</span>
+    <span class="chip region-chip" data-region="충청">충청</span>
+    <span class="chip region-chip" data-region="강원">강원</span>
+    <span class="chip region-chip" data-region="제주">제주</span>
+  </div>
+  <div class="filter-bar" style="margin-top: 8px; gap: 6px;">
+    <span style="font-size:12px;color:var(--text-secondary);margin-right:4px;">기간</span>
+    <span class="chip period-chip" data-period="1">1일</span>
+    <span class="chip period-chip" data-period="7">7일</span>
+    <span class="chip period-chip" data-period="30">30일</span>
+    <span class="chip period-chip" data-period="180">6개월</span>
+    <span class="chip period-chip" data-period="all">전체</span>
+    <span class="chip period-chip" data-period="custom">직접지정</span>
+    <span id="custom-range" class="hidden" style="display:flex;gap:6px;align-items:center;">
+      <input type="date" id="period-from" class="sort-select" style="font-size:12px;">
+      ~
+      <input type="date" id="period-to" class="sort-select" style="font-size:12px;">
+    </span>
   </div>
   <div class="store-grid" id="store-grid"></div>
   <div class="empty hidden" id="store-empty">검색 결과가 없습니다.</div>
@@ -349,7 +391,9 @@ footer {
 <script>
 let DATA = null;
 let chBar = null, sentPie = null, modalChart = null;
-let filterMode = 'all';
+let regionFilter = 'all';
+let periodDays = 'all';   // 'all' | 1 | 7 | 30 | 180 | 'custom'
+let periodFrom = null, periodTo = null;  // Date — custom 모드용
 let sortKey = 'reviews';
 
 const SOURCES = ['naver', 'kakao', 'google', 'baemin', 'coupangeats'];
@@ -470,6 +514,46 @@ function getCss(name) {
   return getComputedStyle(document.body).getPropertyValue(name).trim();
 }
 
+// 기간 필터 적용 — 매장 데이터에 _periodStats 임시 필드 추가
+function applyPeriodToStore(s) {
+  const meta = s.all_reviews_meta || [];
+  let from = null, to = null;
+  if (periodDays === 'custom') {
+    from = periodFrom; to = periodTo;
+  } else if (periodDays !== 'all') {
+    to = new Date(DATA.generated_at);
+    from = new Date(to);
+    from.setDate(from.getDate() - Number(periodDays));
+  }
+
+  let filtered = meta;
+  if (from || to) {
+    filtered = meta.filter(r => {
+      const d = new Date(r.d);
+      if (from && d < from) return false;
+      if (to && d > to) return false;
+      return true;
+    });
+  }
+
+  const stats = {
+    reviews: filtered.length,
+    pos: filtered.filter(r => r.s === '긍정').length,
+    neg: filtered.filter(r => r.s === '부정').length,
+    neu: filtered.filter(r => r.s === '중립').length,
+  };
+  const ratings = filtered.map(r => r.r).filter(r => r > 0);
+  stats.avg_rating = ratings.length
+    ? Math.round((ratings.reduce((a,b)=>a+b,0) / ratings.length) * 100) / 100
+    : null;
+  // 채널별 카운트 (기간 적용)
+  stats.byChannel = {};
+  for (const src of SOURCES) {
+    stats.byChannel[src] = filtered.filter(r => r.c === src).length;
+  }
+  return stats;
+}
+
 function renderStores() {
   const q = document.getElementById('search').value.trim().toLowerCase();
   let stores = DATA.stores.slice();
@@ -480,23 +564,22 @@ function renderStores() {
       (s.address || '').toLowerCase().includes(q)
     );
   }
-  if (filterMode === 'warn')  stores = stores.filter(s => s.warning);
-  if (filterMode === 'data')  stores = stores.filter(s => s.totals.reviews > 0);
-  if (filterMode === 'empty') stores = stores.filter(s => s.totals.reviews === 0);
+  if (regionFilter !== 'all') {
+    stores = stores.filter(s => s.region === regionFilter);
+  }
+
+  // 기간 통계 계산해서 카드에 사용
+  stores.forEach(s => { s._period = applyPeriodToStore(s); });
 
   stores.sort((a, b) => {
-    if (sortKey === 'reviews') return b.totals.reviews - a.totals.reviews;
-    if (sortKey === 'recent_neg') {
-      const an = (a.recent_samples || []).filter(s => s.sentiment === '부정').length;
-      const bn = (b.recent_samples || []).filter(s => s.sentiment === '부정').length;
-      return bn - an;
-    }
+    if (sortKey === 'reviews') return b._period.reviews - a._period.reviews;
+    if (sortKey === 'recent_neg') return (b.recent7_negative || 0) - (a.recent7_negative || 0);
     if (sortKey === 'warning') {
       const w = {red: 0, yellow: 1};
       return (w[a.warning] ?? 2) - (w[b.warning] ?? 2);
     }
-    if (sortKey === 'rating_low')  return (a.totals.avg_rating || 999) - (b.totals.avg_rating || 999);
-    if (sortKey === 'rating_high') return (b.totals.avg_rating || 0) - (a.totals.avg_rating || 0);
+    if (sortKey === 'rating_low')  return (a._period.avg_rating || 999) - (b._period.avg_rating || 999);
+    if (sortKey === 'rating_high') return (b._period.avg_rating || 0) - (a._period.avg_rating || 0);
     if (sortKey === 'branch') return a.branch.localeCompare(b.branch, 'ko');
     return 0;
   });
@@ -509,20 +592,35 @@ function renderStores() {
 }
 
 function storeCardHtml(s) {
-  const t = s.totals;
+  const ps = s._period || {reviews: s.totals.reviews, avg_rating: s.totals.avg_rating,
+                            neg: s.totals.negative, byChannel: {}};
   const wcls = s.warning === 'red' ? 'has-warn-red' : (s.warning === 'yellow' ? 'has-warn-yel' : '');
+
+  // 7일 내 부정이 있으면 매장명 옆에 ⚠ 표시 (warning 이상 등급)
+  let warnIco = '';
+  if (s.warning === 'red')      warnIco = `<span class="warn-ico red" title="${s.warning_reason || ''}">⚠ ${s.recent7_negative || ''}</span>`;
+  else if (s.warning === 'yellow') warnIco = `<span class="warn-ico yel" title="${s.warning_reason || ''}">⚠ ${s.recent7_negative || ''}</span>`;
+  else if ((s.recent7_negative || 0) > 0)
+    warnIco = `<span class="warn-ico yel" title="최근 7일 부정 ${s.recent7_negative}건">⚠ ${s.recent7_negative}</span>`;
+
   const channels = SOURCES.map(src => {
-    const has = s.channels[src] && s.channels[src].count > 0;
-    return `<span class="ch-pill ${has ? 'has' : ''}">${SOURCE_LABEL[src]}${has ? ' '+s.channels[src].count : ''}</span>`;
+    const cnt = ps.byChannel[src] ?? (s.channels[src]?.count || 0);
+    const has = cnt > 0;
+    return `<span class="ch-pill ${has ? 'has' : ''}">${SOURCE_LABEL[src]}${has ? ' '+cnt : ''}</span>`;
   }).join('');
+
   return `
     <div class="store-card ${wcls}" onclick="openStore('${s.store_name.replace(/'/g, "\\'")}')">
-      <div class="name">${s.branch}</div>
+      <div class="name">
+        ${warnIco}
+        <span class="branch-name">${s.branch}</span>
+        <span class="region-tag">${s.region || ''}</span>
+      </div>
       <div class="addr">${s.address || ''}</div>
       <div class="stats">
-        <div class="stat"><div class="v">${fmtNum(t.reviews)}</div><div class="l">리뷰</div></div>
-        <div class="stat"><div class="v">${t.avg_rating ? '★'+t.avg_rating : '—'}</div><div class="l">평점</div></div>
-        <div class="stat ${t.negative ? 'neg' : ''}"><div class="v">${fmtNum(t.negative)}</div><div class="l">부정</div></div>
+        <div class="stat"><div class="v">${fmtNum(ps.reviews)}</div><div class="l">리뷰</div></div>
+        <div class="stat"><div class="v">${ps.avg_rating ? '★'+ps.avg_rating : '—'}</div><div class="l">평점</div></div>
+        <div class="stat ${ps.neg ? 'neg' : ''}"><div class="v">${fmtNum(ps.neg)}</div><div class="l">부정</div></div>
       </div>
       <div class="channels">${channels}</div>
     </div>
@@ -608,15 +706,51 @@ function escapeHtml(s) {
 // 이벤트
 document.getElementById('search').addEventListener('input', renderStores);
 document.getElementById('sort').addEventListener('change', e => { sortKey = e.target.value; renderStores(); });
-document.querySelectorAll('.chip[data-filter]').forEach(chip => {
+
+// 지역 chip
+document.querySelectorAll('.region-chip').forEach(chip => {
   chip.addEventListener('click', () => {
-    document.querySelectorAll('.chip[data-filter]').forEach(c => c.classList.remove('active'));
+    document.querySelectorAll('.region-chip').forEach(c => c.classList.remove('active'));
     chip.classList.add('active');
-    filterMode = chip.dataset.filter;
+    regionFilter = chip.dataset.region;
     renderStores();
   });
 });
-document.querySelector('.chip[data-filter="all"]').classList.add('active');
+document.querySelector('.region-chip[data-region="all"]').classList.add('active');
+
+// 기간 chip
+document.querySelectorAll('.period-chip').forEach(chip => {
+  chip.addEventListener('click', () => {
+    document.querySelectorAll('.period-chip').forEach(c => c.classList.remove('active'));
+    chip.classList.add('active');
+    periodDays = chip.dataset.period;
+    const cust = document.getElementById('custom-range');
+    if (periodDays === 'custom') {
+      cust.classList.remove('hidden');
+      // 기본값 — 30일 전 ~ 오늘
+      const to = new Date(DATA.generated_at);
+      const from = new Date(to); from.setDate(from.getDate() - 30);
+      const fromInput = document.getElementById('period-from');
+      const toInput = document.getElementById('period-to');
+      if (!fromInput.value) fromInput.value = from.toISOString().substring(0,10);
+      if (!toInput.value)   toInput.value   = to.toISOString().substring(0,10);
+      periodFrom = new Date(fromInput.value);
+      periodTo   = new Date(toInput.value);
+    } else {
+      cust.classList.add('hidden');
+    }
+    renderStores();
+  });
+});
+document.querySelector('.period-chip[data-period="all"]').classList.add('active');
+
+document.getElementById('period-from').addEventListener('change', e => {
+  periodFrom = new Date(e.target.value); renderStores();
+});
+document.getElementById('period-to').addEventListener('change', e => {
+  periodTo = new Date(e.target.value); renderStores();
+});
+
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
 
 load();
