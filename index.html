@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>육회바른연어 통합 리뷰 대시보드</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<style>
+:root {
+  --bg-primary: #0f1117;
+  --bg-card: #171a22;
+  --bg-elev: #1f232c;
+  --border: #2a2f3a;
+  --text-primary: #e8eaed;
+  --text-secondary: #9ba3af;
+  --text-muted: #6b7280;
+  --accent: #E4002B;
+  --accent-soft: #2a1014;
+  --pos: #10b981;
+  --neg: #ef4444;
+  --neu: #94a3b8;
+  --warn-red-bg: #2a1014;
+  --warn-red-bd: #ef4444;
+  --warn-yel-bg: #2a2210;
+  --warn-yel-bd: #facc15;
+}
+body.theme-light {
+  --bg-primary: #f6f7fb;
+  --bg-card: #ffffff;
+  --bg-elev: #f1f3f5;
+  --border: #e5e7eb;
+  --text-primary: #111827;
+  --text-secondary: #4b5563;
+  --text-muted: #9ca3af;
+  --accent-soft: #fef2f2;
+  --warn-red-bg: #fef2f2;
+  --warn-yel-bg: #fffbeb;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo",
+               "Noto Sans KR", "Malgun Gothic", sans-serif;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  line-height: 1.5;
+}
+.container { max-width: 1600px; margin: 0 auto; padding: 24px; }
+header {
+  display: flex; justify-content: space-between; align-items: flex-end;
+  flex-wrap: wrap; gap: 16px; margin-bottom: 28px;
+  padding-bottom: 20px; border-bottom: 1px solid var(--border);
+}
+header h1 {
+  margin: 0; font-size: 26px; font-weight: 700;
+  display: flex; align-items: center; gap: 12px;
+}
+header h1::before {
+  content: ''; width: 6px; height: 28px; background: var(--accent); border-radius: 3px;
+}
+.meta {
+  display: flex; gap: 16px; align-items: center;
+  font-size: 13px; color: var(--text-secondary);
+}
+.theme-toggle {
+  background: var(--bg-elev); border: 1px solid var(--border);
+  color: var(--text-primary); padding: 6px 14px; border-radius: 6px;
+  cursor: pointer; font-size: 13px;
+}
+.theme-toggle:hover { background: var(--accent); border-color: var(--accent); color: #fff; }
+
+/* KPI */
+.kpi-strip {
+  display: grid; grid-template-columns: repeat(6, 1fr); gap: 12px;
+  margin-bottom: 24px;
+}
+@media (max-width: 1100px) { .kpi-strip { grid-template-columns: repeat(3, 1fr); } }
+@media (max-width: 600px)  { .kpi-strip { grid-template-columns: repeat(2, 1fr); } }
+.kpi {
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: 10px; padding: 16px;
+}
+.kpi .label { font-size: 12px; color: var(--text-secondary); margin-bottom: 6px; }
+.kpi .value { font-size: 24px; font-weight: 700; color: var(--text-primary); }
+.kpi.warn-red .value { color: var(--neg); }
+.kpi.warn-yel .value { color: #facc15; }
+
+/* Section heading */
+.section { margin: 32px 0; }
+.section h2 {
+  font-size: 18px; font-weight: 600; margin: 0 0 14px;
+  display: flex; align-items: center; gap: 10px;
+}
+.section h2 .count {
+  font-size: 12px; padding: 2px 10px; border-radius: 10px;
+  background: var(--bg-elev); color: var(--text-secondary); font-weight: 500;
+}
+
+/* Warnings */
+.warn-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(360px, 1fr)); gap: 12px;
+}
+.warn-card {
+  border-radius: 10px; padding: 14px 16px;
+  background: var(--bg-card); border: 1px solid var(--border);
+}
+.warn-card.red {
+  background: var(--warn-red-bg); border: 1px solid var(--warn-red-bd);
+  border-left-width: 5px;
+  animation: pulse-red 1.8s ease-in-out infinite;
+}
+.warn-card.yellow {
+  background: var(--warn-yel-bg); border: 1px solid var(--warn-yel-bd);
+  border-left-width: 4px;
+}
+@keyframes pulse-red {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4); }
+  50%      { box-shadow: 0 0 0 6px rgba(239, 68, 68, 0); }
+}
+.warn-card .head {
+  display: flex; justify-content: space-between; align-items: center; gap: 8px;
+  margin-bottom: 8px;
+}
+.warn-card .branch { font-weight: 600; font-size: 14px; }
+.warn-card .badge {
+  font-size: 11px; padding: 2px 8px; border-radius: 4px; font-weight: 700;
+}
+.warn-card.red .badge    { background: var(--neg); color: #fff; }
+.warn-card.yellow .badge { background: #facc15; color: #000; }
+.warn-card .reason {
+  font-size: 12px; color: var(--text-secondary); margin-bottom: 8px;
+}
+.warn-card .sample {
+  font-size: 12px; padding: 8px; background: rgba(0,0,0,0.18);
+  border-radius: 6px; margin-top: 4px; line-height: 1.4;
+}
+body.theme-light .warn-card .sample { background: rgba(0,0,0,0.04); }
+.warn-card .sample .meta { color: var(--text-muted); font-size: 11px; }
+
+/* Charts row */
+.charts-row {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 24px;
+}
+@media (max-width: 900px) { .charts-row { grid-template-columns: 1fr; } }
+.chart-box {
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: 10px; padding: 16px;
+}
+.chart-box h3 { margin: 0 0 12px; font-size: 14px; font-weight: 600; }
+.chart-box canvas { max-height: 240px; }
+
+/* Filter bar */
+.filter-bar {
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: 10px; padding: 14px; margin-bottom: 14px;
+  display: flex; flex-wrap: wrap; gap: 10px; align-items: center;
+}
+.filter-bar input[type="text"] {
+  background: var(--bg-elev); border: 1px solid var(--border);
+  color: var(--text-primary); padding: 8px 12px; border-radius: 6px;
+  font-size: 13px; min-width: 200px; flex: 1 1 200px;
+}
+.chip {
+  padding: 6px 12px; border-radius: 16px; font-size: 12px;
+  background: var(--bg-elev); border: 1px solid var(--border);
+  cursor: pointer; color: var(--text-secondary);
+}
+.chip.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+.chip:hover { color: var(--text-primary); }
+.sort-select {
+  background: var(--bg-elev); border: 1px solid var(--border);
+  color: var(--text-primary); padding: 7px 10px; border-radius: 6px;
+  font-size: 12px; cursor: pointer;
+}
+
+/* Store grid */
+.store-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+  gap: 12px;
+}
+.store-card {
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: 10px; padding: 14px; cursor: pointer;
+  transition: transform 0.15s, border-color 0.15s;
+}
+.store-card:hover {
+  transform: translateY(-2px); border-color: var(--accent);
+}
+.store-card.has-warn-red {
+  border-left: 4px solid var(--neg);
+}
+.store-card.has-warn-yel {
+  border-left: 4px solid #facc15;
+}
+.store-card .name {
+  font-size: 14px; font-weight: 600; margin-bottom: 4px;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.store-card .addr {
+  font-size: 11px; color: var(--text-muted); margin-bottom: 10px;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.store-card .stats {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 10px;
+}
+.store-card .stat {
+  text-align: center; background: var(--bg-elev);
+  padding: 6px 4px; border-radius: 5px;
+}
+.store-card .stat .v { font-size: 14px; font-weight: 700; color: var(--text-primary); }
+.store-card .stat .l { font-size: 10px; color: var(--text-muted); margin-top: 2px; }
+.store-card .stat.neg .v { color: var(--neg); }
+.store-card .channels {
+  display: flex; flex-wrap: wrap; gap: 4px;
+}
+.ch-pill {
+  font-size: 10px; padding: 2px 7px; border-radius: 8px;
+  background: var(--bg-elev); color: var(--text-secondary);
+}
+.ch-pill.has { background: var(--accent-soft); color: var(--accent); }
+body.theme-light .ch-pill.has { background: #fef2f2; color: var(--neg); }
+
+/* Modal */
+.modal-overlay {
+  display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.7);
+  z-index: 100; padding: 20px; overflow-y: auto;
+}
+.modal-overlay.open { display: flex; align-items: flex-start; justify-content: center; }
+.modal {
+  background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px;
+  width: 100%; max-width: 900px; padding: 24px;
+}
+.modal-head {
+  display: flex; justify-content: space-between; align-items: flex-start;
+  margin-bottom: 16px; padding-bottom: 14px; border-bottom: 1px solid var(--border);
+}
+.modal-head h2 { margin: 0 0 4px; font-size: 20px; }
+.modal-head .addr { color: var(--text-muted); font-size: 13px; }
+.modal-close {
+  background: var(--bg-elev); border: 1px solid var(--border); color: var(--text-primary);
+  width: 32px; height: 32px; border-radius: 6px; cursor: pointer; font-size: 18px;
+}
+.modal-row { display: grid; grid-template-columns: 2fr 1fr; gap: 16px; margin-bottom: 16px; }
+@media (max-width: 700px) { .modal-row { grid-template-columns: 1fr; } }
+.modal-charts { background: var(--bg-elev); border-radius: 8px; padding: 12px; }
+.modal-channels { background: var(--bg-elev); border-radius: 8px; padding: 12px; }
+.modal-channels .ch {
+  display: flex; justify-content: space-between; padding: 6px 0;
+  font-size: 13px; border-bottom: 1px solid var(--border);
+}
+.modal-channels .ch:last-child { border-bottom: 0; }
+.modal-channels .ch a { color: var(--accent); text-decoration: none; font-size: 11px; }
+.modal-reviews .review-item {
+  background: var(--bg-elev); border-radius: 6px; padding: 10px 12px; margin-bottom: 6px;
+  font-size: 13px;
+}
+.modal-reviews .review-item .meta {
+  font-size: 11px; color: var(--text-muted); margin-bottom: 4px;
+  display: flex; gap: 8px; align-items: center;
+}
+.sentiment-pos { color: var(--pos); }
+.sentiment-neg { color: var(--neg); }
+.sentiment-neu { color: var(--neu); }
+
+/* Misc */
+.empty {
+  text-align: center; padding: 40px; color: var(--text-muted);
+  background: var(--bg-card); border: 1px dashed var(--border); border-radius: 10px;
+}
+footer {
+  margin-top: 40px; padding-top: 20px; border-top: 1px solid var(--border);
+  font-size: 12px; color: var(--text-muted); text-align: center;
+}
+.hidden { display: none !important; }
+</style>
+</head>
+<body>
+<div class="container">
+
+<header>
+  <h1>육회바른연어 통합 리뷰 대시보드</h1>
+  <div class="meta">
+    <span id="meta-time">로딩 중…</span>
+    <span id="meta-window"></span>
+    <button class="theme-toggle" onclick="toggleTheme()">🌓 테마</button>
+  </div>
+</header>
+
+<!-- KPI -->
+<div class="kpi-strip" id="kpi-strip"></div>
+
+<!-- Warnings -->
+<div class="section" id="warn-section">
+  <h2>🚨 워닝 <span class="count" id="warn-count">0</span></h2>
+  <div class="warn-grid" id="warn-grid"></div>
+</div>
+
+<!-- Charts -->
+<div class="section">
+  <h2>📊 채널별·감성 분포</h2>
+  <div class="charts-row">
+    <div class="chart-box">
+      <h3>채널별 리뷰 수</h3>
+      <canvas id="ch-bar"></canvas>
+    </div>
+    <div class="chart-box">
+      <h3>전체 감성 분포</h3>
+      <canvas id="sent-pie"></canvas>
+    </div>
+  </div>
+</div>
+
+<!-- Stores -->
+<div class="section">
+  <h2>🏪 매장별 <span class="count" id="store-count">0</span></h2>
+  <div class="filter-bar">
+    <input type="text" id="search" placeholder="매장명/주소 검색…">
+    <span class="chip" data-filter="all">전체</span>
+    <span class="chip" data-filter="warn">워닝만</span>
+    <span class="chip" data-filter="data">데이터있음</span>
+    <span class="chip" data-filter="empty">미수집</span>
+    <span style="flex: 1"></span>
+    <select class="sort-select" id="sort">
+      <option value="reviews">리뷰 많은순</option>
+      <option value="recent_neg">최근 부정 많은순</option>
+      <option value="warning">워닝 우선</option>
+      <option value="rating_low">평점 낮은순</option>
+      <option value="rating_high">평점 높은순</option>
+      <option value="branch">매장명순</option>
+    </select>
+  </div>
+  <div class="store-grid" id="store-grid"></div>
+  <div class="empty hidden" id="store-empty">검색 결과가 없습니다.</div>
+</div>
+
+<footer>
+  데이터는 네이버지도 / 카카오맵 / 구글맵 / 배민 / 쿠팡이츠에서 수집됩니다.
+  매장명은 yby.co.kr/branch/find.php의 공식 매장 목록(249개)을 기준으로 통일됩니다.
+  <br>워닝: <b style="color:var(--neg)">빨강</b> = 최근 7일 부정 3건+ 또는 최근 30일 부정률 50%+ /
+  <b style="color:#facc15">노랑</b> = 최근 7일 부정 2건+ 또는 부정률 30%+
+</footer>
+</div>
+
+<!-- Modal -->
+<div class="modal-overlay" id="modal" onclick="if(event.target===this)closeModal()">
+  <div class="modal" id="modal-body"></div>
+</div>
+
+<script>
+let DATA = null;
+let chBar = null, sentPie = null, modalChart = null;
+let filterMode = 'all';
+let sortKey = 'reviews';
+
+const SOURCES = ['naver', 'kakao', 'google', 'baemin', 'coupangeats'];
+const SOURCE_LABEL = {
+  naver: '네이버', kakao: '카카오', google: '구글',
+  baemin: '배민', coupangeats: '쿠팡이츠',
+};
+const SOURCE_COLOR = {
+  naver: '#03c75a', kakao: '#fee500', google: '#4285f4',
+  baemin: '#2ac1bc', coupangeats: '#fa3838',
+};
+
+function toggleTheme() { document.body.classList.toggle('theme-light'); }
+
+function fmtNum(n) { return (n ?? 0).toLocaleString('ko-KR'); }
+
+async function load() {
+  const resp = await fetch('data/dashboard.json');
+  DATA = await resp.json();
+  render();
+}
+
+function render() {
+  document.getElementById('meta-time').textContent =
+    '갱신: ' + DATA.generated_at.replace('T', ' ').substring(0, 16);
+  document.getElementById('meta-window').textContent =
+    `(워닝: 최근 ${DATA.recent_days}일 / 윈도우 ${DATA.data_window_days}일)`;
+  renderKPIs();
+  renderWarnings();
+  renderCharts();
+  renderStores();
+}
+
+function renderKPIs() {
+  const s = DATA.summary;
+  const stats = DATA.channel_stats;
+  const html = [
+    {label: '총 리뷰', value: fmtNum(s.total_reviews)},
+    {label: '매장 수', value: `${fmtNum(s.stores_with_data)} / ${s.total_stores}`},
+    {label: '평균 평점', value: s.avg_rating_all > 0 ? s.avg_rating_all.toFixed(2) : '—'},
+    {label: '워닝 (빨강)', value: fmtNum(s.warnings_red), cls: 'warn-red'},
+    {label: '워닝 (노랑)', value: fmtNum(s.warnings_yellow), cls: 'warn-yel'},
+    {label: '활성 채널', value: SOURCES.filter(c => stats[c].reviews > 0).length + ' / 5'},
+  ];
+  document.getElementById('kpi-strip').innerHTML = html.map(k =>
+    `<div class="kpi ${k.cls || ''}"><div class="label">${k.label}</div><div class="value">${k.value}</div></div>`
+  ).join('');
+}
+
+function renderWarnings() {
+  const ws = DATA.warnings;
+  document.getElementById('warn-count').textContent = ws.length;
+  const grid = document.getElementById('warn-grid');
+  if (!ws.length) {
+    grid.innerHTML = '<div class="empty" style="grid-column: 1 / -1;">현재 워닝 매장 없음. 모니터링 정상.</div>';
+    return;
+  }
+  grid.innerHTML = ws.map(w => `
+    <div class="warn-card ${w.level}" onclick="openStore('${w.store_name.replace(/'/g, "\\'")}')">
+      <div class="head">
+        <div class="branch">${w.branch || w.store_name}</div>
+        <span class="badge">${w.level === 'red' ? '🔴 위험' : '⚠ 경고'}</span>
+      </div>
+      <div class="reason">${w.reason}</div>
+      ${w.samples.length ? w.samples.slice(0,2).map(s => `
+        <div class="sample">
+          <div class="meta">${SOURCE_LABEL[s.channel] || s.channel} · ${s.date} ${s.rating ? '· ★' + s.rating : ''}</div>
+          ${escapeHtml(s.text)}
+        </div>
+      `).join('') : ''}
+    </div>
+  `).join('');
+}
+
+function renderCharts() {
+  const ctx1 = document.getElementById('ch-bar').getContext('2d');
+  const stats = DATA.channel_stats;
+  if (chBar) chBar.destroy();
+  chBar = new Chart(ctx1, {
+    type: 'bar',
+    data: {
+      labels: SOURCES.map(c => SOURCE_LABEL[c]),
+      datasets: [{
+        label: '리뷰 수',
+        data: SOURCES.map(c => stats[c].reviews),
+        backgroundColor: SOURCES.map(c => SOURCE_COLOR[c]),
+      }],
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display: false } },
+      scales: { y: { beginAtZero: true, ticks: { color: getCss('--text-secondary') } },
+                x: { ticks: { color: getCss('--text-secondary') } } },
+    },
+  });
+
+  // 감성 파이
+  const sumPos = DATA.stores.reduce((a, s) => a + (s.totals.positive || 0), 0);
+  const sumNeu = DATA.stores.reduce((a, s) => a + (s.totals.neutral || 0), 0);
+  const sumNeg = DATA.stores.reduce((a, s) => a + (s.totals.negative || 0), 0);
+  const ctx2 = document.getElementById('sent-pie').getContext('2d');
+  if (sentPie) sentPie.destroy();
+  sentPie = new Chart(ctx2, {
+    type: 'doughnut',
+    data: {
+      labels: ['긍정', '중립', '부정'],
+      datasets: [{
+        data: [sumPos, sumNeu, sumNeg],
+        backgroundColor: [getCss('--pos'), getCss('--neu'), getCss('--neg')],
+      }],
+    },
+    options: { responsive: true, maintainAspectRatio: false,
+               plugins: { legend: { position: 'bottom', labels: { color: getCss('--text-secondary') } } } },
+  });
+}
+
+function getCss(name) {
+  return getComputedStyle(document.body).getPropertyValue(name).trim();
+}
+
+function renderStores() {
+  const q = document.getElementById('search').value.trim().toLowerCase();
+  let stores = DATA.stores.slice();
+  if (q) {
+    stores = stores.filter(s =>
+      s.store_name.toLowerCase().includes(q) ||
+      s.branch.toLowerCase().includes(q) ||
+      (s.address || '').toLowerCase().includes(q)
+    );
+  }
+  if (filterMode === 'warn')  stores = stores.filter(s => s.warning);
+  if (filterMode === 'data')  stores = stores.filter(s => s.totals.reviews > 0);
+  if (filterMode === 'empty') stores = stores.filter(s => s.totals.reviews === 0);
+
+  stores.sort((a, b) => {
+    if (sortKey === 'reviews') return b.totals.reviews - a.totals.reviews;
+    if (sortKey === 'recent_neg') {
+      const an = (a.recent_samples || []).filter(s => s.sentiment === '부정').length;
+      const bn = (b.recent_samples || []).filter(s => s.sentiment === '부정').length;
+      return bn - an;
+    }
+    if (sortKey === 'warning') {
+      const w = {red: 0, yellow: 1};
+      return (w[a.warning] ?? 2) - (w[b.warning] ?? 2);
+    }
+    if (sortKey === 'rating_low')  return (a.totals.avg_rating || 999) - (b.totals.avg_rating || 999);
+    if (sortKey === 'rating_high') return (b.totals.avg_rating || 0) - (a.totals.avg_rating || 0);
+    if (sortKey === 'branch') return a.branch.localeCompare(b.branch, 'ko');
+    return 0;
+  });
+
+  document.getElementById('store-count').textContent = stores.length;
+
+  const grid = document.getElementById('store-grid');
+  document.getElementById('store-empty').classList.toggle('hidden', stores.length > 0);
+  grid.innerHTML = stores.map(s => storeCardHtml(s)).join('');
+}
+
+function storeCardHtml(s) {
+  const t = s.totals;
+  const wcls = s.warning === 'red' ? 'has-warn-red' : (s.warning === 'yellow' ? 'has-warn-yel' : '');
+  const channels = SOURCES.map(src => {
+    const has = s.channels[src] && s.channels[src].count > 0;
+    return `<span class="ch-pill ${has ? 'has' : ''}">${SOURCE_LABEL[src]}${has ? ' '+s.channels[src].count : ''}</span>`;
+  }).join('');
+  return `
+    <div class="store-card ${wcls}" onclick="openStore('${s.store_name.replace(/'/g, "\\'")}')">
+      <div class="name">${s.branch}</div>
+      <div class="addr">${s.address || ''}</div>
+      <div class="stats">
+        <div class="stat"><div class="v">${fmtNum(t.reviews)}</div><div class="l">리뷰</div></div>
+        <div class="stat"><div class="v">${t.avg_rating ? '★'+t.avg_rating : '—'}</div><div class="l">평점</div></div>
+        <div class="stat ${t.negative ? 'neg' : ''}"><div class="v">${fmtNum(t.negative)}</div><div class="l">부정</div></div>
+      </div>
+      <div class="channels">${channels}</div>
+    </div>
+  `;
+}
+
+function openStore(storeName) {
+  const s = DATA.stores.find(x => x.store_name === storeName);
+  if (!s) return;
+  const body = document.getElementById('modal-body');
+  body.innerHTML = `
+    <div class="modal-head">
+      <div>
+        <h2>${s.branch}</h2>
+        <div class="addr">${s.store_name} · ${s.address || ''}</div>
+      </div>
+      <button class="modal-close" onclick="closeModal()">×</button>
+    </div>
+    <div class="kpi-strip" style="grid-template-columns: repeat(4,1fr); margin-bottom: 16px;">
+      <div class="kpi"><div class="label">총 리뷰</div><div class="value">${fmtNum(s.totals.reviews)}</div></div>
+      <div class="kpi"><div class="label">평균 평점</div><div class="value">${s.totals.avg_rating ? '★'+s.totals.avg_rating : '—'}</div></div>
+      <div class="kpi"><div class="label">긍정 / 부정</div><div class="value" style="font-size:18px"><span style="color:var(--pos)">${s.totals.positive}</span> / <span style="color:var(--neg)">${s.totals.negative}</span></div></div>
+      <div class="kpi ${s.warning ? (s.warning==='red'?'warn-red':'warn-yel') : ''}"><div class="label">워닝</div><div class="value" style="font-size:18px">${s.warning || '정상'}</div></div>
+    </div>
+    <div class="modal-row">
+      <div class="modal-charts"><h3 style="margin:0 0 8px;font-size:13px">최근 ${DATA.data_window_days}일 일별 리뷰</h3><canvas id="m-trend" height="160"></canvas></div>
+      <div class="modal-channels"><h3 style="margin:0 0 8px;font-size:13px">채널별 링크</h3>
+        ${SOURCES.map(src => {
+          const c = s.channels[src] || {};
+          return `<div class="ch"><span>${SOURCE_LABEL[src]} · ${c.count || 0}건${c.avg_rating ? ' · ★'+c.avg_rating : ''}</span>${c.url ? `<a href="${c.url}" target="_blank" rel="noopener">열기 ↗</a>` : '<span style="color:var(--text-muted)">미수집</span>'}</div>`;
+        }).join('')}
+      </div>
+    </div>
+    <div class="modal-reviews">
+      <h3 style="margin:14px 0 8px;font-size:13px">최근 리뷰 (최대 5건)</h3>
+      ${s.recent_samples.length ? s.recent_samples.map(r => `
+        <div class="review-item">
+          <div class="meta">
+            <b>${SOURCE_LABEL[r.channel] || r.channel}</b> · ${r.date}
+            ${r.rating ? ` · ★${r.rating}` : ''}
+            ${r.sentiment ? ` · <span class="sentiment-${r.sentiment==='긍정'?'pos':r.sentiment==='부정'?'neg':'neu'}">${r.sentiment}</span>` : ''}
+            ${r.reviewer ? ` · ${r.reviewer}` : ''}
+          </div>
+          ${escapeHtml(r.text)}
+        </div>
+      `).join('') : '<div class="empty">수집된 리뷰가 없습니다.</div>'}
+    </div>
+  `;
+  document.getElementById('modal').classList.add('open');
+
+  // 차트
+  const ctx = document.getElementById('m-trend').getContext('2d');
+  if (modalChart) modalChart.destroy();
+  modalChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: s.trend_30d.map(t => t.date.substring(5)),
+      datasets: [{
+        label: '리뷰',
+        data: s.trend_30d.map(t => t.count),
+        borderColor: getCss('--accent'),
+        backgroundColor: 'rgba(228,0,43,0.15)',
+        fill: true, tension: 0.25, pointRadius: 2,
+      }],
+    },
+    options: { responsive: true, plugins: { legend: { display: false } },
+               scales: { y: { beginAtZero: true, ticks: { color: getCss('--text-secondary') } },
+                         x: { ticks: { color: getCss('--text-secondary') } } } },
+  });
+}
+
+function closeModal() {
+  document.getElementById('modal').classList.remove('open');
+  if (modalChart) { modalChart.destroy(); modalChart = null; }
+}
+
+function escapeHtml(s) {
+  return String(s || '').replace(/[&<>"']/g, c =>
+    ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])
+  );
+}
+
+// 이벤트
+document.getElementById('search').addEventListener('input', renderStores);
+document.getElementById('sort').addEventListener('change', e => { sortKey = e.target.value; renderStores(); });
+document.querySelectorAll('.chip[data-filter]').forEach(chip => {
+  chip.addEventListener('click', () => {
+    document.querySelectorAll('.chip[data-filter]').forEach(c => c.classList.remove('active'));
+    chip.classList.add('active');
+    filterMode = chip.dataset.filter;
+    renderStores();
+  });
+});
+document.querySelector('.chip[data-filter="all"]').classList.add('active');
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+load();
+</script>
+</body>
+</html>
