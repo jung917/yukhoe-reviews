@@ -619,15 +619,12 @@ function renderCharts(stores) {
   // 라벨에는 실제 값 (0 포함) — 항상 5채널 모두 표시
   const labels = SOURCES.map(c => `${SOURCE_LABEL[c]} (${fmtN(chCount[c])})`);
   const rawVals = SOURCES.map(c => chCount[c]);
-  const positives = rawVals.filter(v => v > 0);
-  const ratio = positives.length
-    ? Math.max(...positives) / Math.max(1, Math.min(...positives))
-    : 1;
-  const useLog = positives.length > 1 && ratio > 10;
-  // log 사용 시 0은 0.5로 (막대 표시용); 라벨엔 진짜 값 표시
-  // linear도 0이면 막대 안 보이니 항상 최소값 부여
-  const minStub = useLog ? 0.5 : Math.max(1, (Math.max(...rawVals) || 1) * 0.012);
+  // ★ linear scale 고정: 채널 간 상대 크기를 정확히 비교
+  // 0건 채널만 시각적 stub (max의 1.5%)으로 라벨 옆에 짧게라도 보이게
+  const maxV = Math.max(...rawVals, 1);
+  const minStub = maxV * 0.015;
   const displayVals = rawVals.map(v => v > 0 ? v : minStub);
+  const useLog = false;
   chBar = new Chart(ctx1, {
     type: 'bar',
     data: {
@@ -801,13 +798,14 @@ function renderStores() {
 
   // 기간 통계 캐시 무효화 후 재계산 (필터 변경 시 항상 fresh)
   DATA.stores.forEach(s => { s._period = applyPeriodToStore(s); });
-  // 차트 (지역+기간 적용된 매장으로) + 워닝 + KPI 동기 갱신
+  // 차트 (지역+기간 적용된 매장으로) + KPI + 워닝 동기 갱신
+  // ★ 순서 중요: KPI 먼저(워닝 placeholder=0) → renderWarnings 가 KPI 워닝 셀 덮어씀
   const filteredAll = (regionFilter === 'all'
     ? DATA.stores
     : DATA.stores.filter(s => s.region === regionFilter));
   renderCharts(filteredAll);
-  renderWarnings();
   renderKPIs(filteredAll);
+  renderWarnings();
   // 헤더 메타 동적 갱신
   const days = periodDays === 'all' ? '전체' :
                periodDays === 'custom' ? '직접지정' : `${periodDays}일`;
