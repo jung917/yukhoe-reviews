@@ -333,6 +333,34 @@ body.theme-light .ch-pill.has.kakao { color: #b58c00; }
 .sentiment-neg { color: var(--neg); }
 .sentiment-neu { color: var(--neu); }
 
+/* Guide */
+.guide-section { margin: 18px 0; }
+.guide-section h3 {
+  font-size: 14px; font-weight: 700; color: var(--accent);
+  margin: 0 0 8px; padding-bottom: 6px;
+  border-bottom: 1px solid var(--border);
+}
+.guide-section p { margin: 6px 0; color: var(--text-secondary); }
+.guide-section table {
+  width: 100%; border-collapse: collapse; margin: 8px 0; font-size: 12px;
+}
+.guide-section th, .guide-section td {
+  padding: 6px 10px; text-align: left;
+  border-bottom: 1px solid var(--border);
+}
+.guide-section th { color: var(--text-primary); font-weight: 600; background: var(--bg-elev); }
+.guide-section td { color: var(--text-secondary); }
+.guide-section code {
+  background: var(--bg-elev); padding: 1px 6px; border-radius: 4px;
+  font-size: 11px; color: var(--accent); font-family: ui-monospace, monospace;
+}
+.guide-section .pill {
+  display: inline-block; padding: 1px 8px; border-radius: 8px;
+  font-size: 11px; font-weight: 600; margin-right: 4px;
+}
+.guide-section .pill.red { background: var(--neg); color: #fff; }
+.guide-section .pill.yel { background: #facc15; color: #000; }
+
 /* Misc */
 .empty {
   text-align: center; padding: 40px; color: var(--text-muted);
@@ -353,6 +381,7 @@ footer {
   <div class="meta">
     <span id="meta-time">로딩 중…</span>
     <span id="meta-window"></span>
+    <button class="theme-toggle" onclick="openGuide()">📘 용어·지표 해설</button>
     <button class="theme-toggle" onclick="toggleTheme()">🌓 테마</button>
   </div>
 </header>
@@ -374,7 +403,7 @@ footer {
   </div>
 </div>
 
-<!-- 지역 + 기간 한 줄 -->
+<!-- 지역 + 기간 -->
 <div class="filter-row-inline">
   <span class="label-mini">지역</span>
   <span class="chip sm region-chip" data-region="all">전체</span>
@@ -389,17 +418,34 @@ footer {
   <span class="chip sm region-chip" data-region="제주">제주</span>
   <span class="divider"></span>
   <span class="label-mini">기간</span>
+  <span class="chip sm period-chip" data-period="all">전체</span>
   <span class="chip sm period-chip" data-period="1">1일</span>
   <span class="chip sm period-chip" data-period="7">7일</span>
   <span class="chip sm period-chip" data-period="30">30일</span>
   <span class="chip sm period-chip" data-period="180">6개월</span>
-  <span class="chip sm period-chip" data-period="all">전체</span>
   <span class="chip sm period-chip" data-period="custom">직접지정</span>
   <span id="custom-range" class="hidden" style="display:flex;gap:6px;align-items:center;">
     <input type="date" id="period-from" class="sort-select" style="font-size:11px;padding:4px 6px;">
     ~
     <input type="date" id="period-to" class="sort-select" style="font-size:11px;padding:4px 6px;">
   </span>
+</div>
+
+<!-- 채널 + 감성 (multi-select) -->
+<div class="filter-row-inline">
+  <span class="label-mini">채널</span>
+  <span class="chip sm channel-chip" data-channel="all">전체</span>
+  <span class="chip sm channel-chip" data-channel="naver">네이버</span>
+  <span class="chip sm channel-chip" data-channel="kakao">카카오</span>
+  <span class="chip sm channel-chip" data-channel="google">구글</span>
+  <span class="chip sm channel-chip" data-channel="baemin">배민</span>
+  <span class="chip sm channel-chip" data-channel="coupangeats">쿠팡이츠</span>
+  <span class="divider"></span>
+  <span class="label-mini">감성</span>
+  <span class="chip sm sent-chip" data-sent="all">전체</span>
+  <span class="chip sm sent-chip" data-sent="긍정" style="color:var(--pos);">긍정</span>
+  <span class="chip sm sent-chip" data-sent="중립" style="color:var(--neu);">중립</span>
+  <span class="chip sm sent-chip" data-sent="부정" style="color:var(--neg);">부정</span>
 </div>
 
 <!-- Warnings (지역/기간 바로 아래) -->
@@ -423,33 +469,6 @@ footer {
       <option value="branch">매장명순</option>
     </select>
   </div>
-  <div class="filter-bar" style="margin-top: 8px; gap: 6px;">
-    <span style="font-size:12px;color:var(--text-secondary);margin-right:4px;">지역</span>
-    <span class="chip region-chip" data-region="all">전체</span>
-    <span class="chip region-chip" data-region="서울">서울</span>
-    <span class="chip region-chip" data-region="경기">경기</span>
-    <span class="chip region-chip" data-region="인천">인천</span>
-    <span class="chip region-chip" data-region="부산">부산</span>
-    <span class="chip region-chip" data-region="경상">경상</span>
-    <span class="chip region-chip" data-region="전라">전라</span>
-    <span class="chip region-chip" data-region="충청">충청</span>
-    <span class="chip region-chip" data-region="강원">강원</span>
-    <span class="chip region-chip" data-region="제주">제주</span>
-  </div>
-  <div class="filter-bar" style="margin-top: 8px; gap: 6px;">
-    <span style="font-size:12px;color:var(--text-secondary);margin-right:4px;">기간</span>
-    <span class="chip period-chip" data-period="1">1일</span>
-    <span class="chip period-chip" data-period="7">7일</span>
-    <span class="chip period-chip" data-period="30">30일</span>
-    <span class="chip period-chip" data-period="180">6개월</span>
-    <span class="chip period-chip" data-period="all">전체</span>
-    <span class="chip period-chip" data-period="custom">직접지정</span>
-    <span id="custom-range" class="hidden" style="display:flex;gap:6px;align-items:center;">
-      <input type="date" id="period-from" class="sort-select" style="font-size:12px;">
-      ~
-      <input type="date" id="period-to" class="sort-select" style="font-size:12px;">
-    </span>
-  </div>
   <div class="store-grid" id="store-grid"></div>
   <div class="empty hidden" id="store-empty">검색 결과가 없습니다.</div>
 </div>
@@ -467,13 +486,32 @@ footer {
   <div class="modal" id="modal-body"></div>
 </div>
 
+<!-- Guide Modal -->
+<div class="modal-overlay" id="guide-modal" onclick="if(event.target===this)closeGuide()">
+  <div class="modal" style="max-width:980px;">
+    <div class="modal-head">
+      <div>
+        <h2>📘 용어·지표 해설</h2>
+        <div class="addr">대시보드를 만들 때 사용한 데이터 출처·산식·임계값</div>
+      </div>
+      <button class="modal-close" onclick="closeGuide()">×</button>
+    </div>
+    <div id="guide-content" style="font-size:13px; line-height:1.7;"></div>
+  </div>
+</div>
+
 <script>
 let DATA = null;
 let chBar = null, sentPie = null, modalChart = null;
 let regionFilter = 'all';
 let periodDays = '30';   // 기본 30일 (워닝이 잘 보이도록). 'all' | 1 | 7 | 30 | 180 | 'custom'
 let periodFrom = null, periodTo = null;  // Date — custom 모드용
+let channelFilter = new Set();   // 비어있거나 SOURCES 모두 = 전체
+let sentFilter    = new Set();   // 비어있거나 [긍정/중립/부정] 모두 = 전체
 let sortKey = 'reviews';
+
+function isAllChannel() { return channelFilter.size === 0 || channelFilter.size === SOURCES.length; }
+function isAllSent()    { return sentFilter.size === 0 || sentFilter.size === 3; }
 
 const SOURCES = ['naver', 'kakao', 'google', 'baemin', 'coupangeats'];
 const SOURCE_LABEL = {
@@ -486,6 +524,121 @@ const SOURCE_COLOR = {
 };
 
 function toggleTheme() { document.body.classList.toggle('theme-light'); }
+
+function openGuide() {
+  document.getElementById('guide-content').innerHTML = GUIDE_HTML;
+  document.getElementById('guide-modal').classList.add('open');
+}
+function closeGuide() {
+  document.getElementById('guide-modal').classList.remove('open');
+}
+
+const GUIDE_HTML = `
+<div class="guide-section">
+  <h3>1. 데이터 출처 (5개 채널)</h3>
+  <table>
+    <tr><th>채널</th><th>방식</th><th>비고</th></tr>
+    <tr><td>네이버지도</td><td>매장 review/visitor 페이지 + 더보기</td><td>매장당 첫 10건 한계 (GraphQL endpoint 직접호출 보강 예정)</td></tr>
+    <tr><td>카카오맵</td><td><code>place-api.map.kakao.com</code> JSON endpoint 직접호출</td><td>cursor 페이지네이션, 무제한</td></tr>
+    <tr><td>구글맵</td><td>Playwright + 좌표 기반 검색 + 스크롤</td><td>한국 사용자가 구글에 후기 적게 남김 (매장당 평균 3.3건)</td></tr>
+    <tr><td>배민</td><td>(배달앱 세션 작업 중)</td><td>채널 CSV 들어오면 자동 통합</td></tr>
+    <tr><td>쿠팡이츠</td><td>(배달앱 세션 작업 중)</td><td>동일</td></tr>
+  </table>
+</div>
+
+<div class="guide-section">
+  <h3>2. 매장 마스터 · 매장명 통일</h3>
+  <p>매장 리스트는 <code>yby.co.kr/branch/find.php</code> 의 공식 매장 목록 <b>249개</b>를 기준으로 합니다. 모든 채널의 매장명은 <code>육회바른연어 ___점</code> 형식으로 정규화됩니다.</p>
+  <table>
+    <tr><th>채널</th><th>place_id 매핑 성공</th></tr>
+    <tr><td>네이버</td><td>248 / 249 (단축URL <code>naver.me</code>를 펼쳐 추출)</td></tr>
+    <tr><td>카카오</td><td>248 / 249 (검색 endpoint의 <code>confirmid</code> 사용 + 좌표 검증)</td></tr>
+    <tr><td>구글</td><td>239 / 249 (좌표 기반 검색 + "육회바른연어" 포함 첫 결과)</td></tr>
+  </table>
+</div>
+
+<div class="guide-section">
+  <h3>3. 감성·평점 산출 (predicted_rating)</h3>
+  <p>네이버 리뷰는 별점이 없어 LLM으로 예측한 별점(predicted_rating)을 사용합니다.</p>
+  <p>모델 = <b>KFC 리뷰 ~197K건으로 학습된 KcBERT-large</b> + <b>육회바른연어 카카오/구글 별점 ~1,300건으로 fine-tune</b></p>
+  <p>출력: 1~5점 → 감성 매핑 <code>{1,2: 부정, 3: 중립, 4,5: 긍정}</code></p>
+  <p>검증 정확도 (카카오 별점 기준): <b>3단계 감성 88.3%</b> / ±1점 이내 93.3% / 별점 정확 76.1%</p>
+</div>
+
+<div class="guide-section">
+  <h3>4. 워닝 임계 (옵션 A — 균형형, 절대 부정 카운트)</h3>
+  <p>비율이 아니라 <b>부정 리뷰 절대 개수</b>로 판정. 매장 평균 리뷰 수가 적어 비율은 노이즈가 큼.</p>
+  <table>
+    <tr><th>기간</th><th><span class="pill yel">노랑</span></th><th><span class="pill red">빨강</span></th><th>의미</th></tr>
+    <tr><td>1일</td><td>부정 ≥ 1건</td><td>부정 ≥ 2건</td><td>당일 부정 1건도 즉시 점검</td></tr>
+    <tr><td>7일</td><td>부정 ≥ 2건</td><td>부정 ≥ 4건</td><td>주간 패턴 감지</td></tr>
+    <tr><td>30일</td><td>부정 ≥ 3건</td><td>부정 ≥ 6건</td><td>월간 평균 초과</td></tr>
+    <tr><td>6개월</td><td>부정 ≥ 7건</td><td>부정 ≥ 15건</td><td>중기 누적 신호</td></tr>
+    <tr><td>전체</td><td>부정 ≥ 12건</td><td>부정 ≥ 25건</td><td>평생 누적</td></tr>
+  </table>
+  <p>매장 카드 <span class="pill red">⚠</span> 옆 숫자 = 선택 기간의 부정 리뷰 카운트.</p>
+</div>
+
+<div class="guide-section">
+  <h3>5. 지역 분류 (주소 prefix 기준)</h3>
+  <table>
+    <tr><th>지역</th><th>주소 시작</th></tr>
+    <tr><td>서울</td><td>서울</td></tr>
+    <tr><td>경기</td><td>경기</td></tr>
+    <tr><td>인천</td><td>인천</td></tr>
+    <tr><td>부산</td><td>부산</td></tr>
+    <tr><td>경상</td><td>대구 / 울산 / 경상 / 경남 / 경북</td></tr>
+    <tr><td>전라</td><td>광주 / 전라 / 전남 / 전북</td></tr>
+    <tr><td>충청</td><td>대전 / 세종 / 충청 / 충남 / 충북</td></tr>
+    <tr><td>강원</td><td>강원</td></tr>
+    <tr><td>제주</td><td>제주</td></tr>
+  </table>
+</div>
+
+<div class="guide-section">
+  <h3>6. 필터 (지역 / 기간 / 채널 / 감성)</h3>
+  <p><b>지역</b>: 단일 선택. <b>기간</b>: 1일 / 7일 / 30일 / 6개월 / 전체 / 직접지정. <b>채널</b>·<b>감성</b>: 다중 선택.</p>
+  <p>"전체" 클릭하면 모두 활성, 개별 chip 클릭하면 그것만 활성. 같은 chip을 다시 누르면 선택 해제.</p>
+  <p>모든 통계 (KPI / 차트 / 매장 카드 / 워닝)는 필터 선택에 따라 <b>실시간 재계산</b>됩니다.</p>
+</div>
+
+<div class="guide-section">
+  <h3>7. 차트</h3>
+  <p><b>채널별 리뷰 수</b> — 가로 막대, linear scale. <code>x축 max는 전체 데이터 기준 고정</code>이라 필터 바꿔도 막대 비례가 동일하게 비교됩니다. 0건 채널도 작은 stub 막대 + 라벨에 (0) 표시.</p>
+  <p><b>전체 감성 분포</b> — 도넛, 필터 적용된 매장의 긍정/중립/부정 합계.</p>
+  <p><b>매장 모달의 30일 추이</b> — 일별 리뷰 수 (하루 한 점).</p>
+</div>
+
+<div class="guide-section">
+  <h3>8. 매장 카드 정렬·필터</h3>
+  <table>
+    <tr><th>정렬</th><th>기준</th></tr>
+    <tr><td>리뷰 많은순</td><td>선택 기간 내 리뷰 수 (기본)</td></tr>
+    <tr><td>최근 부정 많은순</td><td>최근 7일 부정 카운트</td></tr>
+    <tr><td>워닝 우선</td><td>빨강 → 노랑 → 정상</td></tr>
+    <tr><td>평점 낮은순 / 높은순</td><td>선택 기간 평균 평점</td></tr>
+    <tr><td>매장명순</td><td>가나다순</td></tr>
+  </table>
+</div>
+
+<div class="guide-section">
+  <h3>9. 데이터 갱신 흐름</h3>
+  <p>1. 채널별 크롤러가 <code>~/yookhoe-review/data/channels/*.csv</code>에 저장</p>
+  <p>2. <code>merge_yukhoe_all.py</code> 가 채널별 CSV → 통합 <code>yookhoe_reviews_latest.csv</code></p>
+  <p>3. <code>dashboard_yukhoe_build.py</code> 가 <code>dashboard.json</code> + <code>index.html</code> 생성</p>
+  <p>4. <code>dashboard_yukhoe_deploy.sh</code> 가 GitHub Pages에 push → 라이브 갱신</p>
+</div>
+
+<div class="guide-section">
+  <h3>10. 중복 제거 (dedup)</h3>
+  <p>채널별 dedup 키:</p>
+  <table>
+    <tr><th>채널</th><th>키</th></tr>
+    <tr><td>네이버 / 카카오 / 구글</td><td><code>source | reviewer_name | review_date | store_name</code></td></tr>
+    <tr><td>배민 / 쿠팡이츠</td><td><code>source | store | reviewer | review_text[:100]</code> (날짜 제외 — 상대날짜 변환 불안정)</td></tr>
+  </table>
+</div>
+`;
 
 function fmtNum(n) { return (n ?? 0).toLocaleString('ko-KR'); }
 
@@ -737,6 +890,13 @@ function applyPeriodToStore(s) {
       return true;
     });
   }
+  // 채널/감성 multi-select 필터
+  if (!isAllChannel()) {
+    filtered = filtered.filter(r => channelFilter.has(r.c));
+  }
+  if (!isAllSent()) {
+    filtered = filtered.filter(r => sentFilter.has(r.s));
+  }
 
   const stats = {
     reviews: filtered.length,
@@ -753,30 +913,24 @@ function applyPeriodToStore(s) {
   for (const src of SOURCES) {
     stats.byChannel[src] = filtered.filter(r => r.c === src).length;
   }
-  // 워닝 동적 계산 (기간 기반)
-  const sentTotal = stats.pos + stats.neg + stats.neu;
-  const negRatio = sentTotal ? stats.neg / sentTotal : 0;
-  let warning = null;
-  let reason = null;
-  // 기간 길이에 따라 임계값 조정 (짧을수록 민감)
-  let minSamples = 5;
-  let redNeg = 3, yelNeg = 2;
-  const days = periodDays === 'all' ? 365 : periodDays === 'custom'
+  // 워닝 — 옵션 A "균형형" (절대 부정 카운트, 비율 X)
+  const days = periodDays === 'all' ? 9999 : periodDays === 'custom'
     ? (from && to ? Math.max(1, Math.round((to - from) / 86400000)) : 30)
     : Number(periodDays);
-  if (days <= 1)        { minSamples = 1; redNeg = 1; yelNeg = 1; }
-  else if (days <= 7)   { minSamples = 3; redNeg = 3; yelNeg = 2; }
-  else if (days <= 30)  { minSamples = 5; redNeg = 4; yelNeg = 2; }
-  else if (days <= 180) { minSamples = 10; redNeg = 8; yelNeg = 4; }
-  else                  { minSamples = 15; redNeg = 15; yelNeg = 8; }
+  let yelNeg, redNeg, label;
+  if      (days <= 1)   { yelNeg = 1;  redNeg = 2;  label = '1일'; }
+  else if (days <= 7)   { yelNeg = 2;  redNeg = 4;  label = '7일'; }
+  else if (days <= 30)  { yelNeg = 3;  redNeg = 6;  label = '30일'; }
+  else if (days <= 180) { yelNeg = 7;  redNeg = 15; label = '6개월'; }
+  else                  { yelNeg = 12; redNeg = 25; label = '전체'; }
 
-  if (sentTotal >= minSamples && (stats.neg >= redNeg || negRatio >= 0.5)) {
+  let warning = null, reason = null;
+  if (stats.neg >= redNeg) {
     warning = 'red';
-    reason = `최근 ${days}일 부정 ${stats.neg}건 / 부정률 ${Math.round(negRatio*100)}% (${stats.neg}/${sentTotal})`;
-  } else if (sentTotal >= Math.max(3, Math.floor(minSamples * 0.6))
-             && (stats.neg >= yelNeg || negRatio >= 0.3)) {
+    reason = `${label} 부정 ${stats.neg}건 (≥${redNeg} = 빨강 임계)`;
+  } else if (stats.neg >= yelNeg) {
     warning = 'yellow';
-    reason = `최근 ${days}일 부정 ${stats.neg}건 / 부정률 ${Math.round(negRatio*100)}% (${stats.neg}/${sentTotal})`;
+    reason = `${label} 부정 ${stats.neg}건 (≥${yelNeg} = 노랑 임계)`;
   }
   stats.warning = warning;
   stats.warning_reason = reason;
@@ -990,6 +1144,64 @@ document.querySelectorAll('.period-chip').forEach(chip => {
 });
 document.querySelector('.period-chip[data-period="all"]').classList.add('active');
 
+// 채널 multi-select chip
+function syncChannelChipsUI() {
+  document.querySelectorAll('.channel-chip').forEach(c => {
+    const v = c.dataset.channel;
+    if (v === 'all') c.classList.toggle('active', isAllChannel());
+    else             c.classList.toggle('active', !isAllChannel() && channelFilter.has(v));
+  });
+}
+document.querySelectorAll('.channel-chip').forEach(chip => {
+  chip.addEventListener('click', () => {
+    const v = chip.dataset.channel;
+    if (v === 'all') {
+      channelFilter.clear();   // 전체 = 아무것도 안 선택 (=모두)
+    } else {
+      // 모두 선택 상태에서 개별 클릭 → 해당 매장만 활성으로
+      if (isAllChannel()) {
+        channelFilter.clear();
+        channelFilter.add(v);
+      } else if (channelFilter.has(v)) {
+        channelFilter.delete(v);
+      } else {
+        channelFilter.add(v);
+      }
+    }
+    syncChannelChipsUI();
+    renderStores();
+  });
+});
+syncChannelChipsUI();
+
+// 감성 multi-select chip
+function syncSentChipsUI() {
+  document.querySelectorAll('.sent-chip').forEach(c => {
+    const v = c.dataset.sent;
+    if (v === 'all') c.classList.toggle('active', isAllSent());
+    else             c.classList.toggle('active', !isAllSent() && sentFilter.has(v));
+  });
+}
+document.querySelectorAll('.sent-chip').forEach(chip => {
+  chip.addEventListener('click', () => {
+    const v = chip.dataset.sent;
+    if (v === 'all') {
+      sentFilter.clear();
+    } else {
+      if (isAllSent()) {
+        sentFilter.clear(); sentFilter.add(v);
+      } else if (sentFilter.has(v)) {
+        sentFilter.delete(v);
+      } else {
+        sentFilter.add(v);
+      }
+    }
+    syncSentChipsUI();
+    renderStores();
+  });
+});
+syncSentChipsUI();
+
 document.getElementById('period-from').addEventListener('change', e => {
   periodFrom = new Date(e.target.value); renderStores();
 });
@@ -997,7 +1209,9 @@ document.getElementById('period-to').addEventListener('change', e => {
   periodTo = new Date(e.target.value); renderStores();
 });
 
-document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') { closeModal(); closeGuide(); }
+});
 
 load();
 </script>
