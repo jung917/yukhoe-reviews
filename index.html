@@ -325,6 +325,13 @@ body.theme-light .ch-pill.has.kakao { color: #b58c00; }
   font-size: 11px; color: var(--text-muted); margin-bottom: 6px;
   display: flex; gap: 8px; align-items: center; flex-wrap: wrap;
 }
+/* 채널명 브랜드 컬러 — 채널별 리뷰수 막대와 동일 톤 */
+.ch-color-naver       { color: #03c75a; font-weight: 700; }
+.ch-color-kakao       { color: #f9c200; font-weight: 700; }
+.ch-color-google      { color: #4285f4; font-weight: 700; }
+.ch-color-baemin      { color: #2ac1bc; font-weight: 700; }
+.ch-color-coupangeats { color: #fa3838; font-weight: 700; }
+body.theme-light .ch-color-kakao { color: #b58c00; }
 .modal-reviews .review-item .body {
   white-space: pre-wrap; word-break: break-word;
   color: var(--text-primary);
@@ -738,7 +745,7 @@ function renderWarnings() {
         const short = t.length > 100 ? t.slice(0, 100) + '…' : t;
         return `
         <div class="sample">
-          <div class="meta">${SOURCE_LABEL[s.channel] || s.channel} · ${s.date} ${s.rating ? '· ★' + s.rating : ''}</div>
+          <div class="meta"><span class="ch-color-${s.channel}">${SOURCE_LABEL[s.channel] || s.channel}</span> · ${s.date} ${s.rating ? '· ★' + s.rating : ''}</div>
           ${escapeHtml(short)}
         </div>`;
       }).join('') : ''}
@@ -1060,7 +1067,7 @@ function openStore(storeName) {
       ${s.recent_samples.length ? `<div class="reviews-scroll">${s.recent_samples.map(r => `
         <div class="review-item">
           <div class="meta">
-            <b>${SOURCE_LABEL[r.channel] || r.channel}</b> · ${r.date}
+            <span class="ch-color-${r.channel}">${SOURCE_LABEL[r.channel] || r.channel}</span> · ${r.date}
             ${r.rating ? ` · ★${r.rating}` : ''}
             ${r.sentiment ? ` · <span class="sentiment-${r.sentiment==='긍정'?'pos':r.sentiment==='부정'?'neg':'neu'}">${r.sentiment}</span>` : ''}
             ${r.reviewer ? ` · ${r.reviewer}` : ''}
