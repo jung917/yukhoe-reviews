@@ -146,12 +146,12 @@ body.theme-light .warn-card .sample { background: rgba(0,0,0,0.04); }
   background: var(--bg-card); border: 1px solid var(--border);
   border-radius: 10px; padding: 16px;
 }
-.chart-box h3 { margin: 0 0 12px; font-size: 14px; font-weight: 600; }
+.chart-box h3 { margin: 0 0 8px; font-size: 13px; font-weight: 600; }
 .chart-box canvas { max-height: 240px; }
-.chart-box.compact { padding: 12px; }
+.chart-box.compact { padding: 10px 12px; }
 .chart-box.compact canvas { max-height: 120px; }
-.chart-box.donut { padding: 16px; }
-.chart-box.donut canvas { max-height: 260px; }
+.chart-box.donut { padding: 10px 12px; }
+.chart-box.donut canvas { max-height: 120px; }
 
 /* Filter bar */
 .filter-bar {
@@ -171,6 +171,21 @@ body.theme-light .warn-card .sample { background: rgba(0,0,0,0.04); }
 }
 .chip.active { background: var(--accent); color: #fff; border-color: var(--accent); }
 .chip:hover { color: var(--text-primary); }
+.chip.sm { padding: 3px 8px; font-size: 11px; border-radius: 12px; }
+.filter-row-inline {
+  display: flex; flex-wrap: wrap; gap: 4px; align-items: center;
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: 10px; padding: 8px 12px; margin-top: 8px;
+  font-size: 11px;
+}
+.filter-row-inline .label-mini {
+  font-size: 11px; color: var(--text-muted); margin: 0 2px 0 6px;
+  font-weight: 600;
+}
+.filter-row-inline .label-mini:first-child { margin-left: 0; }
+.filter-row-inline .divider {
+  width: 1px; height: 18px; background: var(--border); margin: 0 6px;
+}
 .sort-select {
   background: var(--bg-elev); border: 1px solid var(--border);
   color: var(--text-primary); padding: 7px 10px; border-radius: 6px;
@@ -320,15 +335,8 @@ footer {
 <!-- KPI -->
 <div class="kpi-strip" id="kpi-strip"></div>
 
-<!-- Warnings -->
-<div class="section" id="warn-section">
-  <h2>🚨 워닝 <span class="count" id="warn-count">0</span></h2>
-  <div class="warn-grid" id="warn-grid"></div>
-</div>
-
 <!-- Charts -->
 <div class="section">
-  <h2>📊 채널별·감성 분포</h2>
   <div class="charts-row">
     <div class="chart-box compact">
       <h3>채널별 리뷰 수</h3>
@@ -339,6 +347,40 @@ footer {
       <canvas id="sent-pie"></canvas>
     </div>
   </div>
+</div>
+
+<!-- 지역 + 기간 한 줄 -->
+<div class="filter-row-inline">
+  <span class="label-mini">지역</span>
+  <span class="chip sm region-chip" data-region="all">전체</span>
+  <span class="chip sm region-chip" data-region="서울">서울</span>
+  <span class="chip sm region-chip" data-region="경기">경기</span>
+  <span class="chip sm region-chip" data-region="인천">인천</span>
+  <span class="chip sm region-chip" data-region="부산">부산</span>
+  <span class="chip sm region-chip" data-region="경상">경상</span>
+  <span class="chip sm region-chip" data-region="전라">전라</span>
+  <span class="chip sm region-chip" data-region="충청">충청</span>
+  <span class="chip sm region-chip" data-region="강원">강원</span>
+  <span class="chip sm region-chip" data-region="제주">제주</span>
+  <span class="divider"></span>
+  <span class="label-mini">기간</span>
+  <span class="chip sm period-chip" data-period="1">1일</span>
+  <span class="chip sm period-chip" data-period="7">7일</span>
+  <span class="chip sm period-chip" data-period="30">30일</span>
+  <span class="chip sm period-chip" data-period="180">6개월</span>
+  <span class="chip sm period-chip" data-period="all">전체</span>
+  <span class="chip sm period-chip" data-period="custom">직접지정</span>
+  <span id="custom-range" class="hidden" style="display:flex;gap:6px;align-items:center;">
+    <input type="date" id="period-from" class="sort-select" style="font-size:11px;padding:4px 6px;">
+    ~
+    <input type="date" id="period-to" class="sort-select" style="font-size:11px;padding:4px 6px;">
+  </span>
+</div>
+
+<!-- Warnings (지역/기간 바로 아래) -->
+<div class="section" id="warn-section" style="margin-top: 16px;">
+  <h2>🚨 워닝 <span class="count" id="warn-count">0</span></h2>
+  <div class="warn-grid" id="warn-grid"></div>
 </div>
 
 <!-- Stores -->
@@ -545,21 +587,39 @@ function renderCharts(stores) {
 
   const ctx1 = document.getElementById('ch-bar').getContext('2d');
   if (chBar) chBar.destroy();
+  // 가로 막대 + 라벨에 값 포함 + log 스케일 (네이버/카카오/구글 격차 시각화)
+  const fmtN = n => n.toLocaleString('ko-KR');
+  const labels = SOURCES.map(c => `${SOURCE_LABEL[c]} (${fmtN(chCount[c])})`);
+  const dataVals = SOURCES.map(c => chCount[c]);
+  const useLog = Math.max(...dataVals) > 0
+                 && Math.max(...dataVals) / Math.max(1, Math.min(...dataVals.filter(v=>v>0)||[1])) > 10;
   chBar = new Chart(ctx1, {
     type: 'bar',
     data: {
-      labels: SOURCES.map(c => SOURCE_LABEL[c]),
+      labels: labels,
       datasets: [{
         label: '리뷰 수',
-        data: SOURCES.map(c => chCount[c]),
+        data: dataVals,
         backgroundColor: SOURCES.map(c => SOURCE_COLOR[c]),
+        borderRadius: 4,
       }],
     },
     options: {
+      indexAxis: 'y',  // 가로 막대 (작은 값도 잘 보임)
       responsive: true, maintainAspectRatio: false,
       plugins: { legend: { display: false } },
-      scales: { y: { beginAtZero: true, ticks: { color: getCss('--text-secondary') } },
-                x: { ticks: { color: getCss('--text-secondary') } } },
+      scales: {
+        x: {
+          beginAtZero: true,
+          type: useLog ? 'logarithmic' : 'linear',
+          ticks: { color: getCss('--text-muted'), font: { size: 10 } },
+          grid: { color: getCss('--border') },
+        },
+        y: {
+          ticks: { color: getCss('--text-secondary'), font: { size: 11 } },
+          grid: { display: false },
+        },
+      },
     },
   });
 
