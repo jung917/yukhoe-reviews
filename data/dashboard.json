@@ -1,13 +1,13 @@
 {
-  "generated_at": "2026-04-26T08:41:42",
+  "generated_at": "2026-04-26T12:51:37",
   "data_window_days": 30,
   "recent_days": 7,
   "summary": {
-    "total_reviews": 3734,
+    "total_reviews": 3941,
     "total_stores": 249,
-    "stores_with_data": 247,
-    "avg_rating_all": 3.78,
-    "recent_reviews_30d": 3734,
+    "stores_with_data": 248,
+    "avg_rating_all": 3.82,
+    "recent_reviews_30d": 3941,
     "warnings_red": 0,
     "warnings_yellow": 1
   },
@@ -23,9 +23,9 @@
       "recent_count": 74
     },
     "google": {
-      "reviews": 0,
-      "avg_rating": null,
-      "recent_count": 0
+      "reviews": 207,
+      "avg_rating": 4.18,
+      "recent_count": 5
     },
     "baemin": {
       "reviews": 0,
@@ -6758,8 +6758,8 @@
           "url": "https://place.map.kakao.com/1596410766"
         },
         "google": {
-          "count": 0,
-          "avg_rating": null,
+          "count": 2,
+          "avg_rating": 5.0,
           "recent_negative": 0,
           "place_id": null,
           "url": "https://www.google.com/maps/place/%EC%9C%A1%ED%9A%8C%EB%B0%94%EB%A5%B8%EC%97%B0%EC%96%B4+%EB%B6%80%EC%B2%9C%EC%83%81%EB%8F%99%EC%97%AD%EC%A0%90/data=!4m6!3m5!1s0x357b7db5bcfdf1cf:0x397259bb8bdfe1cc!8m2!3d37.503605!4d126.7521103!16s%2Fg%2F11yttbsp9d?entry=ttu&g_ep=EgoyMDI2MDQyMi4wIKXMDSoASAFQAw%3D%3D"
@@ -6780,11 +6780,11 @@
         }
       },
       "totals": {
-        "reviews": 16,
+        "reviews": 18,
         "avg_rating": 5.0,
         "negative": 0,
         "neutral": 0,
-        "positive": 16
+        "positive": 18
       },
       "warning": null,
       "warning_reason": null,
@@ -6961,6 +6961,12 @@
           "r": 5.0
         },
         {
+          "d": "2026-02-25",
+          "s": "긍정",
+          "c": "google",
+          "r": 5.0
+        },
+        {
           "d": "2026-01-05",
           "s": "긍정",
           "c": "kakao",
@@ -6970,6 +6976,12 @@
           "d": "2026-01-01",
           "s": "긍정",
           "c": "kakao",
+          "r": 5.0
+        },
+        {
+          "d": "2025-12-27",
+          "s": "긍정",
+          "c": "google",
           "r": 5.0
         },
         {
@@ -10850,8 +10862,8 @@
           "url": "https://place.map.kakao.com/1659096935"
         },
         "google": {
-          "count": 0,
-          "avg_rating": null,
+          "count": 1,
+          "avg_rating": 4.0,
           "recent_negative": 0,
           "place_id": null,
           "url": "https://www.google.com/maps/place/%EC%9C%A1%ED%9A%8C%EB%B0%94%EB%A5%B8%EC%97%B0%EC%96%B4+%EC%82%BC%EC%86%A1%EC%8B%A0%EC%9B%90%EC%A0%90/data=!4m6!3m5!1s0x357c97001c53e02b:0xaf8b1a7c60cc92ee!8m2!3d37.6632935!4d126.8890867!16s%2Fg%2F11nbntynjz?entry=ttu&g_ep=EgoyMDI2MDQyMi4wIKXMDSoASAFQAw%3D%3D"
@@ -10872,11 +10884,11 @@
         }
       },
       "totals": {
-        "reviews": 10,
-        "avg_rating": null,
+        "reviews": 11,
+        "avg_rating": 4.0,
         "negative": 0,
         "neutral": 0,
-        "positive": 10
+        "positive": 11
       },
       "warning": null,
       "warning_reason": null,
@@ -10986,7 +10998,7 @@
         },
         {
           "date": "2026-04-12",
-          "count": 0
+          "count": 1
         },
         {
           "date": "2026-04-13",
@@ -11046,6 +11058,12 @@
         }
       ],
       "all_reviews_meta": [
+        {
+          "d": "2026-04-12",
+          "s": "긍정",
+          "c": "google",
+          "r": 4.0
+        },
         {
           "d": "2026-04-24",
           "s": "긍정",
@@ -12572,8 +12590,8 @@
           "url": "https://place.map.kakao.com/62821585"
         },
         "google": {
-          "count": 0,
-          "avg_rating": null,
+          "count": 1,
+          "avg_rating": 5.0,
           "recent_negative": 0,
           "place_id": null,
           "url": "https://www.google.com/maps/place/%EC%9C%A1%ED%9A%8C%EB%B0%94%EB%A5%B8%EC%97%B0%EC%96%B4+%EC%88%98%EC%9B%90%EA%B2%BD%EA%B8%B0%EB%8C%80%EC%A0%90/data=!4m6!3m5!1s0x357b5b0075d23e91:0x99f98187397b97ff!8m2!3d37.2996072!4d127.0439837!16s%2Fg%2F11ys0k246m?entry=ttu&g_ep=EgoyMDI2MDQyMi4wIKXMDSoASAFQAw%3D%3D"
@@ -12594,11 +12612,11 @@
         }
       },
       "totals": {
-        "reviews": 11,
+        "reviews": 12,
         "avg_rating": 5.0,
         "negative": 0,
         "neutral": 0,
-        "positive": 11
+        "positive": 12
       },
       "warning": null,
       "warning_reason": null,
@@ -12621,6 +12639,14 @@
           "text": "오늘도 맛나게 먹고갑니다 ^^"
         },
         {
+          "channel": "google",
+          "date": "2025-12-27",
+          "rating": 5.0,
+          "sentiment": "긍정",
+          "reviewer": "Googling",
+          "text": "메뉴 종류가 많아서 런치메뉴정도만 우선 첨부합니다. 육회와 연어를 먹을수 있는 프랜차이즈 입니다. 오픈한지 얼마 안되었고 깔끔합니다."
+        },
+        {
           "channel": "naver",
           "date": "2025-12-26",
           "rating": null,
@@ -12635,14 +12661,6 @@
           "sentiment": "긍정",
           "reviewer": "올타임레전드젤라",
           "text": "얼마전에 오픈 한곳! 도시락 포장 주문해봤어요"
-        },
-        {
-          "channel": "naver",
-          "date": "2025-12-16",
-          "rating": null,
-          "sentiment": "긍정",
-          "reviewer": "reneta",
-          "text": "가격대비 양이 적어요"
         }
       ],
       "trend_30d": [
@@ -12768,6 +12786,12 @@
         }
       ],
       "all_reviews_meta": [
+        {
+          "d": "2025-12-27",
+          "s": "긍정",
+          "c": "google",
+          "r": 5.0
+        },
         {
           "d": "2025-10-22",
           "s": "긍정",
@@ -14666,8 +14690,8 @@
           "url": "https://place.map.kakao.com/347037753"
         },
         "google": {
-          "count": 0,
-          "avg_rating": null,
+          "count": 1,
+          "avg_rating": 5.0,
           "recent_negative": 0,
           "place_id": null,
           "url": "https://www.google.com/maps/place/%EC%9C%A1%ED%9A%8C%EB%B0%94%EB%A5%B8%EC%97%B0%EC%96%B4+%EB%8C%80%EC%A0%84%EC%8B%9C%EC%B2%AD%EC%97%AD%EC%A0%90/data=!4m6!3m5!1s0x35654900291c7f91:0x9a6b0c64f14b2cae!8m2!3d36.3510908!4d127.3882975!16s%2Fg%2F11xzk31pwp?entry=ttu&g_ep=EgoyMDI2MDQyMi4wIKXMDSoASAFQAw%3D%3D"
@@ -14688,11 +14712,11 @@
         }
       },
       "totals": {
-        "reviews": 16,
-        "avg_rating": 2.83,
+        "reviews": 17,
+        "avg_rating": 3.14,
         "negative": 3,
         "neutral": 0,
-        "positive": 13
+        "positive": 14
       },
       "warning": null,
       "warning_reason": null,
@@ -14879,6 +14903,12 @@
           "s": "부정",
           "c": "kakao",
           "r": 1.0
+        },
+        {
+          "d": "2026-02-25",
+          "s": "긍정",
+          "c": "google",
+          "r": 5.0
         },
         {
           "d": "2026-01-06",
@@ -21476,8 +21506,8 @@
           "url": "https://place.map.kakao.com/1919679698"
         },
         "google": {
-          "count": 0,
-          "avg_rating": null,
+          "count": 1,
+          "avg_rating": 1.0,
           "recent_negative": 0,
           "place_id": null,
           "url": "https://www.google.com/maps/place/%EC%9C%A1%ED%9A%8C%EB%B0%94%EB%A5%B8%EC%97%B0%EC%96%B4+%EA%B2%BD%EB%B6%81%EB%8C%80%EC%A0%90/data=!4m6!3m5!1s0x3565e1004323acf1:0x868d436144d1a1ef!8m2!3d35.8930574!4d128.6096131!16s%2Fg%2F11yfkfz1j1?entry=ttu&g_ep=EgoyMDI2MDQyMi4wIKXMDSoASAFQAw%3D%3D"
@@ -21498,9 +21528,9 @@
         }
       },
       "totals": {
-        "reviews": 13,
-        "avg_rating": 4.33,
-        "negative": 0,
+        "reviews": 14,
+        "avg_rating": 3.5,
+        "negative": 1,
         "neutral": 0,
         "positive": 13
       },
@@ -21672,6 +21702,12 @@
         }
       ],
       "all_reviews_meta": [
+        {
+          "d": "2025-11-27",
+          "s": "부정",
+          "c": "google",
+          "r": 1.0
+        },
         {
           "d": "2025-11-18",
           "s": "긍정",
@@ -23264,8 +23300,8 @@
           "url": "https://place.map.kakao.com/243422299"
         },
         "google": {
-          "count": 0,
-          "avg_rating": null,
+          "count": 4,
+          "avg_rating": 4.5,
           "recent_negative": 0,
           "place_id": null,
           "url": "https://www.google.com/maps/place/%EC%9C%A1%ED%9A%8C%EB%B0%94%EB%A5%B8%EC%97%B0%EC%96%B4+%EB%85%B8%EB%9F%89%EC%A7%84%EC%A4%91%EC%95%99%EC%A0%90/data=!4m6!3m5!1s0x357c9f00617950cb:0x4af9741c4e8ac2d9!8m2!3d37.5133861!4d126.9439222!16s%2Fg%2F11xkzhh6q5?entry=ttu&g_ep=EgoyMDI2MDQyMi4wIKXMDSoASAFQAw%3D%3D"
@@ -23286,11 +23322,11 @@
         }
       },
       "totals": {
-        "reviews": 23,
-        "avg_rating": 3.69,
+        "reviews": 27,
+        "avg_rating": 3.88,
         "negative": 4,
-        "neutral": 0,
-        "positive": 19
+        "neutral": 1,
+        "positive": 22
       },
       "warning": null,
       "warning_reason": null,
@@ -23497,10 +23533,22 @@
           "r": 5.0
         },
         {
+          "d": "2025-10-28",
+          "s": "긍정",
+          "c": "google",
+          "r": 5.0
+        },
+        {
           "d": "2025-09-30",
           "s": "긍정",
           "c": "kakao",
           "r": 5.0
+        },
+        {
+          "d": "2025-09-28",
+          "s": "중립",
+          "c": "google",
+          "r": 3.0
         },
         {
           "d": "2025-08-16",
@@ -23518,6 +23566,18 @@
           "d": "2025-08-03",
           "s": "긍정",
           "c": "kakao",
+          "r": 5.0
+        },
+        {
+          "d": "2025-07-30",
+          "s": "긍정",
+          "c": "google",
+          "r": 5.0
+        },
+        {
+          "d": "2025-07-30",
+          "s": "긍정",
+          "c": "google",
           "r": 5.0
         },
         {
@@ -23624,8 +23684,8 @@
           "url": "https://place.map.kakao.com/825721520"
         },
         "google": {
-          "count": 0,
-          "avg_rating": null,
+          "count": 2,
+          "avg_rating": 5.0,
           "recent_negative": 0,
           "place_id": null,
           "url": "https://www.google.com/maps/place/%EC%9C%A1%ED%9A%8C%EB%B0%94%EB%A5%B8%EC%97%B0%EC%96%B4+%EA%B5%90%EB%8C%80%EC%A0%90/data=!4m6!3m5!1s0x357ca1005b21cb61:0x2ff7d31c4308df0a!8m2!3d37.4933951!4d127.0154375!16s%2Fg%2F11yd5vx_79?entry=ttu&g_ep=EgoyMDI2MDQyMi4wIKXMDSoASAFQAw%3D%3D"
@@ -23646,190 +23706,10 @@
         }
       },
       "totals": {
-        "reviews": 0,
-        "avg_rating": null,
+        "reviews": 2,
+        "avg_rating": 5.0,
         "negative": 0,
         "neutral": 0,
-        "positive": 0
-      },
-      "warning": null,
-      "warning_reason": null,
-      "recent7_negative": 0,
-      "recent_samples": [],
-      "trend_30d": [
-        {
-          "date": "2026-03-28",
-          "count": 0
-        },
-        {
-          "date": "2026-03-29",
-          "count": 0
-        },
-        {
-          "date": "2026-03-30",
-          "count": 0
-        },
-        {
-          "date": "2026-03-31",
-          "count": 0
-        },
-        {
-          "date": "2026-04-01",
-          "count": 0
-        },
-        {
-          "date": "2026-04-02",
-          "count": 0
-        },
-        {
-          "date": "2026-04-03",
-          "count": 0
-        },
-        {
-          "date": "2026-04-04",
-          "count": 0
-        },
-        {
-          "date": "2026-04-05",
-          "count": 0
-        },
-        {
-          "date": "2026-04-06",
-          "count": 0
-        },
-        {
-          "date": "2026-04-07",
-          "count": 0
-        },
-        {
-          "date": "2026-04-08",
-          "count": 0
-        },
-        {
-          "date": "2026-04-09",
-          "count": 0
-        },
-        {
-          "date": "2026-04-10",
-          "count": 0
-        },
-        {
-          "date": "2026-04-11",
-          "count": 0
-        },
-        {
-          "date": "2026-04-12",
-          "count": 0
-        },
-        {
-          "date": "2026-04-13",
-          "count": 0
-        },
-        {
-          "date": "2026-04-14",
-          "count": 0
-        },
-        {
-          "date": "2026-04-15",
-          "count": 0
-        },
-        {
-          "date": "2026-04-16",
-          "count": 0
-        },
-        {
-          "date": "2026-04-17",
-          "count": 0
-        },
-        {
-          "date": "2026-04-18",
-          "count": 0
-        },
-        {
-          "date": "2026-04-19",
-          "count": 0
-        },
-        {
-          "date": "2026-04-20",
-          "count": 0
-        },
-        {
-          "date": "2026-04-21",
-          "count": 0
-        },
-        {
-          "date": "2026-04-22",
-          "count": 0
-        },
-        {
-          "date": "2026-04-23",
-          "count": 0
-        },
-        {
-          "date": "2026-04-24",
-          "count": 0
-        },
-        {
-          "date": "2026-04-25",
-          "count": 0
-        },
-        {
-          "date": "2026-04-26",
-          "count": 0
-        }
-      ],
-      "all_reviews_meta": []
-    },
-    {
-      "no": 82,
-      "store_name": "육회바른연어 거여중앙점",
-      "branch": "거여중앙점",
-      "address": "서울 송파구 오금로 512",
-      "region": "서울",
-      "lat": 37.492861065755626,
-      "lon": 127.14558050618454,
-      "channels": {
-        "naver": {
-          "count": 0,
-          "avg_rating": null,
-          "recent_negative": 0,
-          "place_id": null,
-          "url": null
-        },
-        "kakao": {
-          "count": 5,
-          "avg_rating": 3.2,
-          "recent_negative": 0,
-          "place_id": "1260110599",
-          "url": "https://place.map.kakao.com/1260110599"
-        },
-        "google": {
-          "count": 0,
-          "avg_rating": null,
-          "recent_negative": 0,
-          "place_id": null,
-          "url": "https://www.google.com/maps/place/%EC%9C%A1%ED%9A%8C%EB%B0%94%EB%A5%B8%EC%97%B0%EC%96%B4/data=!4m6!3m5!1s0x357caf00119423a1:0xe02fd0ce8dff3123!8m2!3d37.4928018!4d127.14568!16s%2Fg%2F11xsqcphbm?entry=ttu&g_ep=EgoyMDI2MDQyMi4wIKXMDSoASAFQAw%3D%3D"
-        },
-        "baemin": {
-          "count": 0,
-          "avg_rating": null,
-          "recent_negative": 0,
-          "place_id": null,
-          "url": null
-        },
-        "coupangeats": {
-          "count": 0,
-          "avg_rating": null,
-          "recent_negative": 0,
-          "place_id": null,
-          "url": null
-        }
-      },
-      "totals": {
-        "reviews": 5,
-        "avg_rating": 3.2,
-        "negative": 2,
-        "neutral": 1,
         "positive": 2
       },
       "warning": null,
@@ -23837,44 +23717,20 @@
       "recent7_negative": 0,
       "recent_samples": [
         {
-          "channel": "kakao",
-          "date": "2025-12-23",
-          "rating": 2.0,
-          "sentiment": "부정",
-          "reviewer": "하늘",
-          "text": "다른 매장에서 육바연 먹을때마다 너무 맛있게 먹었는데 여긴 덮밥에서도 냄새나고 육회는 해동도 제대로 안돼서 이가 시릴정도로 차갑고 비려요ㅠ"
-        },
-        {
-          "channel": "kakao",
-          "date": "2025-12-11",
-          "rating": 3.0,
-          "sentiment": "중립",
-          "reviewer": "치카이와",
-          "text": "그냥 제가 육바연 소스와 입맛이 맞지 않는 것 같아요 점바점인 것 같은데 이 지점은 재료 신선도는 먹을만 했어요 하지만 전체적으로 쏘쏘.."
-        },
-        {
-          "channel": "kakao",
-          "date": "2025-07-19",
+          "channel": "google",
+          "date": "2025-06-30",
           "rating": 5.0,
           "sentiment": "긍정",
-          "reviewer": "ㅜ",
-          "text": "사장님 친절하시고 음식도 맛있네요 싼데 퀄리티 좋아서 놀랬습니다 잘 먹고 갑니다"
+          "reviewer": "Kat",
+          "text": "초밥 세트(연어, 스테이크 초밥, 타르타르 초밥)와 오징어 튀김을 포장 주문했어요. 초밥은 꽤 맛있었어요. 타르타르 초밥이 제일 맛있었고, 오징어 튀김은 그냥 그랬어요. 다만 바삭하지는 않았어요. 전반적으로 만족스러…"
         },
         {
-          "channel": "kakao",
-          "date": "2025-06-14",
+          "channel": "google",
+          "date": "2025-06-30",
           "rating": 5.0,
           "sentiment": "긍정",
-          "reviewer": "좁은길",
-          "text": "맛있어요 😀"
-        },
-        {
-          "channel": "kakao",
-          "date": "2025-06-12",
-          "rating": 1.0,
-          "sentiment": "부정",
-          "reviewer": "슈냥",
-          "text": "개별로^^ 손님 응대도 안하고 좌석 4인석 꽉차고 1.2인이 4인석에 앉아있고 3인은 2인석 앉아야하나요 10~20분기다리다 다른 음식점감 손님응대 제대로하세요"
+          "reviewer": "Goodwill동영",
+          "text": "교대에서 보기 힘든 저렴한 가격에 맛도 있어요 손님이 많지만 회전율이 빨라서 점심시간에도 금방 들어갈수 있었어요 재료도 신선하고 만족스러웠습니다"
         }
       ],
       "trend_30d": [
@@ -24001,6 +23857,246 @@
       ],
       "all_reviews_meta": [
         {
+          "d": "2025-06-30",
+          "s": "긍정",
+          "c": "google",
+          "r": 5.0
+        },
+        {
+          "d": "2025-06-30",
+          "s": "긍정",
+          "c": "google",
+          "r": 5.0
+        }
+      ]
+    },
+    {
+      "no": 82,
+      "store_name": "육회바른연어 거여중앙점",
+      "branch": "거여중앙점",
+      "address": "서울 송파구 오금로 512",
+      "region": "서울",
+      "lat": 37.492861065755626,
+      "lon": 127.14558050618454,
+      "channels": {
+        "naver": {
+          "count": 0,
+          "avg_rating": null,
+          "recent_negative": 0,
+          "place_id": null,
+          "url": null
+        },
+        "kakao": {
+          "count": 5,
+          "avg_rating": 3.2,
+          "recent_negative": 0,
+          "place_id": "1260110599",
+          "url": "https://place.map.kakao.com/1260110599"
+        },
+        "google": {
+          "count": 2,
+          "avg_rating": 4.5,
+          "recent_negative": 0,
+          "place_id": null,
+          "url": "https://www.google.com/maps/place/%EC%9C%A1%ED%9A%8C%EB%B0%94%EB%A5%B8%EC%97%B0%EC%96%B4/data=!4m6!3m5!1s0x357caf00119423a1:0xe02fd0ce8dff3123!8m2!3d37.4928018!4d127.14568!16s%2Fg%2F11xsqcphbm?entry=ttu&g_ep=EgoyMDI2MDQyMi4wIKXMDSoASAFQAw%3D%3D"
+        },
+        "baemin": {
+          "count": 0,
+          "avg_rating": null,
+          "recent_negative": 0,
+          "place_id": null,
+          "url": null
+        },
+        "coupangeats": {
+          "count": 0,
+          "avg_rating": null,
+          "recent_negative": 0,
+          "place_id": null,
+          "url": null
+        }
+      },
+      "totals": {
+        "reviews": 7,
+        "avg_rating": 3.57,
+        "negative": 2,
+        "neutral": 1,
+        "positive": 4
+      },
+      "warning": null,
+      "warning_reason": null,
+      "recent7_negative": 0,
+      "recent_samples": [
+        {
+          "channel": "google",
+          "date": "2025-12-27",
+          "rating": 4.0,
+          "sentiment": "긍정",
+          "reviewer": "In k Kim",
+          "text": "맛은 좋아요 양은 작습니다. 또 가겠습니다."
+        },
+        {
+          "channel": "kakao",
+          "date": "2025-12-23",
+          "rating": 2.0,
+          "sentiment": "부정",
+          "reviewer": "하늘",
+          "text": "다른 매장에서 육바연 먹을때마다 너무 맛있게 먹었는데 여긴 덮밥에서도 냄새나고 육회는 해동도 제대로 안돼서 이가 시릴정도로 차갑고 비려요ㅠ"
+        },
+        {
+          "channel": "kakao",
+          "date": "2025-12-11",
+          "rating": 3.0,
+          "sentiment": "중립",
+          "reviewer": "치카이와",
+          "text": "그냥 제가 육바연 소스와 입맛이 맞지 않는 것 같아요 점바점인 것 같은데 이 지점은 재료 신선도는 먹을만 했어요 하지만 전체적으로 쏘쏘.."
+        },
+        {
+          "channel": "google",
+          "date": "2025-08-29",
+          "rating": 5.0,
+          "sentiment": "긍정",
+          "reviewer": "조신권",
+          "text": "nan"
+        },
+        {
+          "channel": "kakao",
+          "date": "2025-07-19",
+          "rating": 5.0,
+          "sentiment": "긍정",
+          "reviewer": "ㅜ",
+          "text": "사장님 친절하시고 음식도 맛있네요 싼데 퀄리티 좋아서 놀랬습니다 잘 먹고 갑니다"
+        }
+      ],
+      "trend_30d": [
+        {
+          "date": "2026-03-28",
+          "count": 0
+        },
+        {
+          "date": "2026-03-29",
+          "count": 0
+        },
+        {
+          "date": "2026-03-30",
+          "count": 0
+        },
+        {
+          "date": "2026-03-31",
+          "count": 0
+        },
+        {
+          "date": "2026-04-01",
+          "count": 0
+        },
+        {
+          "date": "2026-04-02",
+          "count": 0
+        },
+        {
+          "date": "2026-04-03",
+          "count": 0
+        },
+        {
+          "date": "2026-04-04",
+          "count": 0
+        },
+        {
+          "date": "2026-04-05",
+          "count": 0
+        },
+        {
+          "date": "2026-04-06",
+          "count": 0
+        },
+        {
+          "date": "2026-04-07",
+          "count": 0
+        },
+        {
+          "date": "2026-04-08",
+          "count": 0
+        },
+        {
+          "date": "2026-04-09",
+          "count": 0
+        },
+        {
+          "date": "2026-04-10",
+          "count": 0
+        },
+        {
+          "date": "2026-04-11",
+          "count": 0
+        },
+        {
+          "date": "2026-04-12",
+          "count": 0
+        },
+        {
+          "date": "2026-04-13",
+          "count": 0
+        },
+        {
+          "date": "2026-04-14",
+          "count": 0
+        },
+        {
+          "date": "2026-04-15",
+          "count": 0
+        },
+        {
+          "date": "2026-04-16",
+          "count": 0
+        },
+        {
+          "date": "2026-04-17",
+          "count": 0
+        },
+        {
+          "date": "2026-04-18",
+          "count": 0
+        },
+        {
+          "date": "2026-04-19",
+          "count": 0
+        },
+        {
+          "date": "2026-04-20",
+          "count": 0
+        },
+        {
+          "date": "2026-04-21",
+          "count": 0
+        },
+        {
+          "date": "2026-04-22",
+          "count": 0
+        },
+        {
+          "date": "2026-04-23",
+          "count": 0
+        },
+        {
+          "date": "2026-04-24",
+          "count": 0
+        },
+        {
+          "date": "2026-04-25",
+          "count": 0
+        },
+        {
+          "date": "2026-04-26",
+          "count": 0
+        }
+      ],
+      "all_reviews_meta": [
+        {
+          "d": "2025-12-27",
+          "s": "긍정",
+          "c": "google",
+          "r": 4.0
+        },
+        {
           "d": "2025-12-23",
           "s": "부정",
           "c": "kakao",
@@ -24011,6 +24107,12 @@
           "s": "중립",
           "c": "kakao",
           "r": 3.0
+        },
+        {
+          "d": "2025-08-29",
+          "s": "긍정",
+          "c": "google",
+          "r": 5.0
         },
         {
           "d": "2025-07-19",
@@ -24968,8 +25070,8 @@
           "url": "https://place.map.kakao.com/1830537123"
         },
         "google": {
-          "count": 0,
-          "avg_rating": null,
+          "count": 1,
+          "avg_rating": 5.0,
           "recent_negative": 0,
           "place_id": null,
           "url": "https://www.google.com/maps/place/%EC%9C%A1%ED%9A%8C%EB%B0%94%EB%A5%B8%EC%97%B0%EC%96%B4+%EC%A0%84%EC%A3%BC%EC%A0%84%EB%B6%81%EB%8C%80%EC%A0%90/data=!4m6!3m5!1s0x357023007182414b:0xe8483cc166a2efd8!8m2!3d35.8439522!4d127.1271116!16s%2Fg%2F11yzt06qbr?entry=ttu&g_ep=EgoyMDI2MDQyMi4wIKXMDSoASAFQAw%3D%3D"
@@ -24990,11 +25092,11 @@
         }
       },
       "totals": {
-        "reviews": 19,
-        "avg_rating": 1.33,
+        "reviews": 20,
+        "avg_rating": 1.7,
         "negative": 8,
         "neutral": 1,
-        "positive": 10
+        "positive": 11
       },
       "warning": null,
       "warning_reason": null,
@@ -25164,6 +25266,12 @@
         }
       ],
       "all_reviews_meta": [
+        {
+          "d": "2026-02-25",
+          "s": "긍정",
+          "c": "google",
+          "r": 5.0
+        },
         {
           "d": "2026-01-25",
           "s": "부정",
@@ -26474,8 +26582,8 @@
           "url": "https://place.map.kakao.com/599325642"
         },
         "google": {
-          "count": 0,
-          "avg_rating": null,
+          "count": 9,
+          "avg_rating": 4.67,
           "recent_negative": 0,
           "place_id": null,
           "url": "https://www.google.com/maps/place/%EC%9C%A1%ED%9A%8C%EB%B0%94%EB%A5%B8%EC%97%B0%EC%96%B4+%ED%8F%89%EC%B4%8C%EC%A0%90/data=!4m6!3m5!1s0x357b5f9ba6d618b1:0xa674a22a0f616d05!8m2!3d37.3829662!4d126.9609343!16s%2Fg%2F11k4s4vqj8?entry=ttu&g_ep=EgoyMDI2MDQyMi4wIKXMDSoASAFQAw%3D%3D"
@@ -26496,11 +26604,11 @@
         }
       },
       "totals": {
-        "reviews": 12,
-        "avg_rating": 5.0,
+        "reviews": 21,
+        "avg_rating": 4.73,
         "negative": 0,
         "neutral": 0,
-        "positive": 12
+        "positive": 21
       },
       "warning": null,
       "warning_reason": null,
@@ -26674,6 +26782,18 @@
           "d": "2025-11-29",
           "s": "긍정",
           "c": "kakao",
+          "r": 5.0
+        },
+        {
+          "d": "2025-07-30",
+          "s": "긍정",
+          "c": "google",
+          "r": 5.0
+        },
+        {
+          "d": "2025-07-30",
+          "s": "긍정",
+          "c": "google",
           "r": 5.0
         },
         {
@@ -29640,8 +29760,8 @@
           "url": "https://place.map.kakao.com/1124170885"
         },
         "google": {
-          "count": 0,
-          "avg_rating": null,
+          "count": 3,
+          "avg_rating": 4.33,
           "recent_negative": 0,
           "place_id": null,
           "url": "https://www.google.com/maps/place/%EC%9C%A1%ED%9A%8C%EB%B0%94%EB%A5%B8%EC%97%B0%EC%96%B4+%EC%98%A5%EC%88%98%EC%A0%90/data=!4m6!3m5!1s0x357ca37180b1cb4b:0x780b1e2ee465aceb!8m2!3d37.5436274!4d127.0152993!16s%2Fg%2F11l6thjtm_?entry=ttu&g_ep=EgoyMDI2MDQyMi4wIKXMDSoASAFQAw%3D%3D"
@@ -29662,11 +29782,11 @@
         }
       },
       "totals": {
-        "reviews": 13,
-        "avg_rating": 3.67,
+        "reviews": 16,
+        "avg_rating": 4.0,
         "negative": 1,
-        "neutral": 0,
-        "positive": 12
+        "neutral": 1,
+        "positive": 14
       },
       "warning": null,
       "warning_reason": null,
@@ -29837,6 +29957,12 @@
       ],
       "all_reviews_meta": [
         {
+          "d": "2026-01-26",
+          "s": "긍정",
+          "c": "google",
+          "r": 5.0
+        },
+        {
           "d": "2026-01-10",
           "s": "긍정",
           "c": "kakao",
@@ -29853,6 +29979,12 @@
           "s": "부정",
           "c": "kakao",
           "r": 1.0
+        },
+        {
+          "d": "2025-08-29",
+          "s": "긍정",
+          "c": "google",
+          "r": 5.0
         },
         {
           "d": "2026-04-24",
@@ -29940,8 +30072,8 @@
           "url": "https://place.map.kakao.com/1652293489"
         },
         "google": {
-          "count": 0,
-          "avg_rating": null,
+          "count": 7,
+          "avg_rating": 3.29,
           "recent_negative": 0,
           "place_id": null,
           "url": "https://www.google.com/maps/place/%EC%9C%A1%ED%9A%8C%EB%B0%94%EB%A5%B8%EC%97%B0%EC%96%B4/data=!4m6!3m5!1s0x357ca3f0970e53c9:0xe9c5831dcc8237b0!8m2!3d37.5638828!4d127.0321108!16s%2Fg%2F11ptzt5w5g?entry=ttu&g_ep=EgoyMDI2MDQyMi4wIKXMDSoASAFQAw%3D%3D"
@@ -29962,11 +30094,11 @@
         }
       },
       "totals": {
-        "reviews": 12,
-        "avg_rating": 3.0,
-        "negative": 1,
-        "neutral": 0,
-        "positive": 11
+        "reviews": 19,
+        "avg_rating": 3.22,
+        "negative": 3,
+        "neutral": 1,
+        "positive": 15
       },
       "warning": null,
       "warning_reason": null,
@@ -32988,8 +33120,8 @@
           "url": "https://place.map.kakao.com/1278063178"
         },
         "google": {
-          "count": 0,
-          "avg_rating": null,
+          "count": 1,
+          "avg_rating": 5.0,
           "recent_negative": 0,
           "place_id": null,
           "url": "https://www.google.com/maps/place/%EC%9C%A1%ED%9A%8C%EB%B0%94%EB%A5%B8%EC%97%B0%EC%96%B4+%EA%B3%A0%EB%8D%95%ED%91%B8%EB%A5%B4%EC%A7%80%EC%98%A4%EC%A0%90/data=!4m6!3m5!1s0x357cb10010f3c8d7:0x39cf3a5da3f659ab!8m2!3d37.5576191!4d127.1705838!16s%2Fg%2F11xlj8_g7b?entry=ttu&g_ep=EgoyMDI2MDQyMi4wIKXMDSoASAFQAw%3D%3D"
@@ -33010,11 +33142,11 @@
         }
       },
       "totals": {
-        "reviews": 17,
+        "reviews": 18,
         "avg_rating": 5.0,
         "negative": 0,
         "neutral": 0,
-        "positive": 17
+        "positive": 18
       },
       "warning": null,
       "warning_reason": null,
@@ -33206,6 +33338,12 @@
           "d": "2025-11-23",
           "s": "긍정",
           "c": "kakao",
+          "r": 5.0
+        },
+        {
+          "d": "2025-09-28",
+          "s": "긍정",
+          "c": "google",
           "r": 5.0
         },
         {
@@ -33882,8 +34020,8 @@
           "url": "https://place.map.kakao.com/1232709947"
         },
         "google": {
-          "count": 0,
-          "avg_rating": null,
+          "count": 5,
+          "avg_rating": 4.4,
           "recent_negative": 0,
           "place_id": null,
           "url": "https://www.google.com/maps/place/%EC%9C%A1%ED%9A%8C%EB%B0%94%EB%A5%B8%EC%97%B0%EC%96%B4+%EC%88%98%EC%9B%90%EC%A0%95%EC%9E%90%EC%A4%91%EC%8B%AC%EC%A0%90/data=!4m6!3m5!1s0x357b5d2ba524b59b:0xb09f59c9ad72343e!8m2!3d37.295415!4d126.9938324!16s%2Fg%2F11g0kj9170?entry=ttu&g_ep=EgoyMDI2MDQyMi4wIKXMDSoASAFQAw%3D%3D"
@@ -33904,11 +34042,11 @@
         }
       },
       "totals": {
-        "reviews": 10,
-        "avg_rating": null,
+        "reviews": 15,
+        "avg_rating": 4.4,
         "negative": 0,
         "neutral": 0,
-        "positive": 10
+        "positive": 15
       },
       "warning": null,
       "warning_reason": null,
@@ -37206,8 +37344,8 @@
           "url": "https://place.map.kakao.com/660663693"
         },
         "google": {
-          "count": 0,
-          "avg_rating": null,
+          "count": 3,
+          "avg_rating": 4.0,
           "recent_negative": 0,
           "place_id": null,
           "url": "https://www.google.com/maps/place/%EC%9C%A1%ED%9A%8C%EB%B0%94%EB%A5%B8%EC%97%B0%EC%96%B4+%EA%B3%A0%EC%B0%A9%EC%8A%A4%EC%B9%B4%EC%9D%B4%EC%A0%90/data=!4m6!3m5!1s0x357c9d002d759ea3:0x1a08da73437fb512!8m2!3d37.4999057!4d126.8670792!16s%2Fg%2F11wvrl9092?entry=ttu&g_ep=EgoyMDI2MDQyMi4wIKXMDSoASAFQAw%3D%3D"
@@ -37228,11 +37366,11 @@
         }
       },
       "totals": {
-        "reviews": 19,
-        "avg_rating": 3.67,
+        "reviews": 22,
+        "avg_rating": 3.73,
         "negative": 3,
-        "neutral": 0,
-        "positive": 16
+        "neutral": 1,
+        "positive": 18
       },
       "warning": null,
       "warning_reason": null,
@@ -37439,6 +37577,18 @@
           "r": 5.0
         },
         {
+          "d": "2025-09-28",
+          "s": "긍정",
+          "c": "google",
+          "r": 4.0
+        },
+        {
+          "d": "2025-08-29",
+          "s": "긍정",
+          "c": "google",
+          "r": 5.0
+        },
+        {
           "d": "2025-08-09",
           "s": "긍정",
           "c": "kakao",
@@ -37524,8 +37674,8 @@
           "url": "https://place.map.kakao.com/1019860539"
         },
         "google": {
-          "count": 0,
-          "avg_rating": null,
+          "count": 2,
+          "avg_rating": 5.0,
           "recent_negative": 0,
           "place_id": null,
           "url": "https://www.google.com/maps/place/%EC%9C%A1%ED%9A%8C%EB%B0%94%EB%A5%B8%EC%97%B0%EC%96%B4+%EA%B0%95%EB%B3%80%ED%85%8C%ED%81%AC%EB%85%B8%EB%A7%88%ED%8A%B8%EC%A0%90/data=!4m6!3m5!1s0x357ca500167951ef:0x52a104b721f4feed!8m2!3d37.5358089!4d127.0956288!16s%2Fg%2F11mcqjw9d_?entry=ttu&g_ep=EgoyMDI2MDQyMi4wIKXMDSoASAFQAw%3D%3D"
@@ -37546,11 +37696,11 @@
         }
       },
       "totals": {
-        "reviews": 13,
+        "reviews": 15,
         "avg_rating": 5.0,
         "negative": 0,
         "neutral": 0,
-        "positive": 13
+        "positive": 15
       },
       "warning": null,
       "warning_reason": null,
@@ -37573,6 +37723,14 @@
           "text": "간장연어장 새로 나왔다고 해서 먹어봤는데 진짜 너무 맛있어요….💗💗 양도 많고 가성비 좋아요!!"
         },
         {
+          "channel": "google",
+          "date": "2026-03-29",
+          "rating": 5.0,
+          "sentiment": "긍정",
+          "reviewer": "H H",
+          "text": "빨리 나오고 쾌적하고 맛있음 ₩10,000~20,000…"
+        },
+        {
           "channel": "naver",
           "date": "2026-03-18",
           "rating": null,
@@ -37587,14 +37745,6 @@
           "sentiment": "긍정",
           "reviewer": "su0820",
           "text": "음식이 맛있어요+4"
-        },
-        {
-          "channel": "naver",
-          "date": "2026-03-06",
-          "rating": null,
-          "sentiment": "긍정",
-          "reviewer": "달팽이가좋은가봉가",
-          "text": "저는 와사비 안좋아해서 사진찍고 빼긴했는데 안드시는 분들 사전에 말씀 하시길 바래요!!!"
         }
       ],
       "trend_30d": [
@@ -37604,7 +37754,7 @@
         },
         {
           "date": "2026-03-29",
-          "count": 0
+          "count": 1
         },
         {
           "date": "2026-03-30",
@@ -37720,6 +37870,12 @@
         }
       ],
       "all_reviews_meta": [
+        {
+          "d": "2026-03-29",
+          "s": "긍정",
+          "c": "google",
+          "r": 5.0
+        },
         {
           "d": "2025-12-31",
           "s": "긍정",
@@ -38700,8 +38856,8 @@
           "url": "https://place.map.kakao.com/67384678"
         },
         "google": {
-          "count": 0,
-          "avg_rating": null,
+          "count": 2,
+          "avg_rating": 5.0,
           "recent_negative": 0,
           "place_id": null,
           "url": "https://www.google.com/maps/place/%EC%9C%A1%ED%9A%8C%EB%B0%94%EB%A5%B8%EC%97%B0%EC%96%B4+%EB%8C%80%EC%A0%84%EC%A4%91%EA%B5%AC%EC%B2%AD%EC%A0%90/data=!4m6!3m5!1s0x35654900205a9a31:0x4404b767c2a944b1!8m2!3d36.3256174!4d127.4195887!16s%2Fg%2F11x257l1h5?entry=ttu&g_ep=EgoyMDI2MDQyMi4wIKXMDSoASAFQAw%3D%3D"
@@ -38722,11 +38878,11 @@
         }
       },
       "totals": {
-        "reviews": 16,
-        "avg_rating": 4.17,
+        "reviews": 18,
+        "avg_rating": 4.38,
         "negative": 1,
         "neutral": 0,
-        "positive": 15
+        "positive": 17
       },
       "warning": null,
       "warning_reason": null,
@@ -38896,6 +39052,12 @@
         }
       ],
       "all_reviews_meta": [
+        {
+          "d": "2026-01-26",
+          "s": "긍정",
+          "c": "google",
+          "r": 5.0
+        },
         {
           "d": "2025-10-07",
           "s": "긍정",
@@ -39588,8 +39750,8 @@
           "url": "https://place.map.kakao.com/984675354"
         },
         "google": {
-          "count": 0,
-          "avg_rating": null,
+          "count": 2,
+          "avg_rating": 5.0,
           "recent_negative": 0,
           "place_id": null,
           "url": "https://www.google.com/maps/place/%EC%9C%A1%ED%9A%8C%EB%B0%94%EB%A5%B8%EC%97%B0%EC%96%B4+%EA%B3%A0%EC%86%8D%ED%84%B0%EB%AF%B8%EB%84%90%EC%97%AD9%ED%98%B8%EC%84%A0%EC%A0%90/data=!4m6!3m5!1s0x357ca100711b4703:0xf9f0f6fb78b9277d!8m2!3d37.506014!4d127.0038588!16s%2Fg%2F11wr63v_79?entry=ttu&g_ep=EgoyMDI2MDQyMi4wIKXMDSoASAFQAw%3D%3D"
@@ -39610,11 +39772,11 @@
         }
       },
       "totals": {
-        "reviews": 27,
-        "avg_rating": 2.82,
+        "reviews": 29,
+        "avg_rating": 3.05,
         "negative": 9,
         "neutral": 1,
-        "positive": 17
+        "positive": 19
       },
       "warning": null,
       "warning_reason": null,
@@ -39839,6 +40001,12 @@
           "r": 5.0
         },
         {
+          "d": "2025-06-30",
+          "s": "긍정",
+          "c": "google",
+          "r": 5.0
+        },
+        {
           "d": "2025-06-05",
           "s": "긍정",
           "c": "kakao",
@@ -39936,8 +40104,8 @@
           "url": "https://place.map.kakao.com/1759067292"
         },
         "google": {
-          "count": 0,
-          "avg_rating": null,
+          "count": 1,
+          "avg_rating": 5.0,
           "recent_negative": 0,
           "place_id": null,
           "url": "https://www.google.com/maps/place/%EC%9C%A1%ED%9A%8C%EB%B0%94%EB%A5%B8%EC%97%B0%EC%96%B4+%EC%96%91%EC%9E%AC%EB%B9%84%EC%97%94%ED%94%BC%EC%A0%90/data=!4m6!3m5!1s0x357ca1baba7c0a6f:0x2c324c348e886728!8m2!3d37.4855786!4d127.0359786!16s%2Fg%2F11wv02p53y?entry=ttu&g_ep=EgoyMDI2MDQyMi4wIKXMDSoASAFQAw%3D%3D"
@@ -39958,11 +40126,11 @@
         }
       },
       "totals": {
-        "reviews": 18,
-        "avg_rating": 3.62,
+        "reviews": 19,
+        "avg_rating": 3.78,
         "negative": 3,
         "neutral": 0,
-        "positive": 15
+        "positive": 16
       },
       "warning": null,
       "warning_reason": null,
@@ -40142,6 +40310,12 @@
           "d": "2026-01-17",
           "s": "긍정",
           "c": "kakao",
+          "r": 5.0
+        },
+        {
+          "d": "2025-12-27",
+          "s": "긍정",
+          "c": "google",
           "r": 5.0
         },
         {
@@ -41130,8 +41304,8 @@
           "url": "https://place.map.kakao.com/855246055"
         },
         "google": {
-          "count": 0,
-          "avg_rating": null,
+          "count": 5,
+          "avg_rating": 3.6,
           "recent_negative": 0,
           "place_id": null,
           "url": "https://www.google.com/maps/place/%EC%9C%A1%ED%9A%8C%EB%B0%94%EB%A5%B8%EC%97%B0%EC%96%B4+%EA%B3%A0%EC%96%91%EC%9B%90%EB%8B%B9%EC%A0%90/data=!4m6!3m5!1s0x357c91000f2bbc97:0x4f8a9cbe687ccf88!8m2!3d37.655634!4d126.8356245!16s%2Fg%2F11wg5z3cps?entry=ttu&g_ep=EgoyMDI2MDQyMi4wIKXMDSoASAFQAw%3D%3D"
@@ -41152,11 +41326,11 @@
         }
       },
       "totals": {
-        "reviews": 12,
-        "avg_rating": 5.0,
-        "negative": 0,
-        "neutral": 0,
-        "positive": 12
+        "reviews": 17,
+        "avg_rating": 4.0,
+        "negative": 1,
+        "neutral": 1,
+        "positive": 15
       },
       "warning": null,
       "warning_reason": null,
@@ -41327,6 +41501,12 @@
       ],
       "all_reviews_meta": [
         {
+          "d": "2025-10-28",
+          "s": "긍정",
+          "c": "google",
+          "r": 4.0
+        },
+        {
           "d": "2026-04-20",
           "s": "긍정",
           "c": "naver",
@@ -41412,8 +41592,8 @@
           "url": "https://place.map.kakao.com/343607752"
         },
         "google": {
-          "count": 0,
-          "avg_rating": null,
+          "count": 2,
+          "avg_rating": 5.0,
           "recent_negative": 0,
           "place_id": null,
           "url": "https://www.google.com/maps/place/%EC%9C%A1%ED%9A%8C%EB%B0%94%EB%A5%B8%EC%97%B0%EC%96%B4/data=!4m6!3m5!1s0x357b77002524594b:0x7c01d776d665a920!8m2!3d37.3779674!4d126.6639536!16s%2Fg%2F11y5gd8p9b?entry=ttu&g_ep=EgoyMDI2MDQyMi4wIKXMDSoASAFQAw%3D%3D"
@@ -41434,11 +41614,11 @@
         }
       },
       "totals": {
-        "reviews": 13,
-        "avg_rating": 3.0,
+        "reviews": 15,
+        "avg_rating": 3.8,
         "negative": 1,
         "neutral": 1,
-        "positive": 11
+        "positive": 13
       },
       "warning": null,
       "warning_reason": null,
@@ -41619,6 +41799,12 @@
           "s": "부정",
           "c": "kakao",
           "r": 1.0
+        },
+        {
+          "d": "2025-08-29",
+          "s": "긍정",
+          "c": "google",
+          "r": 5.0
         },
         {
           "d": "2026-04-21",
@@ -42288,8 +42474,8 @@
           "url": "https://place.map.kakao.com/435743731"
         },
         "google": {
-          "count": 0,
-          "avg_rating": null,
+          "count": 2,
+          "avg_rating": 5.0,
           "recent_negative": 0,
           "place_id": null,
           "url": "https://www.google.com/maps/place/%EC%9C%A1%ED%9A%8C%EB%B0%94%EB%A5%B8%EC%97%B0%EC%96%B4+%EC%82%B0%EB%B3%B8%EC%88%98%EB%A6%AC%EC%A0%90/data=!4m6!3m5!1s0x357b6700004ccc3f:0x982adc1c1cde663d!8m2!3d37.3593778!4d126.9222821!16s%2Fg%2F11wjl5c58x?entry=ttu&g_ep=EgoyMDI2MDQyMi4wIKXMDSoASAFQAw%3D%3D"
@@ -42310,11 +42496,11 @@
         }
       },
       "totals": {
-        "reviews": 11,
+        "reviews": 13,
         "avg_rating": 5.0,
         "negative": 0,
         "neutral": 0,
-        "positive": 11
+        "positive": 13
       },
       "warning": null,
       "warning_reason": null,
@@ -42491,6 +42677,12 @@
           "r": 5.0
         },
         {
+          "d": "2025-05-31",
+          "s": "긍정",
+          "c": "google",
+          "r": 5.0
+        },
+        {
           "d": "2026-04-24",
           "s": "긍정",
           "c": "naver",
@@ -42576,8 +42768,8 @@
           "url": "https://place.map.kakao.com/1257874435"
         },
         "google": {
-          "count": 0,
-          "avg_rating": null,
+          "count": 2,
+          "avg_rating": 3.0,
           "recent_negative": 0,
           "place_id": null,
           "url": "https://www.google.com/maps/place/%EC%9C%A1%ED%9A%8C%EB%B0%94%EB%A5%B8%EC%97%B0%EC%96%B4+%EA%B3%84%EC%96%91%EC%9E%90%EC%9D%B4%EC%A0%90/data=!4m6!3m5!1s0x357b7d005f8a2cb9:0xfdd2e0f7a78a1612!8m2!3d37.5319878!4d126.7210022!16s%2Fg%2F11ltkm0mtx?entry=ttu&g_ep=EgoyMDI2MDQyMi4wIKXMDSoASAFQAw%3D%3D"
@@ -42598,11 +42790,11 @@
         }
       },
       "totals": {
-        "reviews": 13,
-        "avg_rating": 3.67,
-        "negative": 1,
+        "reviews": 15,
+        "avg_rating": 3.4,
+        "negative": 2,
         "neutral": 0,
-        "positive": 12
+        "positive": 13
       },
       "warning": null,
       "warning_reason": null,
@@ -42615,6 +42807,14 @@
           "sentiment": "긍정",
           "reviewer": "wog****",
           "text": "여긴 다른지점보다 정말 맛있네요^^"
+        },
+        {
+          "channel": "google",
+          "date": "2026-02-25",
+          "rating": 5.0,
+          "sentiment": "긍정",
+          "reviewer": "김영진",
+          "text": "늘 먹어도 맛있음 ₩1~10,000…"
         },
         {
           "channel": "naver",
@@ -42639,14 +42839,6 @@
           "sentiment": "긍정",
           "reviewer": "coffee6337",
           "text": "연어도 쫄깃탱글!! 잘 먹었네요~"
-        },
-        {
-          "channel": "naver",
-          "date": "2025-11-12",
-          "rating": null,
-          "sentiment": "긍정",
-          "reviewer": "SAME54",
-          "text": "음식이 맛있어요+3"
         }
       ],
       "trend_30d": [
@@ -42772,6 +42964,12 @@
         }
       ],
       "all_reviews_meta": [
+        {
+          "d": "2026-02-25",
+          "s": "긍정",
+          "c": "google",
+          "r": 5.0
+        },
         {
           "d": "2026-03-04",
           "s": "긍정",
@@ -43164,8 +43362,8 @@
           "url": "https://place.map.kakao.com/1026423573"
         },
         "google": {
-          "count": 0,
-          "avg_rating": null,
+          "count": 1,
+          "avg_rating": 5.0,
           "recent_negative": 0,
           "place_id": null,
           "url": "https://www.google.com/maps/place/%EC%9C%A1%ED%9A%8C%EB%B0%94%EB%A5%B8%EC%97%B0%EC%96%B4+%EB%B6%88%EA%B4%91%EB%A1%AF%EB%8D%B0%EC%BA%90%EC%8A%AC%EC%A0%90/data=!4m6!3m5!1s0x357c9700497fa749:0x258683847053fb2b!8m2!3d37.6128745!4d126.932102!16s%2Fg%2F11ln0m95k_?entry=ttu&g_ep=EgoyMDI2MDQyMi4wIKXMDSoASAFQAw%3D%3D"
@@ -43186,11 +43384,11 @@
         }
       },
       "totals": {
-        "reviews": 13,
-        "avg_rating": 3.0,
+        "reviews": 14,
+        "avg_rating": 3.5,
         "negative": 0,
         "neutral": 3,
-        "positive": 10
+        "positive": 11
       },
       "warning": null,
       "warning_reason": null,
@@ -44502,8 +44700,8 @@
           "url": "https://place.map.kakao.com/64220108"
         },
         "google": {
-          "count": 0,
-          "avg_rating": null,
+          "count": 1,
+          "avg_rating": 5.0,
           "recent_negative": 0,
           "place_id": null,
           "url": "https://www.google.com/maps/place/%EC%9C%A1%ED%9A%8C%EB%B0%94%EB%A5%B8%EC%97%B0%EC%96%B4+%EC%9D%98%EC%A0%95%EB%B6%80%EB%AF%BC%EB%9D%BD%EC%A0%90/data=!4m6!3m5!1s0x357cc700590f9419:0xe33d84903efdd9b9!8m2!3d37.745135!4d127.0968172!16s%2Fg%2F11w9ycdpv9?entry=ttu&g_ep=EgoyMDI2MDQyMi4wIKXMDSoASAFQAw%3D%3D"
@@ -44524,11 +44722,11 @@
         }
       },
       "totals": {
-        "reviews": 14,
+        "reviews": 15,
         "avg_rating": 5.0,
         "negative": 0,
         "neutral": 0,
-        "positive": 14
+        "positive": 15
       },
       "warning": null,
       "warning_reason": null,
@@ -47076,8 +47274,8 @@
           "url": "https://place.map.kakao.com/2063154470"
         },
         "google": {
-          "count": 0,
-          "avg_rating": null,
+          "count": 1,
+          "avg_rating": 5.0,
           "recent_negative": 0,
           "place_id": null,
           "url": "https://www.google.com/maps/place/%EC%9C%A1%ED%9A%8C%EB%B0%94%EB%A5%B8%EC%97%B0%EC%96%B4+%EA%B0%80%EC%96%91%EC%97%AD%EC%A0%90/data=!4m6!3m5!1s0x357c9d000e6a3f9d:0x60bef5fcab96d70e!8m2!3d37.5594693!4d126.8552691!16s%2Fg%2F11w2jmrr39?entry=ttu&g_ep=EgoyMDI2MDQyMi4wIKXMDSoASAFQAw%3D%3D"
@@ -47098,11 +47296,11 @@
         }
       },
       "totals": {
-        "reviews": 22,
-        "avg_rating": 4.42,
+        "reviews": 23,
+        "avg_rating": 4.46,
         "negative": 1,
         "neutral": 1,
-        "positive": 20
+        "positive": 21
       },
       "warning": null,
       "warning_reason": null,
@@ -47994,8 +48192,8 @@
           "url": "https://place.map.kakao.com/1956352435"
         },
         "google": {
-          "count": 0,
-          "avg_rating": null,
+          "count": 2,
+          "avg_rating": 5.0,
           "recent_negative": 0,
           "place_id": null,
           "url": "https://www.google.com/maps/place/%EC%9C%A1%ED%9A%8C%EB%B0%94%EB%A5%B8%EC%97%B0%EC%96%B4/data=!4m6!3m5!1s0x357b77002524594b:0x7c01d776d665a920!8m2!3d37.3779674!4d126.6639536!16s%2Fg%2F11y5gd8p9b?entry=ttu&g_ep=EgoyMDI2MDQyMi4wIKXMDSoASAFQAw%3D%3D"
@@ -48016,11 +48214,11 @@
         }
       },
       "totals": {
-        "reviews": 16,
-        "avg_rating": 3.33,
+        "reviews": 18,
+        "avg_rating": 3.75,
         "negative": 3,
         "neutral": 0,
-        "positive": 13
+        "positive": 15
       },
       "warning": null,
       "warning_reason": null,
@@ -48207,6 +48405,12 @@
           "s": "긍정",
           "c": "kakao",
           "r": 4.0
+        },
+        {
+          "d": "2025-08-29",
+          "s": "긍정",
+          "c": "google",
+          "r": 5.0
         },
         {
           "d": "2025-05-10",
@@ -48588,8 +48792,8 @@
           "url": "https://place.map.kakao.com/224193335"
         },
         "google": {
-          "count": 0,
-          "avg_rating": null,
+          "count": 1,
+          "avg_rating": 5.0,
           "recent_negative": 0,
           "place_id": null,
           "url": "https://www.google.com/maps/place/%EC%9C%A1%ED%9A%8C%EB%B0%94%EB%A5%B8%EC%97%B0%EC%96%B4+%EA%B3%BC%EC%B2%9C%EC%A4%91%EC%95%99%EC%A0%90/data=!4m6!3m5!1s0x357b5f002ef1a7ff:0xd1ac887dc12f24b1!8m2!3d37.4293961!4d126.9905641!16s%2Fg%2F11xnvnc6x5?entry=ttu&g_ep=EgoyMDI2MDQyMi4wIKXMDSoASAFQAw%3D%3D"
@@ -48610,11 +48814,11 @@
         }
       },
       "totals": {
-        "reviews": 16,
-        "avg_rating": 3.17,
+        "reviews": 17,
+        "avg_rating": 3.43,
         "negative": 2,
         "neutral": 2,
-        "positive": 12
+        "positive": 13
       },
       "warning": null,
       "warning_reason": null,
@@ -48795,6 +48999,12 @@
           "s": "부정",
           "c": "kakao",
           "r": 2.0
+        },
+        {
+          "d": "2025-10-28",
+          "s": "긍정",
+          "c": "google",
+          "r": 5.0
         },
         {
           "d": "2025-07-30",
@@ -49770,8 +49980,8 @@
           "url": "https://place.map.kakao.com/1268330065"
         },
         "google": {
-          "count": 0,
-          "avg_rating": null,
+          "count": 2,
+          "avg_rating": 5.0,
           "recent_negative": 0,
           "place_id": null,
           "url": "https://www.google.com/maps/search/%EC%9C%A1%ED%9A%8C%EB%B0%94%EB%A5%B8%EC%97%B0%EC%96%B4+%EC%B2%AD%EC%A3%BC%EA%B0%95%EC%84%9C%EC%A0%90?entry=ttu&g_ep=EgoyMDI2MDQyMi4wIKXMDSoASAFQAw%3D%3D"
@@ -49792,11 +50002,11 @@
         }
       },
       "totals": {
-        "reviews": 14,
+        "reviews": 16,
         "avg_rating": 5.0,
         "negative": 0,
         "neutral": 0,
-        "positive": 14
+        "positive": 16
       },
       "warning": null,
       "warning_reason": null,
@@ -49970,6 +50180,12 @@
           "d": "2025-10-06",
           "s": "긍정",
           "c": "kakao",
+          "r": 5.0
+        },
+        {
+          "d": "2025-09-28",
+          "s": "긍정",
+          "c": "google",
           "r": 5.0
         },
         {
@@ -50652,8 +50868,8 @@
           "url": "https://place.map.kakao.com/988366293"
         },
         "google": {
-          "count": 0,
-          "avg_rating": null,
+          "count": 2,
+          "avg_rating": 3.5,
           "recent_negative": 0,
           "place_id": null,
           "url": "https://www.google.com/maps/place/%EC%9C%A1%ED%9A%8C%EB%B0%94%EB%A5%B8%EC%97%B0%EC%96%B4+%EC%83%81%EA%B3%84%EC%A0%90/data=!4m6!3m5!1s0x357cb9002fa1830f:0x830287a6c38c6af7!8m2!3d37.6568416!4d127.0742638!16s%2Fg%2F11wftrl1mj?entry=ttu&g_ep=EgoyMDI2MDQyMi4wIKXMDSoASAFQAw%3D%3D"
@@ -50674,11 +50890,11 @@
         }
       },
       "totals": {
-        "reviews": 17,
-        "avg_rating": 3.29,
-        "negative": 2,
+        "reviews": 19,
+        "avg_rating": 3.33,
+        "negative": 3,
         "neutral": 2,
-        "positive": 13
+        "positive": 14
       },
       "warning": null,
       "warning_reason": null,
@@ -50732,7 +50948,7 @@
         },
         {
           "date": "2026-03-29",
-          "count": 0
+          "count": 1
         },
         {
           "date": "2026-03-30",
@@ -50849,6 +51065,12 @@
       ],
       "all_reviews_meta": [
         {
+          "d": "2026-03-29",
+          "s": "긍정",
+          "c": "google",
+          "r": 5.0
+        },
+        {
           "d": "2026-03-07",
           "s": "긍정",
           "c": "kakao",
@@ -50958,8 +51180,8 @@
           "url": "https://place.map.kakao.com/1642483988"
         },
         "google": {
-          "count": 0,
-          "avg_rating": null,
+          "count": 2,
+          "avg_rating": 5.0,
           "recent_negative": 0,
           "place_id": null,
           "url": "https://www.google.com/maps/place/%EC%9C%A1%ED%9A%8C%EB%B0%94%EB%A5%B8%EC%97%B0%EC%96%B4+%EC%97%AD%EC%82%BC%EC%A0%90/data=!4m6!3m5!1s0x357ca1286c543471:0x7dfe00e773fb1ca6!8m2!3d37.4958563!4d127.0333492!16s%2Fg%2F11y3112v3s?entry=ttu&g_ep=EgoyMDI2MDQyMi4wIKXMDSoASAFQAw%3D%3D"
@@ -50980,11 +51202,11 @@
         }
       },
       "totals": {
-        "reviews": 28,
-        "avg_rating": 3.61,
+        "reviews": 30,
+        "avg_rating": 3.75,
         "negative": 6,
         "neutral": 1,
-        "positive": 21
+        "positive": 23
       },
       "warning": null,
       "warning_reason": null,
@@ -51191,6 +51413,12 @@
           "r": 2.0
         },
         {
+          "d": "2025-09-28",
+          "s": "긍정",
+          "c": "google",
+          "r": 5.0
+        },
+        {
           "d": "2025-06-13",
           "s": "부정",
           "c": "kakao",
@@ -51288,8 +51516,8 @@
           "url": "https://place.map.kakao.com/1720383166"
         },
         "google": {
-          "count": 0,
-          "avg_rating": null,
+          "count": 2,
+          "avg_rating": 5.0,
           "recent_negative": 0,
           "place_id": null,
           "url": "https://www.google.com/maps/place/%EC%9C%A1%ED%9A%8C%EB%B0%94%EB%A5%B8%EC%97%B0%EC%96%B4+%EB%AA%85%EC%A7%80%EB%8C%80%EC%A0%90/data=!4m6!3m5!1s0x357c990035505581:0x8c5fa7361d3353c1!8m2!3d37.5767388!4d126.925347!16s%2Fg%2F11ltrs3q4z?entry=ttu&g_ep=EgoyMDI2MDQyMi4wIKXMDSoASAFQAw%3D%3D"
@@ -51310,11 +51538,11 @@
         }
       },
       "totals": {
-        "reviews": 13,
+        "reviews": 15,
         "avg_rating": 5.0,
         "negative": 0,
         "neutral": 0,
-        "positive": 13
+        "positive": 15
       },
       "warning": null,
       "warning_reason": null,
@@ -52152,8 +52380,8 @@
           "url": "https://place.map.kakao.com/439336974"
         },
         "google": {
-          "count": 0,
-          "avg_rating": null,
+          "count": 5,
+          "avg_rating": 5.0,
           "recent_negative": 0,
           "place_id": null,
           "url": "https://www.google.com/maps/place/%EC%9C%A1%ED%9A%8C%EB%B0%94%EB%A5%B8%EC%97%B0%EC%96%B4+%EA%B5%AC%EC%9D%98%EC%97%AD%EC%A0%90/data=!4m6!3m5!1s0x357ca50041d34ed3:0xd89c996355393783!8m2!3d37.5377283!4d127.0853003!16s%2Fg%2F11vxlpssps?entry=ttu&g_ep=EgoyMDI2MDQyMi4wIKXMDSoASAFQAw%3D%3D"
@@ -52174,16 +52402,24 @@
         }
       },
       "totals": {
-        "reviews": 19,
-        "avg_rating": 3.67,
+        "reviews": 24,
+        "avg_rating": 4.14,
         "negative": 3,
         "neutral": 0,
-        "positive": 16
+        "positive": 21
       },
       "warning": null,
       "warning_reason": null,
       "recent7_negative": 0,
       "recent_samples": [
+        {
+          "channel": "google",
+          "date": "2026-03-27",
+          "rating": 5.0,
+          "sentiment": "긍정",
+          "reviewer": "오원석",
+          "text": "주문 유형 매장 내 식사…"
+        },
         {
           "channel": "naver",
           "date": "2026-02-21",
@@ -52191,6 +52427,14 @@
           "sentiment": "긍정",
           "reviewer": "아리스토캣",
           "text": "한 끼에 만원도 안하고 점심특선도 있고 심지어 포장 할인까지 되는 갓혜자 가게에용"
+        },
+        {
+          "channel": "google",
+          "date": "2025-11-27",
+          "rating": 5.0,
+          "sentiment": "긍정",
+          "reviewer": "Rachel Foo",
+          "text": "이곳의 하이라이트는 생연어와 소고기 타르타르인데, 처음 먹어보는 메뉴예요. 평일 오후 4시에 문을 열었는데, 같은 시간대에 다른 매장들이 문을 닫은 것 같아요. 간단히 식사하기 좋은 곳이에요."
         },
         {
           "channel": "naver",
@@ -52207,22 +52451,6 @@
           "sentiment": "긍정",
           "reviewer": "chond96",
           "text": "연어.육회 소.맥과함께 맛나게 먹었어요"
-        },
-        {
-          "channel": "naver",
-          "date": "2025-09-19",
-          "rating": null,
-          "sentiment": "긍정",
-          "reviewer": "따뜻한 바다 하늘 마음",
-          "text": "음식이 맛있어요+3"
-        },
-        {
-          "channel": "kakao",
-          "date": "2025-09-18",
-          "rating": 5.0,
-          "sentiment": "긍정",
-          "reviewer": "이시연",
-          "text": "너무 맛있어요 친절하시고..."
         }
       ],
       "trend_30d": [
@@ -52349,9 +52577,27 @@
       ],
       "all_reviews_meta": [
         {
+          "d": "2026-03-27",
+          "s": "긍정",
+          "c": "google",
+          "r": 5.0
+        },
+        {
+          "d": "2025-11-27",
+          "s": "긍정",
+          "c": "google",
+          "r": 5.0
+        },
+        {
           "d": "2025-09-18",
           "s": "긍정",
           "c": "kakao",
+          "r": 5.0
+        },
+        {
+          "d": "2025-08-29",
+          "s": "긍정",
+          "c": "google",
           "r": 5.0
         },
         {
@@ -53328,8 +53574,8 @@
           "url": "https://place.map.kakao.com/1813099941"
         },
         "google": {
-          "count": 0,
-          "avg_rating": null,
+          "count": 4,
+          "avg_rating": 4.25,
           "recent_negative": 0,
           "place_id": null,
           "url": "https://www.google.com/maps/place/%EC%9C%A1%ED%9A%8C%EB%B0%94%EB%A5%B8%EC%97%B0%EC%96%B4+%EC%95%88%EC%96%91%ED%98%B8%EA%B3%84%EC%A0%90/data=!4m6!3m5!1s0x357b5d0043840a67:0x7022e1d44afaaeb7!8m2!3d37.3723424!4d126.9570285!16s%2Fg%2F11ldhwhkmf?entry=ttu&g_ep=EgoyMDI2MDQyMi4wIKXMDSoASAFQAw%3D%3D"
@@ -53350,11 +53596,11 @@
         }
       },
       "totals": {
-        "reviews": 12,
-        "avg_rating": 3.0,
+        "reviews": 16,
+        "avg_rating": 3.83,
         "negative": 1,
-        "neutral": 0,
-        "positive": 11
+        "neutral": 1,
+        "positive": 14
       },
       "warning": null,
       "warning_reason": null,
@@ -53524,6 +53770,12 @@
         }
       ],
       "all_reviews_meta": [
+        {
+          "d": "2025-06-30",
+          "s": "긍정",
+          "c": "google",
+          "r": 5.0
+        },
         {
           "d": "2026-04-25",
           "s": "긍정",
@@ -54390,8 +54642,8 @@
           "url": "https://place.map.kakao.com/882730772"
         },
         "google": {
-          "count": 0,
-          "avg_rating": null,
+          "count": 1,
+          "avg_rating": 5.0,
           "recent_negative": 0,
           "place_id": null,
           "url": "https://www.google.com/maps/place/%EC%9C%A1%ED%9A%8C%EB%B0%94%EB%A5%B8%EC%97%B0%EC%96%B4+%EB%AF%B8%EC%95%84%EC%97%AD%EC%A0%90/data=!4m6!3m5!1s0x357cbd411d0079eb:0x9fb2910b7f891ebe!8m2!3d37.6252402!4d127.0259748!16s%2Fg%2F11vs3kmtf2?entry=ttu&g_ep=EgoyMDI2MDQyMi4wIKXMDSoASAFQAw%3D%3D"
@@ -54412,11 +54664,11 @@
         }
       },
       "totals": {
-        "reviews": 19,
-        "avg_rating": 2.56,
+        "reviews": 20,
+        "avg_rating": 2.8,
         "negative": 5,
         "neutral": 1,
-        "positive": 13
+        "positive": 14
       },
       "warning": null,
       "warning_reason": null,
@@ -54972,8 +55224,8 @@
           "url": "https://place.map.kakao.com/1612337249"
         },
         "google": {
-          "count": 0,
-          "avg_rating": null,
+          "count": 1,
+          "avg_rating": 5.0,
           "recent_negative": 0,
           "place_id": null,
           "url": "https://www.google.com/maps/place/%EC%9C%A1%ED%9A%8C%EB%B0%94%EB%A5%B8%EC%97%B0%EC%96%B4+%EC%9E%A5%EC%95%88%EB%8F%99%EC%82%AC%EA%B1%B0%EB%A6%AC%EC%A0%90/data=!4m6!3m5!1s0x357cbb00357c1283:0xb7ba8dd3661aae8f!8m2!3d37.5726648!4d127.0697715!16s%2Fg%2F11vppzw6wk?entry=ttu&g_ep=EgoyMDI2MDQyMi4wIKXMDSoASAFQAw%3D%3D"
@@ -54994,11 +55246,11 @@
         }
       },
       "totals": {
-        "reviews": 17,
-        "avg_rating": 2.14,
+        "reviews": 18,
+        "avg_rating": 2.5,
         "negative": 5,
         "neutral": 0,
-        "positive": 12
+        "positive": 13
       },
       "warning": "yellow",
       "warning_reason": "최근 7일 부정 2건, 최근 30일 부정률 66% (2/3)",
@@ -57936,8 +58188,8 @@
           "url": "https://place.map.kakao.com/504668220"
         },
         "google": {
-          "count": 0,
-          "avg_rating": null,
+          "count": 2,
+          "avg_rating": 3.0,
           "recent_negative": 0,
           "place_id": null,
           "url": "https://www.google.com/maps/place/%EC%9C%A1%ED%9A%8C%EB%B0%94%EB%A5%B8%EC%97%B0%EC%96%B4+%EB%B0%A9%ED%95%99%EC%82%AC%EA%B1%B0%EB%A6%AC%EC%A0%90/data=!4m6!3m5!1s0x357cbeb55c9d59d3:0x94cd41245b8d12b4!8m2!3d37.6628749!4d127.0405706!16s%2Fg%2F11scqmddz9?entry=ttu&g_ep=EgoyMDI2MDQyMi4wIKXMDSoASAFQAw%3D%3D"
@@ -57958,10 +58210,10 @@
         }
       },
       "totals": {
-        "reviews": 16,
-        "avg_rating": 4.5,
+        "reviews": 18,
+        "avg_rating": 4.12,
         "negative": 0,
-        "neutral": 0,
+        "neutral": 2,
         "positive": 16
       },
       "warning": null,
@@ -58133,6 +58385,12 @@
       ],
       "all_reviews_meta": [
         {
+          "d": "2026-03-27",
+          "s": "중립",
+          "c": "google",
+          "r": 3.0
+        },
+        {
           "d": "2026-03-14",
           "s": "긍정",
           "c": "kakao",
@@ -58230,8 +58488,8 @@
           "url": "https://place.map.kakao.com/1319652537"
         },
         "google": {
-          "count": 0,
-          "avg_rating": null,
+          "count": 3,
+          "avg_rating": 3.67,
           "recent_negative": 0,
           "place_id": null,
           "url": "https://www.google.com/maps/place/%EC%9C%A1%ED%9A%8C%EB%B0%94%EB%A5%B8%EC%97%B0%EC%96%B4+%EB%8B%B9%EC%82%B0%EC%97%AD%EC%A0%90/data=!4m6!3m5!1s0x357c9f7efb0153f7:0x8a8be06461f53c51!8m2!3d37.531956!4d126.903065!16s%2Fg%2F11l2wghkw0?entry=ttu&g_ep=EgoyMDI2MDQyMi4wIKXMDSoASAFQAw%3D%3D"
@@ -58252,11 +58510,11 @@
         }
       },
       "totals": {
-        "reviews": 23,
-        "avg_rating": 2.77,
+        "reviews": 26,
+        "avg_rating": 2.94,
         "negative": 6,
-        "neutral": 2,
-        "positive": 15
+        "neutral": 3,
+        "positive": 17
       },
       "warning": null,
       "warning_reason": null,
@@ -58443,6 +58701,12 @@
           "s": "부정",
           "c": "kakao",
           "r": 1.0
+        },
+        {
+          "d": "2025-05-31",
+          "s": "중립",
+          "c": "google",
+          "r": 3.0
         },
         {
           "d": "2026-04-22",
@@ -59076,8 +59340,8 @@
           "url": "https://place.map.kakao.com/1817800224"
         },
         "google": {
-          "count": 0,
-          "avg_rating": null,
+          "count": 1,
+          "avg_rating": 4.0,
           "recent_negative": 0,
           "place_id": null,
           "url": "https://www.google.com/maps/place/%EC%9C%A1%ED%9A%8C%EB%B0%94%EB%A5%B8%EC%97%B0%EC%96%B4+%ED%99%94%EC%96%91%EC%A0%90/data=!4m6!3m5!1s0x357ca5005a43aa99:0xf17dbb35011db938!8m2!3d37.547586!4d127.0699089!16s%2Fg%2F11wnlq_zsz?entry=ttu&g_ep=EgoyMDI2MDQyMi4wIKXMDSoASAFQAw%3D%3D"
@@ -59098,11 +59362,11 @@
         }
       },
       "totals": {
-        "reviews": 21,
+        "reviews": 22,
         "avg_rating": 4.0,
         "negative": 2,
         "neutral": 1,
-        "positive": 18
+        "positive": 19
       },
       "warning": null,
       "warning_reason": null,
@@ -59272,6 +59536,12 @@
         }
       ],
       "all_reviews_meta": [
+        {
+          "d": "2025-11-27",
+          "s": "긍정",
+          "c": "google",
+          "r": 4.0
+        },
         {
           "d": "2025-09-05",
           "s": "중립",
@@ -59952,8 +60222,8 @@
           "url": "https://place.map.kakao.com/1634401842"
         },
         "google": {
-          "count": 0,
-          "avg_rating": null,
+          "count": 4,
+          "avg_rating": 3.25,
           "recent_negative": 0,
           "place_id": null,
           "url": "https://www.google.com/maps/place/%EC%9C%A1%ED%9A%8C%EB%B0%94%EB%A5%B8%EC%97%B0%EC%96%B4+%EC%84%B8%EC%A2%85%EB%B3%B4%EB%9E%8C%EC%A0%90/data=!4m6!3m5!1s0x357acb43024869bf:0x9be40b58697be44b!8m2!3d36.4774732!4d127.2869955!16s%2Fg%2F11vcs7m1nk?entry=ttu&g_ep=EgoyMDI2MDQyMi4wIKXMDSoASAFQAw%3D%3D"
@@ -59974,11 +60244,11 @@
         }
       },
       "totals": {
-        "reviews": 23,
-        "avg_rating": 4.85,
-        "negative": 0,
-        "neutral": 0,
-        "positive": 23
+        "reviews": 27,
+        "avg_rating": 4.47,
+        "negative": 1,
+        "neutral": 1,
+        "positive": 25
       },
       "warning": null,
       "warning_reason": null,
@@ -60840,8 +61110,8 @@
           "url": "https://place.map.kakao.com/617154382"
         },
         "google": {
-          "count": 0,
-          "avg_rating": null,
+          "count": 2,
+          "avg_rating": 1.0,
           "recent_negative": 0,
           "place_id": null,
           "url": "https://www.google.com/maps/place/%EC%9C%A1%ED%9A%8C%EB%B0%94%EB%A5%B8%EC%97%B0%EC%96%B4+%EB%B6%80%EC%B2%9C%EC%97%AD%EC%A0%90/data=!4m6!3m5!1s0x357b7d8e33ebf23f:0xfac0f6842d973726!8m2!3d37.4860125!4d126.7809455!16s%2Fg%2F11kpgrt1fl?entry=ttu&g_ep=EgoyMDI2MDQyMi4wIKXMDSoASAFQAw%3D%3D"
@@ -60862,9 +61132,9 @@
         }
       },
       "totals": {
-        "reviews": 17,
-        "avg_rating": 3.0,
-        "negative": 3,
+        "reviews": 19,
+        "avg_rating": 2.56,
+        "negative": 5,
         "neutral": 1,
         "positive": 13
       },
@@ -61416,8 +61686,8 @@
           "url": "https://place.map.kakao.com/1018962448"
         },
         "google": {
-          "count": 0,
-          "avg_rating": null,
+          "count": 2,
+          "avg_rating": 2.5,
           "recent_negative": 0,
           "place_id": null,
           "url": "https://www.google.com/maps/place/%EC%9C%A1%ED%9A%8C%EB%B0%94%EB%A5%B8%EC%97%B0%EC%96%B4+%EC%84%B1%EB%82%A8%ED%83%9C%ED%8F%89%EC%A0%90/data=!4m6!3m5!1s0x357ca99f255e4ebf:0xe594754f7dc29b1b!8m2!3d37.4435048!4d127.1412901!16s%2Fg%2F11kskyr506?entry=ttu&g_ep=EgoyMDI2MDQyMi4wIKXMDSoASAFQAw%3D%3D"
@@ -61438,11 +61708,11 @@
         }
       },
       "totals": {
-        "reviews": 19,
-        "avg_rating": 2.0,
-        "negative": 7,
+        "reviews": 21,
+        "avg_rating": 2.09,
+        "negative": 8,
         "neutral": 0,
-        "positive": 12
+        "positive": 13
       },
       "warning": null,
       "warning_reason": null,
@@ -62322,8 +62592,8 @@
           "url": "https://place.map.kakao.com/1776545023"
         },
         "google": {
-          "count": 0,
-          "avg_rating": null,
+          "count": 4,
+          "avg_rating": 5.0,
           "recent_negative": 0,
           "place_id": null,
           "url": "https://www.google.com/maps/place/%EC%9C%A1%ED%9A%8C%EB%B0%94%EB%A5%B8%EC%97%B0%EC%96%B4+%EC%9E%A5%ED%95%AD%EC%A0%90/data=!4m6!3m5!1s0x357c85c088410103:0x9a52eb024d5edcae!8m2!3d37.6569562!4d126.7711965!16s%2Fg%2F11txhppcy4?entry=ttu&g_ep=EgoyMDI2MDQyMi4wIKXMDSoASAFQAw%3D%3D"
@@ -62344,11 +62614,11 @@
         }
       },
       "totals": {
-        "reviews": 29,
-        "avg_rating": 4.0,
+        "reviews": 33,
+        "avg_rating": 4.17,
         "negative": 5,
         "neutral": 0,
-        "positive": 24
+        "positive": 28
       },
       "warning": null,
       "warning_reason": null,
@@ -62952,8 +63222,8 @@
           "url": "https://place.map.kakao.com/652168565"
         },
         "google": {
-          "count": 0,
-          "avg_rating": null,
+          "count": 5,
+          "avg_rating": 4.4,
           "recent_negative": 0,
           "place_id": null,
           "url": "https://www.google.com/maps/place/%EC%9C%A1%ED%9A%8C%EB%B0%94%EB%A5%B8%EC%97%B0%EC%96%B4+%EC%84%9C%EC%82%B0%EC%A0%90/data=!4m6!3m5!1s0x357a5d2ab8744fef:0xd26c2aec47338f3!8m2!3d36.7654327!4d126.4523208!16s%2Fg%2F11l5tbdg6g?entry=ttu&g_ep=EgoyMDI2MDQyMi4wIKXMDSoASAFQAw%3D%3D"
@@ -62974,11 +63244,11 @@
         }
       },
       "totals": {
-        "reviews": 13,
-        "avg_rating": 4.33,
+        "reviews": 18,
+        "avg_rating": 4.38,
         "negative": 0,
-        "neutral": 1,
-        "positive": 12
+        "neutral": 2,
+        "positive": 16
       },
       "warning": null,
       "warning_reason": null,
@@ -63149,6 +63419,18 @@
       ],
       "all_reviews_meta": [
         {
+          "d": "2025-11-27",
+          "s": "중립",
+          "c": "google",
+          "r": 3.0
+        },
+        {
+          "d": "2025-07-30",
+          "s": "긍정",
+          "c": "google",
+          "r": 4.0
+        },
+        {
           "d": "2026-04-17",
           "s": "긍정",
           "c": "naver",
@@ -63234,8 +63516,8 @@
           "url": "https://place.map.kakao.com/474292860"
         },
         "google": {
-          "count": 0,
-          "avg_rating": null,
+          "count": 3,
+          "avg_rating": 4.33,
           "recent_negative": 0,
           "place_id": null,
           "url": "https://www.google.com/maps/place/%EC%9C%A1%ED%9A%8C%EB%B0%94%EB%A5%B8%EC%97%B0%EC%96%B4+%EA%B3%B5%EB%A6%89%EC%A0%90/data=!4m6!3m5!1s0x357cbb28feb6c3c3:0x16216dd2f49f6014!8m2!3d37.6185315!4d127.0762191!16s%2Fg%2F11sryj1wh9?entry=ttu&g_ep=EgoyMDI2MDQyMi4wIKXMDSoASAFQAw%3D%3D"
@@ -63256,11 +63538,11 @@
         }
       },
       "totals": {
-        "reviews": 21,
-        "avg_rating": 3.91,
+        "reviews": 24,
+        "avg_rating": 4.0,
         "negative": 2,
         "neutral": 1,
-        "positive": 18
+        "positive": 21
       },
       "warning": null,
       "warning_reason": null,
@@ -63810,8 +64092,8 @@
           "url": "https://place.map.kakao.com/685060670"
         },
         "google": {
-          "count": 0,
-          "avg_rating": null,
+          "count": 4,
+          "avg_rating": 4.0,
           "recent_negative": 0,
           "place_id": null,
           "url": "https://www.google.com/maps/place/%EC%9C%A1%ED%9A%8C%EB%B0%94%EB%A5%B8%EC%97%B0%EC%96%B4+%EA%B5%AC%ED%8C%8C%EB%B0%9C%EC%A0%90/data=!4m6!3m5!1s0x357c9768f4133b29:0x54de6bbffd2e576a!8m2!3d37.6393118!4d126.9191622!16s%2Fg%2F11v0xs2v13?entry=ttu&g_ep=EgoyMDI2MDQyMi4wIKXMDSoASAFQAw%3D%3D"
@@ -63832,11 +64114,11 @@
         }
       },
       "totals": {
-        "reviews": 25,
-        "avg_rating": 3.07,
-        "negative": 6,
+        "reviews": 29,
+        "avg_rating": 3.26,
+        "negative": 7,
         "neutral": 2,
-        "positive": 17
+        "positive": 20
       },
       "warning": null,
       "warning_reason": null,
@@ -64668,8 +64950,8 @@
           "url": "https://place.map.kakao.com/1986214633"
         },
         "google": {
-          "count": 0,
-          "avg_rating": null,
+          "count": 9,
+          "avg_rating": 4.67,
           "recent_negative": 0,
           "place_id": null,
           "url": "https://www.google.com/maps/place/%EC%9C%A1%ED%9A%8C%EB%B0%94%EB%A5%B8%EC%97%B0%EC%96%B4+%ED%8F%89%EC%B4%8C%EC%A0%90/data=!4m6!3m5!1s0x357b5f9ba6d618b1:0xa674a22a0f616d05!8m2!3d37.3829662!4d126.9609343!16s%2Fg%2F11k4s4vqj8?entry=ttu&g_ep=EgoyMDI2MDQyMi4wIKXMDSoASAFQAw%3D%3D"
@@ -64690,11 +64972,11 @@
         }
       },
       "totals": {
-        "reviews": 20,
-        "avg_rating": 3.9,
+        "reviews": 29,
+        "avg_rating": 4.26,
         "negative": 2,
         "neutral": 0,
-        "positive": 18
+        "positive": 27
       },
       "warning": null,
       "warning_reason": null,
@@ -64865,6 +65147,18 @@
       ],
       "all_reviews_meta": [
         {
+          "d": "2025-07-30",
+          "s": "긍정",
+          "c": "google",
+          "r": 5.0
+        },
+        {
+          "d": "2025-07-30",
+          "s": "긍정",
+          "c": "google",
+          "r": 5.0
+        },
+        {
           "d": "2026-04-25",
           "s": "긍정",
           "c": "naver",
@@ -64950,8 +65244,8 @@
           "url": "https://place.map.kakao.com/575799042"
         },
         "google": {
-          "count": 0,
-          "avg_rating": null,
+          "count": 4,
+          "avg_rating": 4.25,
           "recent_negative": 0,
           "place_id": null,
           "url": "https://www.google.com/maps/place/%EC%9C%A1%ED%9A%8C%EB%B0%94%EB%A5%B8%EC%97%B0%EC%96%B4/data=!4m6!3m5!1s0x357caf30c8050139:0x331c55c57f01c8fc!8m2!3d37.4748706!4d127.1420332!16s%2Fg%2F11tht6bksz?entry=ttu&g_ep=EgoyMDI2MDQyMi4wIKXMDSoASAFQAw%3D%3D"
@@ -64972,11 +65266,11 @@
         }
       },
       "totals": {
-        "reviews": 21,
-        "avg_rating": 3.09,
+        "reviews": 25,
+        "avg_rating": 3.4,
         "negative": 5,
-        "neutral": 0,
-        "positive": 16
+        "neutral": 1,
+        "positive": 19
       },
       "warning": null,
       "warning_reason": null,
@@ -65562,8 +65856,8 @@
           "url": "https://place.map.kakao.com/1748870140"
         },
         "google": {
-          "count": 0,
-          "avg_rating": null,
+          "count": 1,
+          "avg_rating": 4.0,
           "recent_negative": 0,
           "place_id": null,
           "url": "https://www.google.com/maps/place/%EC%9C%A1%ED%9A%8C%EB%B0%94%EB%A5%B8%EC%97%B0%EC%96%B4+%EA%B2%80%EB%8B%A8%EC%A0%90/data=!4m6!3m5!1s0x357b7d148d215599:0x6eb54248e8f23d13!8m2!3d37.593926!4d126.7113596!16s%2Fg%2F11v3jrl_1t?entry=ttu&g_ep=EgoyMDI2MDQyMi4wIKXMDSoASAFQAw%3D%3D"
@@ -65584,11 +65878,11 @@
         }
       },
       "totals": {
-        "reviews": 14,
-        "avg_rating": 3.25,
+        "reviews": 15,
+        "avg_rating": 3.4,
         "negative": 2,
         "neutral": 0,
-        "positive": 12
+        "positive": 13
       },
       "warning": null,
       "warning_reason": null,
@@ -66138,8 +66432,8 @@
           "url": "https://place.map.kakao.com/1081765123"
         },
         "google": {
-          "count": 0,
-          "avg_rating": null,
+          "count": 3,
+          "avg_rating": 5.0,
           "recent_negative": 0,
           "place_id": null,
           "url": "https://www.google.com/maps/place/%EC%9C%A1%ED%9A%8C%EB%B0%94%EB%A5%B8%EC%97%B0%EC%96%B4%EB%B3%B4%EB%9D%BC%EB%A7%A4%EC%A0%90/data=!4m6!3m5!1s0x357c9fbc9f8aeda5:0x1019b328f8056ce4!8m2!3d37.4913303!4d126.9273256!16s%2Fg%2F11scqgg4tw?entry=ttu&g_ep=EgoyMDI2MDQyMi4wIKXMDSoASAFQAw%3D%3D"
@@ -66160,11 +66454,11 @@
         }
       },
       "totals": {
-        "reviews": 23,
-        "avg_rating": 3.69,
+        "reviews": 26,
+        "avg_rating": 3.94,
         "negative": 4,
         "neutral": 1,
-        "positive": 18
+        "positive": 21
       },
       "warning": null,
       "warning_reason": null,
@@ -66339,6 +66633,12 @@
           "s": "부정",
           "c": "kakao",
           "r": 1.0
+        },
+        {
+          "d": "2025-08-29",
+          "s": "긍정",
+          "c": "google",
+          "r": 5.0
         },
         {
           "d": "2026-04-24",
@@ -66756,8 +67056,8 @@
           "url": "https://place.map.kakao.com/195157112"
         },
         "google": {
-          "count": 0,
-          "avg_rating": null,
+          "count": 3,
+          "avg_rating": 3.67,
           "recent_negative": 0,
           "place_id": null,
           "url": "https://www.google.com/maps/place/%EC%9C%A1%ED%9A%8C%EB%B0%94%EB%A5%B8%EC%97%B0%EC%96%B4+%ED%99%94%EA%B3%A1%EB%A9%94%EA%B0%80%EB%B0%95%EC%8A%A4%EC%A0%90/data=!4m6!3m5!1s0x357c9df69115340f:0x2ca40325ade22ae5!8m2!3d37.5405337!4d126.8375885!16s%2Fg%2F11kc7ypykn?entry=ttu&g_ep=EgoyMDI2MDQyMi4wIKXMDSoASAFQAw%3D%3D"
@@ -66778,11 +67078,11 @@
         }
       },
       "totals": {
-        "reviews": 20,
-        "avg_rating": 2.8,
+        "reviews": 23,
+        "avg_rating": 3.0,
         "negative": 5,
-        "neutral": 0,
-        "positive": 15
+        "neutral": 2,
+        "positive": 16
       },
       "warning": null,
       "warning_reason": null,
@@ -67056,8 +67356,8 @@
           "url": "https://place.map.kakao.com/719008860"
         },
         "google": {
-          "count": 0,
-          "avg_rating": null,
+          "count": 4,
+          "avg_rating": 4.75,
           "recent_negative": 0,
           "place_id": null,
           "url": "https://www.google.com/maps/place/%EC%9C%A1%ED%9A%8C%EB%B0%94%EB%A5%B8%EC%97%B0%EC%96%B4+%EC%8C%8D%EB%AC%B8%EC%A0%90/data=!4m6!3m5!1s0x357cbfa4678b2bef:0xbeb3cb32aa383e29!8m2!3d37.647384!4d127.0348312!16s%2Fg%2F11s3vkgygm?entry=ttu&g_ep=EgoyMDI2MDQyMi4wIKXMDSoASAFQAw%3D%3D"
@@ -67078,11 +67378,11 @@
         }
       },
       "totals": {
-        "reviews": 22,
-        "avg_rating": 3.83,
+        "reviews": 26,
+        "avg_rating": 4.06,
         "negative": 3,
         "neutral": 0,
-        "positive": 19
+        "positive": 23
       },
       "warning": null,
       "warning_reason": null,
@@ -67220,7 +67520,7 @@
         },
         {
           "date": "2026-04-19",
-          "count": 0
+          "count": 1
         },
         {
           "date": "2026-04-20",
@@ -67252,6 +67552,12 @@
         }
       ],
       "all_reviews_meta": [
+        {
+          "d": "2026-04-19",
+          "s": "긍정",
+          "c": "google",
+          "r": 4.0
+        },
         {
           "d": "2026-04-18",
           "s": "긍정",
@@ -67668,8 +67974,8 @@
           "url": "https://place.map.kakao.com/47980285"
         },
         "google": {
-          "count": 0,
-          "avg_rating": null,
+          "count": 4,
+          "avg_rating": 4.25,
           "recent_negative": 0,
           "place_id": null,
           "url": "https://www.google.com/maps/place/%EC%9C%A1%ED%9A%8C%EB%B0%94%EB%A5%B8%EC%97%B0%EC%96%B4+%EC%97%AD%EC%B4%8C%EC%A0%90/data=!4m6!3m5!1s0x357c997e982673af:0xd6412a7a319dcfc2!8m2!3d37.6072365!4d126.9216686!16s%2Fg%2F11t2zzmrq_?entry=ttu&g_ep=EgoyMDI2MDQyMi4wIKXMDSoASAFQAw%3D%3D"
@@ -67690,11 +67996,11 @@
         }
       },
       "totals": {
-        "reviews": 38,
+        "reviews": 42,
         "avg_rating": 4.25,
         "negative": 3,
         "neutral": 2,
-        "positive": 33
+        "positive": 37
       },
       "warning": null,
       "warning_reason": null,
@@ -67967,6 +68273,12 @@
           "r": 5.0
         },
         {
+          "d": "2025-06-30",
+          "s": "긍정",
+          "c": "google",
+          "r": 5.0
+        },
+        {
           "d": "2025-05-18",
           "s": "긍정",
           "c": "kakao",
@@ -68058,8 +68370,8 @@
           "url": "https://place.map.kakao.com/1692340722"
         },
         "google": {
-          "count": 0,
-          "avg_rating": null,
+          "count": 2,
+          "avg_rating": 5.0,
           "recent_negative": 0,
           "place_id": null,
           "url": "https://www.google.com/maps/place/%EC%9C%A1%ED%9A%8C%EB%B0%94%EB%A5%B8%EC%97%B0%EC%96%B4%EB%B4%89%EC%B2%9C%EC%A0%90/data=!4m6!3m5!1s0x357c9f8679ad987f:0x8de837fc82d4d382!8m2!3d37.4864983!4d126.9489137!16s%2Fg%2F11k3n594zd?entry=ttu&g_ep=EgoyMDI2MDQyMi4wIKXMDSoASAFQAw%3D%3D"
@@ -68080,11 +68392,11 @@
         }
       },
       "totals": {
-        "reviews": 15,
-        "avg_rating": 3.4,
+        "reviews": 17,
+        "avg_rating": 3.86,
         "negative": 2,
         "neutral": 0,
-        "positive": 13
+        "positive": 15
       },
       "warning": null,
       "warning_reason": null,
@@ -68123,12 +68435,12 @@
           "text": "가격이 올랐는데 육회양이 많이 줄었네요"
         },
         {
-          "channel": "kakao",
-          "date": "2025-09-27",
-          "rating": 1.0,
-          "sentiment": "부정",
-          "reviewer": ".",
-          "text": "해당 가게에서 배달 주문을 해서 먹던 와중 초밥 밥알에 붙어있는 날카로운 플라스틱 조각을 발견하였습니다. 해당 주문건에 대해 전체 취소를 요구하였으나, 사장은 배달의 민족 수수료도 비싸고 또 본인 가게에서 취급하지 …"
+          "channel": "google",
+          "date": "2025-09-28",
+          "rating": 5.0,
+          "sentiment": "긍정",
+          "reviewer": "박시연",
+          "text": "항상 맛있게 잘 먹고 있습니다. 감사합니다 😊… 주문 유형 테이크아웃…"
         }
       ],
       "trend_30d": [
@@ -68255,6 +68567,12 @@
       ],
       "all_reviews_meta": [
         {
+          "d": "2025-09-28",
+          "s": "긍정",
+          "c": "google",
+          "r": 5.0
+        },
+        {
           "d": "2025-09-27",
           "s": "부정",
           "c": "kakao",
@@ -68316,8 +68634,8 @@
           "url": "https://place.map.kakao.com/635357943"
         },
         "google": {
-          "count": 0,
-          "avg_rating": null,
+          "count": 15,
+          "avg_rating": 3.73,
           "recent_negative": 0,
           "place_id": null,
           "url": "https://www.google.com/maps/place/%EC%9C%A1%ED%9A%8C%EB%B0%94%EB%A5%B8%EC%97%B0%EC%96%B4/data=!4m6!3m5!1s0x357af9533d9c7b95:0xb86af7decb53502f!8m2!3d36.8894252!4d126.6435562!16s%2Fg%2F11frsxx_bp?entry=ttu&g_ep=EgoyMDI2MDQyMi4wIKXMDSoASAFQAw%3D%3D"
@@ -68338,11 +68656,11 @@
         }
       },
       "totals": {
-        "reviews": 15,
-        "avg_rating": 4.8,
-        "negative": 0,
-        "neutral": 0,
-        "positive": 15
+        "reviews": 30,
+        "avg_rating": 4.0,
+        "negative": 2,
+        "neutral": 3,
+        "positive": 25
       },
       "warning": null,
       "warning_reason": null,
@@ -68604,9 +68922,9 @@
           "url": "https://place.map.kakao.com/761922447"
         },
         "google": {
-          "count": 0,
-          "avg_rating": null,
-          "recent_negative": 0,
+          "count": 8,
+          "avg_rating": 3.75,
+          "recent_negative": 1,
           "place_id": null,
           "url": "https://www.google.com/maps/search/%EC%9C%A1%ED%9A%8C%EB%B0%94%EB%A5%B8%EC%97%B0%EC%96%B4+%EA%B3%84%EC%82%B0%EC%A0%90?entry=ttu&g_ep=EgoyMDI2MDQyMi4wIKXMDSoASAFQAw%3D%3D"
         },
@@ -68626,16 +68944,24 @@
         }
       },
       "totals": {
-        "reviews": 19,
-        "avg_rating": 3.67,
-        "negative": 2,
-        "neutral": 1,
-        "positive": 16
+        "reviews": 27,
+        "avg_rating": 3.71,
+        "negative": 3,
+        "neutral": 4,
+        "positive": 20
       },
       "warning": null,
       "warning_reason": null,
       "recent7_negative": 0,
       "recent_samples": [
+        {
+          "channel": "google",
+          "date": "2026-04-19",
+          "rating": 1.0,
+          "sentiment": "부정",
+          "reviewer": "김명옥",
+          "text": "식사 유형 저녁 식사…"
+        },
         {
           "channel": "kakao",
           "date": "2026-03-05",
@@ -68667,14 +68993,6 @@
           "sentiment": "긍정",
           "reviewer": "해인맘9",
           "text": "건강하게 한끼 뚝딱 하기 좋아요~~ 부드럽게 술술 잘 넘어가요^^"
-        },
-        {
-          "channel": "naver",
-          "date": "2025-09-12",
-          "rating": null,
-          "sentiment": "긍정",
-          "reviewer": "jjhh95",
-          "text": "음식이 너무 맛있어요!"
         }
       ],
       "trend_30d": [
@@ -68768,7 +69086,7 @@
         },
         {
           "date": "2026-04-19",
-          "count": 0
+          "count": 1
         },
         {
           "date": "2026-04-20",
@@ -68801,10 +69119,22 @@
       ],
       "all_reviews_meta": [
         {
+          "d": "2026-04-19",
+          "s": "부정",
+          "c": "google",
+          "r": 1.0
+        },
+        {
           "d": "2026-03-05",
           "s": "중립",
           "c": "kakao",
           "r": 3.0
+        },
+        {
+          "d": "2025-06-30",
+          "s": "긍정",
+          "c": "google",
+          "r": 5.0
         },
         {
           "d": "2026-03-02",
@@ -69114,8 +69444,8 @@
           "url": "https://place.map.kakao.com/1735636607"
         },
         "google": {
-          "count": 0,
-          "avg_rating": null,
+          "count": 6,
+          "avg_rating": 3.83,
           "recent_negative": 0,
           "place_id": null,
           "url": "https://www.google.com/maps/place/%EC%9C%A1%ED%9A%8C%EB%B0%94%EB%A5%B8%EC%97%B0%EC%96%B4+%EA%B0%88%EC%82%B0%EC%A0%90/data=!4m6!3m5!1s0x357b7dbc8f60521b:0xada0367417ea42ca!8m2!3d37.5151439!4d126.725801!16s%2Fg%2F11tmx_ywc4?entry=ttu&g_ep=EgoyMDI2MDQyMi4wIKXMDSoASAFQAw%3D%3D"
@@ -69136,11 +69466,11 @@
         }
       },
       "totals": {
-        "reviews": 19,
-        "avg_rating": 3.89,
-        "negative": 2,
-        "neutral": 1,
-        "positive": 16
+        "reviews": 25,
+        "avg_rating": 3.87,
+        "negative": 3,
+        "neutral": 2,
+        "positive": 20
       },
       "warning": null,
       "warning_reason": null,
@@ -69402,8 +69732,8 @@
           "url": "https://place.map.kakao.com/1335338967"
         },
         "google": {
-          "count": 0,
-          "avg_rating": null,
+          "count": 1,
+          "avg_rating": 4.0,
           "recent_negative": 0,
           "place_id": null,
           "url": "https://www.google.com/maps/place/%EC%9C%A1%ED%9A%8C%EB%B0%94%EB%A5%B8%EC%97%B0%EC%96%B4+%EC%97%AD%EB%B6%81%EC%A0%90/data=!4m6!3m5!1s0x357b51000308cc1d:0xa62130e5b4c2c35!8m2!3d37.2319432!4d127.1866554!16s%2Fg%2F11y6jc5rlc?entry=ttu&g_ep=EgoyMDI2MDQyMi4wIKXMDSoASAFQAw%3D%3D"
@@ -69424,11 +69754,11 @@
         }
       },
       "totals": {
-        "reviews": 14,
-        "avg_rating": 5.0,
+        "reviews": 15,
+        "avg_rating": 4.8,
         "negative": 0,
         "neutral": 0,
-        "positive": 14
+        "positive": 15
       },
       "warning": null,
       "warning_reason": null,
@@ -69467,12 +69797,12 @@
           "text": "음식이 맛있어요"
         },
         {
-          "channel": "naver",
-          "date": "2025-06-13",
-          "rating": null,
+          "channel": "google",
+          "date": "2025-06-30",
+          "rating": 4.0,
           "sentiment": "긍정",
-          "reviewer": "동작도슨트",
-          "text": "용인역북편 가족픽 나는 광고를 하는 체인을 피하는 편, 보통 광고 후 가격이 올라가기에.딸의 선택. 요즘 막걸리와 육회.연어 친구랑 자주 가는 곳이라 함. 우리는 식사 3인분 새우튀김 새우튀김은 바삭함 가성비 아주 …"
+          "reviewer": "이랑신",
+          "text": "식사 유형 1인당…"
         }
       ],
       "trend_30d": [
@@ -69603,6 +69933,12 @@
           "s": "긍정",
           "c": "kakao",
           "r": 5.0
+        },
+        {
+          "d": "2025-06-30",
+          "s": "긍정",
+          "c": "google",
+          "r": 4.0
         },
         {
           "d": "2026-04-03",
@@ -69972,8 +70308,8 @@
           "url": "https://place.map.kakao.com/616408542"
         },
         "google": {
-          "count": 0,
-          "avg_rating": null,
+          "count": 4,
+          "avg_rating": 3.25,
           "recent_negative": 0,
           "place_id": null,
           "url": "https://www.google.com/maps/place/%EC%9C%A1%ED%9A%8C%EB%B0%94%EB%A5%B8%EC%97%B0%EC%96%B4+%EC%A7%80%ED%83%80%EC%9B%8C%EB%AA%B0%EC%A0%90/data=!4m6!3m5!1s0x357c9fa721fc57dd:0x5d007ecfc3a4536d!8m2!3d37.4802017!4d126.8951205!16s%2Fg%2F11rtf57lkt?entry=ttu&g_ep=EgoyMDI2MDQyMi4wIKXMDSoASAFQAw%3D%3D"
@@ -69994,11 +70330,11 @@
         }
       },
       "totals": {
-        "reviews": 21,
-        "avg_rating": 2.91,
-        "negative": 5,
+        "reviews": 25,
+        "avg_rating": 3.0,
+        "negative": 7,
         "neutral": 0,
-        "positive": 16
+        "positive": 18
       },
       "warning": null,
       "warning_reason": null,
@@ -70584,8 +70920,8 @@
           "url": "https://place.map.kakao.com/2133655945"
         },
         "google": {
-          "count": 0,
-          "avg_rating": null,
+          "count": 1,
+          "avg_rating": 5.0,
           "recent_negative": 0,
           "place_id": null,
           "url": "https://www.google.com/maps/place/%EC%9C%A1%ED%9A%8C%EB%B0%94%EB%A5%B8%EC%97%B0%EC%96%B4%EB%B6%80%EC%B2%9C%EC%A4%91%EB%8F%99%EC%A0%90/data=!4m6!3m5!1s0x357b7d470e1709fd:0xa0a230a99c0a693d!8m2!3d37.5050153!4d126.7678607!16s%2Fg%2F11tmy38h7f?entry=ttu&g_ep=EgoyMDI2MDQyMi4wIKXMDSoASAFQAw%3D%3D"
@@ -70606,11 +70942,11 @@
         }
       },
       "totals": {
-        "reviews": 18,
-        "avg_rating": 3.88,
+        "reviews": 19,
+        "avg_rating": 4.0,
         "negative": 1,
         "neutral": 1,
-        "positive": 16
+        "positive": 17
       },
       "warning": null,
       "warning_reason": null,
@@ -70866,8 +71202,8 @@
           "url": "https://place.map.kakao.com/911738140"
         },
         "google": {
-          "count": 0,
-          "avg_rating": null,
+          "count": 17,
+          "avg_rating": 4.06,
           "recent_negative": 0,
           "place_id": null,
           "url": "https://www.google.com/maps/place/%EC%9C%A1%ED%9A%8C%EB%B0%94%EB%A5%B8%EC%97%B0%EC%96%B4%EA%B2%BD%EB%B3%B5%EA%B6%81%EC%A0%90/data=!4m6!3m5!1s0x357ca2be281798b9:0xbe77be846b347987!8m2!3d37.5778177!4d126.9722707!16s%2Fg%2F11pvfx1y1l?entry=ttu&g_ep=EgoyMDI2MDQyMi4wIKXMDSoASAFQAw%3D%3D"
@@ -70888,11 +71224,11 @@
         }
       },
       "totals": {
-        "reviews": 35,
-        "avg_rating": 3.12,
-        "negative": 9,
-        "neutral": 3,
-        "positive": 23
+        "reviews": 52,
+        "avg_rating": 3.5,
+        "negative": 12,
+        "neutral": 4,
+        "positive": 36
       },
       "warning": null,
       "warning_reason": null,
@@ -71079,6 +71415,12 @@
           "s": "부정",
           "c": "kakao",
           "r": 2.0
+        },
+        {
+          "d": "2025-10-28",
+          "s": "긍정",
+          "c": "google",
+          "r": 5.0
         },
         {
           "d": "2025-10-02",
@@ -72060,8 +72402,8 @@
           "url": "https://place.map.kakao.com/343859840"
         },
         "google": {
-          "count": 0,
-          "avg_rating": null,
+          "count": 2,
+          "avg_rating": 5.0,
           "recent_negative": 0,
           "place_id": null,
           "url": "https://www.google.com/maps/place/%EC%9C%A1%ED%9A%8C%EB%B0%94%EB%A5%B8%EC%97%B0%EC%96%B4%EB%A9%B4%EB%AA%A9%EC%A0%90/data=!4m6!3m5!1s0x357cbafe8ec43cb9:0xe666b240206004c5!8m2!3d37.5878166!4d127.0860325!16s%2Fg%2F11k3n7kbbw?entry=ttu&g_ep=EgoyMDI2MDQyMi4wIKXMDSoASAFQAw%3D%3D"
@@ -72082,11 +72424,11 @@
         }
       },
       "totals": {
-        "reviews": 16,
-        "avg_rating": 3.83,
+        "reviews": 18,
+        "avg_rating": 4.12,
         "negative": 1,
         "neutral": 2,
-        "positive": 13
+        "positive": 15
       },
       "warning": null,
       "warning_reason": null,
@@ -72256,6 +72598,12 @@
         }
       ],
       "all_reviews_meta": [
+        {
+          "d": "2026-02-25",
+          "s": "긍정",
+          "c": "google",
+          "r": 5.0
+        },
         {
           "d": "2026-01-23",
           "s": "부정",
@@ -72636,8 +72984,8 @@
           "url": "https://place.map.kakao.com/1735735678"
         },
         "google": {
-          "count": 0,
-          "avg_rating": null,
+          "count": 7,
+          "avg_rating": 3.86,
           "recent_negative": 0,
           "place_id": null,
           "url": "https://www.google.com/maps/place/%EC%9C%A1%ED%9A%8C%EB%B0%94%EB%A5%B8%EC%97%B0%EC%96%B4/data=!4m6!3m5!1s0x357c98ea5b2c1c13:0xdbc25cb350da4503!8m2!3d37.5580229!4d126.9292699!16s%2Fg%2F11scqkjvfz?entry=ttu&g_ep=EgoyMDI2MDQyMi4wIKXMDSoASAFQAw%3D%3D"
@@ -72658,11 +73006,11 @@
         }
       },
       "totals": {
-        "reviews": 36,
-        "avg_rating": 3.33,
-        "negative": 10,
-        "neutral": 2,
-        "positive": 24
+        "reviews": 43,
+        "avg_rating": 3.44,
+        "negative": 11,
+        "neutral": 3,
+        "positive": 29
       },
       "warning": null,
       "warning_reason": null,
@@ -72861,6 +73209,12 @@
           "s": "부정",
           "c": "kakao",
           "r": 1.0
+        },
+        {
+          "d": "2025-07-30",
+          "s": "긍정",
+          "c": "google",
+          "r": 5.0
         },
         {
           "d": "2025-06-10",
@@ -73224,75 +73578,11 @@
     },
     {
       "channel": "naver",
-      "store": "육회바른연어 길동점",
+      "store": "육회바른연어 순천연향점",
       "date": "2026-04-25",
       "rating": null,
       "sentiment": "긍정",
-      "text": "양도 많고 가성비도 좋네요~"
-    },
-    {
-      "channel": "naver",
-      "store": "육회바른연어 의정부행복로점",
-      "date": "2026-04-25",
-      "rating": null,
-      "sentiment": "긍정",
-      "text": "육회 엄청 신선하고 맛있어요! 매장도 깔끔하고 메뉴도 다양해서 좋았습니다"
-    },
-    {
-      "channel": "naver",
-      "store": "육회바른연어 고덕로데오점",
-      "date": "2026-04-25",
-      "rating": null,
-      "sentiment": "긍정",
-      "text": "집 앞에 이런곳이 생겨 좋아요! 인테리어 포근하고 음식 맛있습니다!"
-    },
-    {
-      "channel": "naver",
-      "store": "육회바른연어 고덕로데오점",
-      "date": "2026-04-25",
-      "rating": null,
-      "sentiment": "긍정",
-      "text": "매장깨끗하고 직원분들도 친절하네요~ 자주 들를께요~"
-    },
-    {
-      "channel": "naver",
-      "store": "육회바른연어 이대역점",
-      "date": "2026-04-25",
-      "rating": null,
-      "sentiment": "긍정",
-      "text": "친절하고 매장이 깨끗해요"
-    },
-    {
-      "channel": "naver",
-      "store": "육회바른연어 이대역점",
-      "date": "2026-04-25",
-      "rating": null,
-      "sentiment": "긍정",
-      "text": "너무 맛있어용 🥰"
-    },
-    {
-      "channel": "naver",
-      "store": "육회바른연어 이대역점",
-      "date": "2026-04-25",
-      "rating": null,
-      "sentiment": "긍정",
-      "text": "들기름막국수가 그렇게 맛있다길래 시켜봤습니다!!! 명성대로 정말 맛있네요..."
-    },
-    {
-      "channel": "naver",
-      "store": "육회바른연어 안양호계점",
-      "date": "2026-04-25",
-      "rating": null,
-      "sentiment": "긍정",
-      "text": "친구랑 간단하게 먹으러 왔는데 가성비가 좋아요! 여기 자주 시켜먹었는데 매장에서 먹는 건 오랜만이라 새로워요ㅎㅎ!"
-    },
-    {
-      "channel": "naver",
-      "store": "육회바른연어 안양호계점",
-      "date": "2026-04-25",
-      "rating": null,
-      "sentiment": "긍정",
-      "text": "매장도 깨끗하고 간단하게 저녁 먹기 좋은 거 같아요 맛있어욤"
+      "text": "순천시 맛집 연향동 맛집"
     },
     {
       "channel": "naver",
@@ -73336,31 +73626,71 @@
     },
     {
       "channel": "naver",
-      "store": "육회바른연어 수락산역점",
+      "store": "육회바른연어 경희대점",
       "date": "2026-04-25",
       "rating": null,
       "sentiment": "긍정",
-      "text": "육회초밥 너무 맛잇어요!!"
+      "text": "리뷰이벤트참여하고 육회초밥 무료로 꼭 받으세용"
     },
     {
       "channel": "naver",
-      "store": "육회바른연어 이대역점",
+      "store": "육회바른연어 경희대점",
       "date": "2026-04-25",
       "rating": null,
       "sentiment": "긍정",
-      "text": "음식이 맛있어요+1"
+      "text": "음식이 맛있어요+3"
     },
     {
       "channel": "naver",
-      "store": "육회바른연어 신풍1호점",
+      "store": "육회바른연어 용인한숲시티점",
       "date": "2026-04-25",
       "rating": null,
       "sentiment": "긍정",
-      "text": "오늘도 잘 먹고 갑니다!!"
+      "text": "너무 맛있어용😘"
     },
     {
       "channel": "naver",
-      "store": "육회바른연어 이대역점",
+      "store": "육회바른연어 경산사동점",
+      "date": "2026-04-25",
+      "rating": null,
+      "sentiment": "긍정",
+      "text": "너무 맛있어서 일주일에 한 번씩은 꼭 오는 것 같아요 사장님도 엄청 착하세요 ㅎㅅㅎ"
+    },
+    {
+      "channel": "naver",
+      "store": "육회바른연어 경산사동점",
+      "date": "2026-04-25",
+      "rating": null,
+      "sentiment": "긍정",
+      "text": "사동 최고 맛집👍 육덮 육쫄 초밥 유부초밥 싹 다 맛있어요 사장님도 친절하시구 ㅎㅎ 맨날 옵니다 여기 ㅎㅎ 배달 시켜먹어도 맛있더라구여 ㅎㅎ"
+    },
+    {
+      "channel": "naver",
+      "store": "육회바른연어 경산사동점",
+      "date": "2026-04-25",
+      "rating": null,
+      "sentiment": "긍정",
+      "text": "유와아아앙 맛있어요"
+    },
+    {
+      "channel": "naver",
+      "store": "육회바른연어 천안터미널점",
+      "date": "2026-04-25",
+      "rating": null,
+      "sentiment": "긍정",
+      "text": "진짜 싱싱하고고소하고 맛있어용 ㅎㅎ 맨날 육바연막 먹어용"
+    },
+    {
+      "channel": "naver",
+      "store": "육회바른연어 배곧중앙점",
+      "date": "2026-04-25",
+      "rating": null,
+      "sentiment": "긍정",
+      "text": "혼밥하기 좋은곳이에요"
+    },
+    {
+      "channel": "naver",
+      "store": "육회바른연어 오산대역점",
       "date": "2026-04-25",
       "rating": null,
       "sentiment": "긍정",
@@ -73368,39 +73698,79 @@
     },
     {
       "channel": "naver",
-      "store": "육회바른연어 신풍1호점",
+      "store": "육회바른연어 대전시청역점",
       "date": "2026-04-25",
       "rating": null,
       "sentiment": "긍정",
-      "text": "기본 안주가 좋아요+4"
+      "text": "ㅏㅅ잇어요맛잇어요"
     },
     {
       "channel": "naver",
-      "store": "육회바른연어 신풍1호점",
+      "store": "육회바른연어 대전시청역점",
       "date": "2026-04-25",
       "rating": null,
       "sentiment": "긍정",
-      "text": "너무 맛있어요!! 점심특선 최고🙌🙌🙌"
+      "text": "점심특선 가성비 좋아여 메뉴가 다양해서 육회나 연어 먹고 싶을때 오기 좋아용"
     },
     {
       "channel": "naver",
-      "store": "육회바른연어 의정부행복로점",
+      "store": "육회바른연어 대전시청역점",
       "date": "2026-04-25",
       "rating": null,
       "sentiment": "긍정",
-      "text": "오프라인 매장도 엄청 깔끔 합니다"
+      "text": "명란비빔우동 신메뉴라 기대했는데 맛있었어요"
     },
     {
       "channel": "naver",
-      "store": "육회바른연어 광주첨단중앙점",
+      "store": "육회바른연어 대전시청역점",
       "date": "2026-04-25",
       "rating": null,
       "sentiment": "긍정",
-      "text": "친절하시고 양도 많아요!!"
+      "text": "음식 맛있어서 또 왔어요"
     },
     {
       "channel": "naver",
-      "store": "육회바른연어 신풍1호점",
+      "store": "육회바른연어 대전시청역점",
+      "date": "2026-04-25",
+      "rating": null,
+      "sentiment": "긍정",
+      "text": "음식이 맛있어요+1"
+    },
+    {
+      "channel": "naver",
+      "store": "육회바른연어 대전시청역점",
+      "date": "2026-04-25",
+      "rating": null,
+      "sentiment": "긍정",
+      "text": "인테리어가 멋져요+3"
+    },
+    {
+      "channel": "naver",
+      "store": "육회바른연어 대전시청역점",
+      "date": "2026-04-25",
+      "rating": null,
+      "sentiment": "긍정",
+      "text": "매장이 깔끔하고 음식도 깔끔하게 나왔습니다. 가격대 구성이 대만족.. 아이등과 가볍게 식사하기 너무좋아요. ㅎ"
+    },
+    {
+      "channel": "naver",
+      "store": "육회바른연어 대전시청역점",
+      "date": "2026-04-25",
+      "rating": null,
+      "sentiment": "긍정",
+      "text": "깔끔하고 맛있어요~!!"
+    },
+    {
+      "channel": "naver",
+      "store": "육회바른연어 잠실점",
+      "date": "2026-04-25",
+      "rating": null,
+      "sentiment": "긍정",
+      "text": "잠실역맛집, 신천동 맛집"
+    },
+    {
+      "channel": "naver",
+      "store": "육회바른연어 대전시청역점",
       "date": "2026-04-25",
       "rating": null,
       "sentiment": "긍정",
@@ -73408,11 +73778,91 @@
     },
     {
       "channel": "naver",
-      "store": "육회바른연어 청라국제도시점",
+      "store": "육회바른연어 대전시청역점",
       "date": "2026-04-25",
       "rating": null,
       "sentiment": "긍정",
-      "text": "매번 포장해서 먹다가 매장 와서"
+      "text": "음식이 늦게 나와요 지금도 기다리는중ㅜ"
+    },
+    {
+      "channel": "naver",
+      "store": "육회바른연어 호매실점",
+      "date": "2026-04-25",
+      "rating": null,
+      "sentiment": "긍정",
+      "text": "처음오는곳인데 음청맛나고 초밥 and 덮밥까지!"
+    },
+    {
+      "channel": "naver",
+      "store": "육회바른연어 안양호계점",
+      "date": "2026-04-25",
+      "rating": null,
+      "sentiment": "긍정",
+      "text": "매장도 깨끗하고 간단하게 저녁 먹기 좋은 거 같아요 맛있어욤"
+    },
+    {
+      "channel": "naver",
+      "store": "육회바른연어 안양호계점",
+      "date": "2026-04-25",
+      "rating": null,
+      "sentiment": "긍정",
+      "text": "친구랑 간단하게 먹으러 왔는데 가성비가 좋아요! 여기 자주 시켜먹었는데 매장에서 먹는 건 오랜만이라 새로워요ㅎㅎ!"
+    },
+    {
+      "channel": "naver",
+      "store": "육회바른연어 경희대점",
+      "date": "2026-04-25",
+      "rating": null,
+      "sentiment": "긍정",
+      "text": "육회바른연어 맛있고 조아요 소스도 맛있고 신선해요!"
+    },
+    {
+      "channel": "naver",
+      "store": "육회바른연어 경희대점",
+      "date": "2026-04-25",
+      "rating": null,
+      "sentiment": "긍정",
+      "text": "훔 너무 마싯네요오 소스맛도 사기인듯!"
+    },
+    {
+      "channel": "naver",
+      "store": "육회바른연어 부산장산점",
+      "date": "2026-04-25",
+      "rating": null,
+      "sentiment": "긍정",
+      "text": "평소 육회랑 연어 즐겨 먹는 편인데 육바연 장산점에서 배불리 먹었어요 ㅜㅅㅜ 직원 분들도 친절하시고 건물 내부도 깨끗했어요 육회랑 연어는 엄청 신선했습니다!!"
+    },
+    {
+      "channel": "naver",
+      "store": "육회바른연어 범계역점",
+      "date": "2026-04-25",
+      "rating": null,
+      "sentiment": "긍정",
+      "text": "음식이 맛있어서 자주 와요."
+    },
+    {
+      "channel": "naver",
+      "store": "육회바른연어 범계역점",
+      "date": "2026-04-25",
+      "rating": null,
+      "sentiment": "긍정",
+      "text": "음식이 맛있어요"
+    },
+    {
+      "channel": "naver",
+      "store": "육회바른연어 청주강서점",
+      "date": "2026-04-25",
+      "rating": null,
+      "sentiment": "긍정",
+      "text": "홀에서 먹었는데 분위기도 깔끔하고 음식 나오는 속도도 빨라서 좋았어요🙏🏻"
+    },
+    {
+      "channel": "naver",
+      "store": "육회바른연어 청주강서점",
+      "date": "2026-04-25",
+      "rating": null,
+      "sentiment": "긍정",
+      "text": "매장이 깔끔하고 쾌적해요. 음식도 빨리 나와요!"
     },
     {
       "channel": "naver",
@@ -73432,83 +73882,27 @@
     },
     {
       "channel": "naver",
-      "store": "육회바른연어 부천옥길점",
+      "store": "육회바른연어 경북대점",
       "date": "2026-04-25",
       "rating": null,
       "sentiment": "긍정",
-      "text": "육회가 신선하고 맛나요"
+      "text": "연어랑 육회 진짜 맛있어요 3단 변신 초밥도 맛있어용 추천합니다!!!!"
     },
     {
       "channel": "naver",
-      "store": "육회바른연어 부천옥길점",
+      "store": "육회바른연어 부산 양정제일점",
       "date": "2026-04-25",
       "rating": null,
       "sentiment": "긍정",
-      "text": "맛있어요. 양 많아요"
+      "text": "사장님도 친절하시고 육회메뉴도 신선하고"
     },
     {
       "channel": "naver",
-      "store": "육회바른연어 부천옥길점",
+      "store": "육회바른연어 부산 양정제일점",
       "date": "2026-04-25",
       "rating": null,
       "sentiment": "긍정",
-      "text": "신메뉴 맛있어요!"
-    },
-    {
-      "channel": "naver",
-      "store": "육회바른연어 루원시티점",
-      "date": "2026-04-25",
-      "rating": null,
-      "sentiment": "긍정",
-      "text": "맨날 배달로만 시켜먹다가 매장에서 처음 먹어요! 맛있었습니당ㅎㅎ"
-    },
-    {
-      "channel": "naver",
-      "store": "육회바른연어 루원시티점",
-      "date": "2026-04-25",
-      "rating": null,
-      "sentiment": "긍정",
-      "text": "기본 안주가 좋아요+4"
-    },
-    {
-      "channel": "naver",
-      "store": "육회바른연어 루원시티점",
-      "date": "2026-04-25",
-      "rating": null,
-      "sentiment": "긍정",
-      "text": "너무 맛잇어여 맛에 비해 가격이 싸서 부담없이 먹기 조아요"
-    },
-    {
-      "channel": "naver",
-      "store": "육회바른연어 루원시티점",
-      "date": "2026-04-25",
-      "rating": null,
-      "sentiment": "긍정",
-      "text": "어ㅏㄴ전 맛있어용!!"
-    },
-    {
-      "channel": "naver",
-      "store": "육회바른연어 루원시티점",
-      "date": "2026-04-25",
-      "rating": null,
-      "sentiment": "긍정",
-      "text": "음식이 맛있어요+3"
-    },
-    {
-      "channel": "naver",
-      "store": "육회바른연어 루원시티점",
-      "date": "2026-04-25",
-      "rating": null,
-      "sentiment": "긍정",
-      "text": "특별한 메뉴가 있어요+2"
-    },
-    {
-      "channel": "naver",
-      "store": "육회바른연어 부천옥길점",
-      "date": "2026-04-25",
-      "rating": null,
-      "sentiment": "긍정",
-      "text": "양도 괜찮고 맛도 좋아요! 육회랑 연어 신선해서 잘 먹었습니다. 다음에 또 올게요"
+      "text": "늘 먹으러 오는 육바연 행복해요"
     },
     {
       "channel": "naver",
@@ -73520,15 +73914,39 @@
     },
     {
       "channel": "naver",
-      "store": "육회바른연어 부천옥길점",
+      "store": "육회바른연어 부평시장역점",
       "date": "2026-04-25",
       "rating": null,
       "sentiment": "긍정",
-      "text": "소스도 맛있고 조합이 환상입니다~ 가족끼리와서 잘 즐기고갑니다!"
+      "text": "사장님이 친절하시고 다른 지점 육바연보다 음식이 더 맛있습니다 가성비 최고!!!"
     },
     {
       "channel": "naver",
-      "store": "육회바른연어 남악신도시점",
+      "store": "육회바른연어 부산 대연못골점",
+      "date": "2026-04-25",
+      "rating": null,
+      "sentiment": "긍정",
+      "text": "육회초밥 너무 맛있어요 먹어도먹어도안질려서 정말 자주 먹습니다 육연덮밥도 만족합니다 얼그레이하이볼도 너무 맛있어요 다음에 또 오겠습니다"
+    },
+    {
+      "channel": "naver",
+      "store": "육회바른연어 사당제일점",
+      "date": "2026-04-25",
+      "rating": null,
+      "sentiment": "긍정",
+      "text": "점심저녁 가격좋고 맛도 좋아서 자주가는 곳입니다 ㅎㅎ"
+    },
+    {
+      "channel": "naver",
+      "store": "육회바른연어 대흥역점",
+      "date": "2026-04-25",
+      "rating": null,
+      "sentiment": "긍정",
+      "text": "맨날 저녁에 와서 몰랐는데 점심 특선도 있네요 ㅎㅎ"
+    },
+    {
+      "channel": "naver",
+      "store": "육회바른연어 대흥역점",
       "date": "2026-04-25",
       "rating": null,
       "sentiment": "긍정",
@@ -73536,83 +73954,19 @@
     },
     {
       "channel": "naver",
-      "store": "육회바른연어 부천옥길점",
+      "store": "육회바른연어 대흥역점",
       "date": "2026-04-25",
       "rating": null,
       "sentiment": "긍정",
-      "text": "진짜 맛있고 신선한 것 같아요! 육회바른연어 최고!"
+      "text": "불닭연어덮밥세트를 점심특선으로 먹으면 연어초밥 두조각도 함께 먹을 수 있어서 좋고, 연어가 신선해서 항상 맛있게 먹고 있습니다."
     },
     {
       "channel": "naver",
-      "store": "육회바른연어 부천옥길점",
+      "store": "육회바른연어 대흥역점",
       "date": "2026-04-25",
       "rating": null,
       "sentiment": "긍정",
-      "text": "육회랑 연어를 너무너무 좋아하는데, 육바연 만큼 재료도 신선하고 가성비 있게 먹을 수 있는 곳이 없는거 같아요. 특히 부천옥길점은 매장도 너무 깔끔하고 키오스크와 셀프바 이용으로 더 편리하게 이용 할 수 있다는 점이…"
-    },
-    {
-      "channel": "naver",
-      "store": "육회바른연어 천안신불당시청점",
-      "date": "2026-04-25",
-      "rating": null,
-      "sentiment": "긍정",
-      "text": "혼술하기 좋아요"
-    },
-    {
-      "channel": "naver",
-      "store": "육회바른연어 청라국제도시점",
-      "date": "2026-04-25",
-      "rating": null,
-      "sentiment": "긍정",
-      "text": "음식이 맛있어요+1"
-    },
-    {
-      "channel": "naver",
-      "store": "육회바른연어 신풍1호점",
-      "date": "2026-04-25",
-      "rating": null,
-      "sentiment": "긍정",
-      "text": "다 맛있긴한데 여기 육회초밥이 진짜 개맛있어요 ㅠㅠ ㅊㅊ"
-    },
-    {
-      "channel": "naver",
-      "store": "육회바른연어 신풍1호점",
-      "date": "2026-04-25",
-      "rating": null,
-      "sentiment": "긍정",
-      "text": "너어엉무마싯어요!!!"
-    },
-    {
-      "channel": "naver",
-      "store": "육회바른연어 영남대점",
-      "date": "2026-04-25",
-      "rating": null,
-      "sentiment": "긍정",
-      "text": "음식이 맛있어요"
-    },
-    {
-      "channel": "naver",
-      "store": "육회바른연어 수원종합운동장점",
-      "date": "2026-04-25",
-      "rating": null,
-      "sentiment": "긍정",
-      "text": "음식도 맛있고 분위기도 좋고 깔끔해요!"
-    },
-    {
-      "channel": "naver",
-      "store": "육회바른연어 화양점",
-      "date": "2026-04-25",
-      "rating": null,
-      "sentiment": "긍정",
-      "text": "인테리어가 멋져요+3"
-    },
-    {
-      "channel": "naver",
-      "store": "육회바른연어 광주 봉선중앙점",
-      "date": "2026-04-25",
-      "rating": null,
-      "sentiment": "긍정",
-      "text": "최고입니다~ 항상 맛있어요"
+      "text": "음식이 맛있어요+3"
     }
   ]
 }
