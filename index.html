@@ -719,8 +719,8 @@ function renderWarnings() {
         to = new Date(DATA.generated_at);
         from = new Date(to); from.setDate(from.getDate() - Number(periodDays));
       }
-      const samples = (s.recent_samples || []).filter(r => {
-        if (r.sentiment !== '부정') return false;
+      // 부정 sample (최근순 10건 사전 추출됨) — 기간 필터 적용
+      const samples = (s.negative_samples || []).filter(r => {
         if (!from && !to) return true;
         const d = new Date(r.date);
         if (from && d < from) return false;
