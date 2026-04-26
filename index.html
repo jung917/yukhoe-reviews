@@ -619,10 +619,11 @@ function renderCharts(stores) {
   // 라벨에는 실제 값 (0 포함) — 항상 5채널 모두 표시
   const labels = SOURCES.map(c => `${SOURCE_LABEL[c]} (${fmtN(chCount[c])})`);
   const rawVals = SOURCES.map(c => chCount[c]);
-  // ★ linear scale 고정: 채널 간 상대 크기를 정확히 비교
-  // 0건 채널만 시각적 stub (max의 1.5%)으로 라벨 옆에 짧게라도 보이게
-  const maxV = Math.max(...rawVals, 1);
-  const minStub = maxV * 0.015;
+  // ★ x축 max를 전체 데이터(필터 무관) 기준으로 고정
+  //   → 지역/기간 필터 바꿔도 막대 비례가 일정하게 비교됨
+  const globalMax = Math.max(...SOURCES.map(c => DATA.channel_stats[c].reviews), 1);
+  // 0건 채널은 시각적 stub (전체 max의 1.5%) — 라벨로 0임을 알림
+  const minStub = globalMax * 0.015;
   const displayVals = rawVals.map(v => v > 0 ? v : minStub);
   const useLog = false;
   chBar = new Chart(ctx1, {
@@ -651,9 +652,10 @@ function renderCharts(stores) {
       },
       scales: {
         x: {
-          beginAtZero: !useLog,
-          min: useLog ? 0.5 : 0,
-          type: useLog ? 'logarithmic' : 'linear',
+          beginAtZero: true,
+          min: 0,
+          max: globalMax,                    // ★ 전체 max 고정 — 필터 변경해도 동일 스케일
+          type: 'linear',
           ticks: { color: getCss('--text-muted'), font: { size: 10 } },
           grid: { color: getCss('--border') },
         },
