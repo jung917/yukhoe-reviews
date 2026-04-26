@@ -516,7 +516,7 @@ footer {
 let DATA = null;
 let chBar = null, sentPie = null, modalChart = null;
 let regionFilter = 'all';
-let periodDays = '30';   // 기본 30일 (워닝이 잘 보이도록). 'all' | 1 | 7 | 30 | 180 | 'custom'
+let periodDays = 'all';   // 기본 '전체' (active chip과 일치). 'all' | 1 | 7 | 30 | 180 | 'custom'
 let periodFrom = null, periodTo = null;  // Date — custom 모드용
 let channelFilter = new Set();   // 비어있거나 SOURCES 모두 = 전체
 let sentFilter    = new Set();   // 비어있거나 [긍정/중립/부정] 모두 = 전체
