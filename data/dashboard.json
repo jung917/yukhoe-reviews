@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-04-26T12:51:37",
+  "generated_at": "2026-04-26T12:58:02",
   "data_window_days": 30,
   "recent_days": 7,
   "summary": {
@@ -9,7 +9,7 @@
     "avg_rating_all": 3.82,
     "recent_reviews_30d": 3941,
     "warnings_red": 0,
-    "warnings_yellow": 1
+    "warnings_yellow": 3
   },
   "channel_stats": {
     "naver": {
@@ -69,6 +69,48 @@
           "sentiment": "부정",
           "reviewer": "carpediem",
           "text": "매장애선 진짜 별로임. 매장 두번 가보고 다신 안먹을예정.. 짐 있으면 바닥에 두라는가게 첨봄 ㅋㅋㅋ 의자에 걸면 안됨 테이블에 두면 안됨 무조건 바닥에 두라고 걍 바닥에 두세요 라고 사장이 콕 찝어서 말하는 가게 …"
+        }
+      ]
+    },
+    {
+      "level": "yellow",
+      "store_name": "육회바른연어 고대안암점",
+      "branch": "고대안암점",
+      "address": "서울 성북구 고려대로24길 55 1층",
+      "reason": "최근 7일 부정 1건, 최근 30일 부정률 40% (2/5)",
+      "samples": [
+        {
+          "channel": "naver",
+          "date": "2026-04-21",
+          "rating": null,
+          "sentiment": "부정",
+          "reviewer": "미역이9854",
+          "text": "타지역 체인점에서 맛있게 먹은 기억이 있어서 와본건데 당황스럽네요"
+        },
+        {
+          "channel": "naver",
+          "date": "2026-04-10",
+          "rating": null,
+          "sentiment": "부정",
+          "reviewer": "5050히히",
+          "text": "그리고 앞치마 달라고 했는데 부엌에서 응대로 \"부엌 문 옆에 있어요\"라고 얘기하는데 알고 보니 서랍 밑 칸에 있는데 그거 말로 하면 어떻게 아는 위치였음. 보통 직원이\" 잠시만요 가져다 드릴게요 이렇게 응대 하지 않…"
+        }
+      ]
+    },
+    {
+      "level": "yellow",
+      "store_name": "육회바른연어 산본점",
+      "branch": "산본점",
+      "address": "경기 군포시 산본로323번길 20-33 102호, 106호",
+      "reason": "최근 7일 부정 0건, 최근 30일 부정률 33% (2/6)",
+      "samples": [
+        {
+          "channel": "naver",
+          "date": "2026-04-14",
+          "rating": null,
+          "sentiment": "부정",
+          "reviewer": "ekg****",
+          "text": "여자 알바생분 태도 너무 심각해요 이건 아닌거같아요"
         }
       ]
     }
@@ -1527,8 +1569,8 @@
         "reviews": 10,
         "avg_rating": null,
         "negative": 0,
-        "neutral": 0,
-        "positive": 10
+        "neutral": 1,
+        "positive": 9
       },
       "warning": null,
       "warning_reason": null,
@@ -1742,7 +1784,7 @@
         },
         {
           "d": "2026-04-07",
-          "s": "긍정",
+          "s": "중립",
           "c": "naver",
           "r": null
         },
@@ -1809,8 +1851,8 @@
         "reviews": 16,
         "avg_rating": 3.33,
         "negative": 2,
-        "neutral": 1,
-        "positive": 13
+        "neutral": 2,
+        "positive": 12
       },
       "warning": null,
       "warning_reason": null,
@@ -2054,7 +2096,7 @@
         },
         {
           "d": "2026-04-25",
-          "s": "긍정",
+          "s": "중립",
           "c": "naver",
           "r": null
         },
@@ -2414,7 +2456,7 @@
         "naver": {
           "count": 10,
           "avg_rating": null,
-          "recent_negative": 0,
+          "recent_negative": 1,
           "place_id": "2091526625",
           "url": "https://pcmap.place.naver.com/restaurant/2091526625/review/visitor"
         },
@@ -2450,13 +2492,13 @@
       "totals": {
         "reviews": 13,
         "avg_rating": 4.33,
-        "negative": 0,
+        "negative": 1,
         "neutral": 1,
-        "positive": 12
+        "positive": 11
       },
       "warning": null,
       "warning_reason": null,
-      "recent7_negative": 0,
+      "recent7_negative": 1,
       "recent_samples": [
         {
           "channel": "naver",
@@ -2696,7 +2738,7 @@
         },
         {
           "d": "2026-04-24",
-          "s": "긍정",
+          "s": "부정",
           "c": "naver",
           "r": null
         }
@@ -3026,7 +3068,7 @@
         "naver": {
           "count": 9,
           "avg_rating": null,
-          "recent_negative": 0,
+          "recent_negative": 1,
           "place_id": "2076320997",
           "url": "https://pcmap.place.naver.com/restaurant/2076320997/review/visitor"
         },
@@ -3062,13 +3104,13 @@
       "totals": {
         "reviews": 9,
         "avg_rating": null,
-        "negative": 0,
+        "negative": 1,
         "neutral": 0,
-        "positive": 9
+        "positive": 8
       },
       "warning": null,
       "warning_reason": null,
-      "recent7_negative": 0,
+      "recent7_negative": 1,
       "recent_samples": [
         {
           "channel": "naver",
@@ -3284,7 +3326,7 @@
         },
         {
           "d": "2026-04-22",
-          "s": "긍정",
+          "s": "부정",
           "c": "naver",
           "r": null
         }
@@ -3584,7 +3626,7 @@
         "naver": {
           "count": 10,
           "avg_rating": null,
-          "recent_negative": 0,
+          "recent_negative": 1,
           "place_id": "2052493175",
           "url": "https://pcmap.place.naver.com/restaurant/2052493175/review/visitor"
         },
@@ -3620,9 +3662,9 @@
       "totals": {
         "reviews": 10,
         "avg_rating": null,
-        "negative": 0,
+        "negative": 1,
         "neutral": 0,
-        "positive": 10
+        "positive": 9
       },
       "warning": null,
       "warning_reason": null,
@@ -3640,7 +3682,7 @@
           "channel": "naver",
           "date": "2026-04-18",
           "rating": null,
-          "sentiment": "긍정",
+          "sentiment": "부정",
           "reviewer": "키티키티80",
           "text": "식사할수있죠 그런데 손님이 양보 직원분들은 모른척... 음... 또 다른손님이 들어옴 4인. 4인테이블만석 4인테이블에서 직원2명 식사중이었으나 한명 빨리식사끝마치고 주방으로 한분계속 자리에앉아 핸드폰보심 결국 자리…"
         },
@@ -3800,7 +3842,7 @@
         },
         {
           "d": "2026-04-18",
-          "s": "긍정",
+          "s": "부정",
           "c": "naver",
           "r": null
         },
@@ -3866,7 +3908,7 @@
         "naver": {
           "count": 10,
           "avg_rating": null,
-          "recent_negative": 0,
+          "recent_negative": 1,
           "place_id": "2033475035",
           "url": "https://pcmap.place.naver.com/restaurant/2033475035/review/visitor"
         },
@@ -3902,13 +3944,13 @@
       "totals": {
         "reviews": 12,
         "avg_rating": 2.0,
-        "negative": 2,
+        "negative": 3,
         "neutral": 0,
-        "positive": 10
+        "positive": 9
       },
       "warning": null,
       "warning_reason": null,
-      "recent7_negative": 0,
+      "recent7_negative": 1,
       "recent_samples": [
         {
           "channel": "naver",
@@ -4124,7 +4166,7 @@
         },
         {
           "d": "2026-04-21",
-          "s": "긍정",
+          "s": "부정",
           "c": "naver",
           "r": null
         },
@@ -6207,8 +6249,8 @@
         "reviews": 11,
         "avg_rating": 4.0,
         "negative": 0,
-        "neutral": 0,
-        "positive": 11
+        "neutral": 1,
+        "positive": 10
       },
       "warning": null,
       "warning_reason": null,
@@ -6422,7 +6464,7 @@
         },
         {
           "d": "2026-04-24",
-          "s": "긍정",
+          "s": "중립",
           "c": "naver",
           "r": null
         },
@@ -6458,7 +6500,7 @@
         "naver": {
           "count": 10,
           "avg_rating": null,
-          "recent_negative": 0,
+          "recent_negative": 1,
           "place_id": "2023071419",
           "url": "https://pcmap.place.naver.com/restaurant/2023071419/review/visitor"
         },
@@ -6494,19 +6536,19 @@
       "totals": {
         "reviews": 11,
         "avg_rating": 5.0,
-        "negative": 0,
+        "negative": 1,
         "neutral": 0,
-        "positive": 11
+        "positive": 10
       },
       "warning": null,
       "warning_reason": null,
-      "recent7_negative": 0,
+      "recent7_negative": 1,
       "recent_samples": [
         {
           "channel": "naver",
           "date": "2026-04-25",
           "rating": null,
-          "sentiment": "긍정",
+          "sentiment": "부정",
           "reviewer": "아41",
           "text": "직원을 늘리던지.. 배달주문을 조절하던지.. 손을 빠르게 하려고 연습이라도 하던지 조치를 취하셔야할듯요 30분 넘게기다림 개오바임 이걸 만드는데 이렇게 오래걸린다고??????? 불쓰는것도 아닌데 왜이러는지 심지어 양…"
         },
@@ -6674,7 +6716,7 @@
         },
         {
           "d": "2026-04-25",
-          "s": "긍정",
+          "s": "부정",
           "c": "naver",
           "r": null
         },
@@ -7701,8 +7743,8 @@
         "reviews": 15,
         "avg_rating": 3.0,
         "negative": 3,
-        "neutral": 0,
-        "positive": 12
+        "neutral": 1,
+        "positive": 11
       },
       "warning": null,
       "warning_reason": null,
@@ -7744,7 +7786,7 @@
           "channel": "naver",
           "date": "2026-04-19",
           "rating": null,
-          "sentiment": "긍정",
+          "sentiment": "중립",
           "reviewer": "dd6555",
           "text": "간식으로 포장을 자주 해갔는데.."
         }
@@ -7928,7 +7970,7 @@
         },
         {
           "d": "2026-04-19",
-          "s": "긍정",
+          "s": "중립",
           "c": "naver",
           "r": null
         },
@@ -8301,8 +8343,8 @@
         "reviews": 10,
         "avg_rating": null,
         "negative": 0,
-        "neutral": 0,
-        "positive": 10
+        "neutral": 1,
+        "positive": 9
       },
       "warning": null,
       "warning_reason": null,
@@ -8320,7 +8362,7 @@
           "channel": "naver",
           "date": "2026-04-25",
           "rating": null,
-          "sentiment": "긍정",
+          "sentiment": "중립",
           "reviewer": "kuj****",
           "text": "매번 포장해서 먹다가 매장 와서"
         },
@@ -8480,7 +8522,7 @@
         },
         {
           "d": "2026-04-25",
-          "s": "긍정",
+          "s": "중립",
           "c": "naver",
           "r": null
         },
@@ -9122,7 +9164,7 @@
         "naver": {
           "count": 10,
           "avg_rating": null,
-          "recent_negative": 0,
+          "recent_negative": 1,
           "place_id": "2067692428",
           "url": "https://pcmap.place.naver.com/restaurant/2067692428/review/visitor"
         },
@@ -9158,19 +9200,19 @@
       "totals": {
         "reviews": 10,
         "avg_rating": null,
-        "negative": 0,
+        "negative": 1,
         "neutral": 0,
-        "positive": 10
+        "positive": 9
       },
       "warning": null,
       "warning_reason": null,
-      "recent7_negative": 0,
+      "recent7_negative": 1,
       "recent_samples": [
         {
           "channel": "naver",
           "date": "2026-04-24",
           "rating": null,
-          "sentiment": "긍정",
+          "sentiment": "부정",
           "reviewer": "쩝쩝박사나야나",
           "text": "육회초밥은 진짜 맛있어요. 그런데 어묵탕은 이 가격에 팔면 안될것 같아요. 연어 덮밥도 전용 초장에 비벼먹으니 초장맛만 나고 좀 그랬어요. 또 온다면 육회초밥만 먹을것 같아요."
         },
@@ -9332,7 +9374,7 @@
       "all_reviews_meta": [
         {
           "d": "2026-04-24",
-          "s": "긍정",
+          "s": "부정",
           "c": "naver",
           "r": null
         },
@@ -10605,8 +10647,8 @@
         "reviews": 10,
         "avg_rating": null,
         "negative": 0,
-        "neutral": 0,
-        "positive": 10
+        "neutral": 1,
+        "positive": 9
       },
       "warning": null,
       "warning_reason": null,
@@ -10640,7 +10682,7 @@
           "channel": "naver",
           "date": "2026-04-21",
           "rating": null,
-          "sentiment": "긍정",
+          "sentiment": "중립",
           "reviewer": "물가의별94",
           "text": "간단히 배채우러 오기 좋아요"
         },
@@ -10796,7 +10838,7 @@
         },
         {
           "d": "2026-04-21",
-          "s": "긍정",
+          "s": "중립",
           "c": "naver",
           "r": null
         },
@@ -11463,8 +11505,8 @@
         "reviews": 10,
         "avg_rating": null,
         "negative": 0,
-        "neutral": 0,
-        "positive": 10
+        "neutral": 1,
+        "positive": 9
       },
       "warning": null,
       "warning_reason": null,
@@ -11490,7 +11532,7 @@
           "channel": "naver",
           "date": "2026-04-24",
           "rating": null,
-          "sentiment": "긍정",
+          "sentiment": "중립",
           "reviewer": "lse****",
           "text": "육바연 너무 맛있어여ㅜㅜㅜㅜ"
         },
@@ -11648,7 +11690,7 @@
         },
         {
           "d": "2026-04-24",
-          "s": "긍정",
+          "s": "중립",
           "c": "naver",
           "r": null
         },
@@ -12033,8 +12075,8 @@
         "reviews": 11,
         "avg_rating": 5.0,
         "negative": 0,
-        "neutral": 0,
-        "positive": 11
+        "neutral": 1,
+        "positive": 10
       },
       "warning": null,
       "warning_reason": null,
@@ -12260,7 +12302,7 @@
         },
         {
           "d": "2026-04-20",
-          "s": "긍정",
+          "s": "중립",
           "c": "naver",
           "r": null
         },
@@ -12615,8 +12657,8 @@
         "reviews": 12,
         "avg_rating": 5.0,
         "negative": 0,
-        "neutral": 0,
-        "positive": 12
+        "neutral": 1,
+        "positive": 11
       },
       "warning": null,
       "warning_reason": null,
@@ -12824,7 +12866,7 @@
         },
         {
           "d": "2025-12-16",
-          "s": "긍정",
+          "s": "중립",
           "c": "naver",
           "r": null
         },
@@ -13466,7 +13508,7 @@
         "naver": {
           "count": 10,
           "avg_rating": null,
-          "recent_negative": 0,
+          "recent_negative": 1,
           "place_id": "2050632670",
           "url": "https://pcmap.place.naver.com/restaurant/2050632670/review/visitor"
         },
@@ -13502,9 +13544,9 @@
       "totals": {
         "reviews": 12,
         "avg_rating": 5.0,
-        "negative": 0,
+        "negative": 1,
         "neutral": 0,
-        "positive": 12
+        "positive": 11
       },
       "warning": null,
       "warning_reason": null,
@@ -13742,7 +13784,7 @@
         },
         {
           "d": "2026-04-16",
-          "s": "긍정",
+          "s": "부정",
           "c": "naver",
           "r": null
         }
@@ -14678,7 +14720,7 @@
         "naver": {
           "count": 10,
           "avg_rating": null,
-          "recent_negative": 0,
+          "recent_negative": 1,
           "place_id": "2056396892",
           "url": "https://pcmap.place.naver.com/restaurant/2056396892/review/visitor"
         },
@@ -14714,19 +14756,19 @@
       "totals": {
         "reviews": 17,
         "avg_rating": 3.14,
-        "negative": 3,
+        "negative": 4,
         "neutral": 0,
-        "positive": 14
+        "positive": 13
       },
       "warning": null,
       "warning_reason": null,
-      "recent7_negative": 0,
+      "recent7_negative": 1,
       "recent_samples": [
         {
           "channel": "naver",
           "date": "2026-04-25",
           "rating": null,
-          "sentiment": "긍정",
+          "sentiment": "부정",
           "reviewer": "opp****",
           "text": "음식이 늦게 나와요 지금도 기다리는중ㅜ"
         },
@@ -14930,7 +14972,7 @@
         },
         {
           "d": "2026-04-25",
-          "s": "긍정",
+          "s": "부정",
           "c": "naver",
           "r": null
         },
@@ -15327,8 +15369,8 @@
         "reviews": 16,
         "avg_rating": 2.83,
         "negative": 3,
-        "neutral": 1,
-        "positive": 12
+        "neutral": 3,
+        "positive": 10
       },
       "warning": null,
       "warning_reason": null,
@@ -15560,7 +15602,7 @@
         },
         {
           "d": "2026-04-15",
-          "s": "긍정",
+          "s": "중립",
           "c": "naver",
           "r": null
         },
@@ -15572,7 +15614,7 @@
         },
         {
           "d": "2026-04-13",
-          "s": "긍정",
+          "s": "중립",
           "c": "naver",
           "r": null
         },
@@ -16497,8 +16539,8 @@
         "reviews": 11,
         "avg_rating": 5.0,
         "negative": 0,
-        "neutral": 0,
-        "positive": 11
+        "neutral": 1,
+        "positive": 10
       },
       "warning": null,
       "warning_reason": null,
@@ -16724,7 +16766,7 @@
         },
         {
           "d": "2026-04-16",
-          "s": "긍정",
+          "s": "중립",
           "c": "naver",
           "r": null
         },
@@ -16748,7 +16790,7 @@
         "naver": {
           "count": 10,
           "avg_rating": null,
-          "recent_negative": 0,
+          "recent_negative": 1,
           "place_id": "2077190870",
           "url": "https://pcmap.place.naver.com/restaurant/2077190870/review/visitor"
         },
@@ -16784,13 +16826,13 @@
       "totals": {
         "reviews": 13,
         "avg_rating": 3.0,
-        "negative": 1,
+        "negative": 2,
         "neutral": 1,
-        "positive": 11
+        "positive": 10
       },
       "warning": null,
       "warning_reason": null,
-      "recent7_negative": 0,
+      "recent7_negative": 1,
       "recent_samples": [
         {
           "channel": "naver",
@@ -16820,7 +16862,7 @@
           "channel": "naver",
           "date": "2026-04-25",
           "rating": null,
-          "sentiment": "긍정",
+          "sentiment": "부정",
           "reviewer": "pppph10",
           "text": "훔 너무 마싯네요오 소스맛도 사기인듯!"
         },
@@ -16994,7 +17036,7 @@
         },
         {
           "d": "2026-04-25",
-          "s": "긍정",
+          "s": "부정",
           "c": "naver",
           "r": null
         },
@@ -17900,7 +17942,7 @@
         "naver": {
           "count": 10,
           "avg_rating": null,
-          "recent_negative": 0,
+          "recent_negative": 1,
           "place_id": "2055001843",
           "url": "https://pcmap.place.naver.com/restaurant/2055001843/review/visitor"
         },
@@ -17936,9 +17978,9 @@
       "totals": {
         "reviews": 14,
         "avg_rating": 3.5,
-        "negative": 1,
+        "negative": 2,
         "neutral": 1,
-        "positive": 12
+        "positive": 11
       },
       "warning": null,
       "warning_reason": null,
@@ -18164,7 +18206,7 @@
         },
         {
           "d": "2026-04-18",
-          "s": "긍정",
+          "s": "부정",
           "c": "naver",
           "r": null
         },
@@ -18530,7 +18572,7 @@
         "naver": {
           "count": 10,
           "avg_rating": null,
-          "recent_negative": 0,
+          "recent_negative": 1,
           "place_id": "2063419855",
           "url": "https://pcmap.place.naver.com/restaurant/2063419855/review/visitor"
         },
@@ -18566,9 +18608,9 @@
       "totals": {
         "reviews": 17,
         "avg_rating": 4.43,
-        "negative": 0,
+        "negative": 1,
         "neutral": 1,
-        "positive": 16
+        "positive": 15
       },
       "warning": null,
       "warning_reason": null,
@@ -18610,7 +18652,7 @@
           "channel": "naver",
           "date": "2026-04-19",
           "rating": null,
-          "sentiment": "긍정",
+          "sentiment": "부정",
           "reviewer": "CAT",
           "text": "음식 나올때 이벤트 참여한다 했으나 영수증만 주고 이후 쳐다도 안보더군요... 근처 테이블로 오셨을 때 몇번 불렀음에도 바쁘신 것 직접 카운터 가서 보여드렸습니다. 이후에 바쁜것 같아서 저보다 늦게오신 포장손님 끝날…"
         }
@@ -18806,7 +18848,7 @@
         },
         {
           "d": "2026-04-19",
-          "s": "긍정",
+          "s": "부정",
           "c": "naver",
           "r": null
         },
@@ -18891,8 +18933,8 @@
         "reviews": 11,
         "avg_rating": 4.0,
         "negative": 0,
-        "neutral": 0,
-        "positive": 11
+        "neutral": 1,
+        "positive": 10
       },
       "warning": null,
       "warning_reason": null,
@@ -18934,7 +18976,7 @@
           "channel": "naver",
           "date": "2026-04-15",
           "rating": null,
-          "sentiment": "긍정",
+          "sentiment": "중립",
           "reviewer": "세이카쨩",
           "text": "지난주 야구 직관 간 지 얼마 안 돼 또 찾은 육바연"
         }
@@ -19094,7 +19136,7 @@
         },
         {
           "d": "2026-04-15",
-          "s": "긍정",
+          "s": "중립",
           "c": "naver",
           "r": null
         },
@@ -19467,8 +19509,8 @@
         "reviews": 14,
         "avg_rating": 4.0,
         "negative": 1,
-        "neutral": 0,
-        "positive": 13
+        "neutral": 1,
+        "positive": 12
       },
       "warning": null,
       "warning_reason": null,
@@ -19486,7 +19528,7 @@
           "channel": "naver",
           "date": "2026-03-31",
           "rating": null,
-          "sentiment": "긍정",
+          "sentiment": "중립",
           "reviewer": "어이쿠사장님",
           "text": "약간 담다마셨나용"
         },
@@ -19664,7 +19706,7 @@
         },
         {
           "d": "2026-03-31",
-          "s": "긍정",
+          "s": "중립",
           "c": "naver",
           "r": null
         },
@@ -19773,8 +19815,8 @@
         "reviews": 10,
         "avg_rating": null,
         "negative": 0,
-        "neutral": 0,
-        "positive": 10
+        "neutral": 1,
+        "positive": 9
       },
       "warning": null,
       "warning_reason": null,
@@ -19988,7 +20030,7 @@
         },
         {
           "d": "2026-03-14",
-          "s": "긍정",
+          "s": "중립",
           "c": "naver",
           "r": null
         },
@@ -20912,9 +20954,9 @@
       "totals": {
         "reviews": 14,
         "avg_rating": 3.75,
-        "negative": 1,
+        "negative": 3,
         "neutral": 0,
-        "positive": 13
+        "positive": 11
       },
       "warning": null,
       "warning_reason": null,
@@ -20940,7 +20982,7 @@
           "channel": "naver",
           "date": "2026-01-07",
           "rating": null,
-          "sentiment": "긍정",
+          "sentiment": "부정",
           "reviewer": "안경탱이65",
           "text": "매장에서 주문했고 메뉴 받는데 30분이 걸렸습니다. 매장에 아무도 없었습니다. 육회덮밥은 만들고 10분가까이 방치된걸 받았네요. 하나가 더 나와야 한다는것도 초밥을 받고 말씀드렸더니 그제서야... 심지어 연어초밥 모…"
         },
@@ -20948,7 +20990,7 @@
           "channel": "naver",
           "date": "2025-11-23",
           "rating": null,
-          "sentiment": "긍정",
+          "sentiment": "부정",
           "reviewer": "파니5088",
           "text": "너무 느리다 대기시간 부정확 다음에 이용 의사 없음"
         },
@@ -21116,13 +21158,13 @@
         },
         {
           "d": "2026-01-07",
-          "s": "긍정",
+          "s": "부정",
           "c": "naver",
           "r": null
         },
         {
           "d": "2025-11-23",
-          "s": "긍정",
+          "s": "부정",
           "c": "naver",
           "r": null
         },
@@ -22131,8 +22173,8 @@
         "reviews": 10,
         "avg_rating": null,
         "negative": 0,
-        "neutral": 0,
-        "positive": 10
+        "neutral": 2,
+        "positive": 8
       },
       "warning": null,
       "warning_reason": null,
@@ -22158,7 +22200,7 @@
           "channel": "naver",
           "date": "2026-04-24",
           "rating": null,
-          "sentiment": "긍정",
+          "sentiment": "중립",
           "reviewer": "ChittyCherry",
           "text": "처음에 먹고 너무 맛이 있어서 놀랬는데 이제 너무 유명해진 육바연..."
         },
@@ -22174,7 +22216,7 @@
           "channel": "naver",
           "date": "2026-04-23",
           "rating": null,
-          "sentiment": "긍정",
+          "sentiment": "중립",
           "reviewer": "alw****",
           "text": "맨날와도 안질리는맛"
         }
@@ -22316,7 +22358,7 @@
         },
         {
           "d": "2026-04-24",
-          "s": "긍정",
+          "s": "중립",
           "c": "naver",
           "r": null
         },
@@ -22328,7 +22370,7 @@
         },
         {
           "d": "2026-04-23",
-          "s": "긍정",
+          "s": "중립",
           "c": "naver",
           "r": null
         },
@@ -25725,8 +25767,8 @@
         "reviews": 10,
         "avg_rating": null,
         "negative": 0,
-        "neutral": 0,
-        "positive": 10
+        "neutral": 1,
+        "positive": 9
       },
       "warning": null,
       "warning_reason": null,
@@ -25928,7 +25970,7 @@
         },
         {
           "d": "2026-04-23",
-          "s": "긍정",
+          "s": "중립",
           "c": "naver",
           "r": null
         },
@@ -31921,8 +31963,8 @@
         "reviews": 22,
         "avg_rating": 4.92,
         "negative": 0,
-        "neutral": 0,
-        "positive": 22
+        "neutral": 1,
+        "positive": 21
       },
       "warning": null,
       "warning_reason": null,
@@ -32178,7 +32220,7 @@
         },
         {
           "d": "2026-03-20",
-          "s": "긍정",
+          "s": "중립",
           "c": "naver",
           "r": null
         },
@@ -34045,8 +34087,8 @@
         "reviews": 15,
         "avg_rating": 4.4,
         "negative": 0,
-        "neutral": 0,
-        "positive": 15
+        "neutral": 2,
+        "positive": 13
       },
       "warning": null,
       "warning_reason": null,
@@ -34064,7 +34106,7 @@
           "channel": "naver",
           "date": "2026-01-09",
           "rating": null,
-          "sentiment": "긍정",
+          "sentiment": "중립",
           "reviewer": "yoon4292",
           "text": "아, 그리고 사장님 ! 올 때마다 정말 잘 먹고 있는데 혹시 육회초밥 8피스는 안 나올까요?🥺 6피스 먹긴 아쉽고 10,12피스는 너무 많아서요 못 보실 수도 있지만 혹시나하는 마음에 남겨요"
         },
@@ -34224,7 +34266,7 @@
         },
         {
           "d": "2026-01-09",
-          "s": "긍정",
+          "s": "중립",
           "c": "naver",
           "r": null
         },
@@ -34260,7 +34302,7 @@
         },
         {
           "d": "2025-11-08",
-          "s": "긍정",
+          "s": "중립",
           "c": "naver",
           "r": null
         },
@@ -35856,9 +35898,9 @@
       "totals": {
         "reviews": 19,
         "avg_rating": 3.67,
-        "negative": 2,
-        "neutral": 2,
-        "positive": 15
+        "negative": 3,
+        "neutral": 3,
+        "positive": 13
       },
       "warning": null,
       "warning_reason": null,
@@ -35876,7 +35918,7 @@
           "channel": "naver",
           "date": "2026-04-09",
           "rating": null,
-          "sentiment": "긍정",
+          "sentiment": "중립",
           "reviewer": "buhiitt",
           "text": "신메뉴인 들기름 육회 막국수랑 비빔 육회 막국수 먹었는데 너무 맛있어요ㅜㅜㅜㅜ"
         },
@@ -36072,7 +36114,7 @@
         },
         {
           "d": "2026-04-09",
-          "s": "긍정",
+          "s": "중립",
           "c": "naver",
           "r": null
         },
@@ -36108,7 +36150,7 @@
         },
         {
           "d": "2026-02-08",
-          "s": "긍정",
+          "s": "부정",
           "c": "naver",
           "r": null
         },
@@ -36138,7 +36180,7 @@
         "naver": {
           "count": 10,
           "avg_rating": null,
-          "recent_negative": 0,
+          "recent_negative": 1,
           "place_id": "1995395020",
           "url": "https://pcmap.place.naver.com/restaurant/1995395020/review/visitor"
         },
@@ -36174,13 +36216,13 @@
       "totals": {
         "reviews": 17,
         "avg_rating": 2.0,
-        "negative": 5,
+        "negative": 6,
         "neutral": 2,
-        "positive": 10
+        "positive": 9
       },
       "warning": null,
       "warning_reason": null,
-      "recent7_negative": 0,
+      "recent7_negative": 1,
       "recent_samples": [
         {
           "channel": "naver",
@@ -36202,7 +36244,7 @@
           "channel": "naver",
           "date": "2026-04-25",
           "rating": null,
-          "sentiment": "긍정",
+          "sentiment": "부정",
           "reviewer": "혜령7062",
           "text": "매장이 너무 바쁜데 홀 정리가 잘 안됩니다.. 메뉴도 테이블 별로 정리도 안되고 리뷰이벤트는 밥 다 먹고 말했더니 그때 주셨어요. 그치만 맛은 있습니다🥲"
         },
@@ -36396,7 +36438,7 @@
         },
         {
           "d": "2026-04-25",
-          "s": "긍정",
+          "s": "부정",
           "c": "naver",
           "r": null
         },
@@ -37698,9 +37740,9 @@
       "totals": {
         "reviews": 15,
         "avg_rating": 5.0,
-        "negative": 0,
+        "negative": 1,
         "neutral": 0,
-        "positive": 15
+        "positive": 14
       },
       "warning": null,
       "warning_reason": null,
@@ -37920,7 +37962,7 @@
         },
         {
           "d": "2026-03-01",
-          "s": "긍정",
+          "s": "부정",
           "c": "naver",
           "r": null
         },
@@ -38298,9 +38340,9 @@
       "totals": {
         "reviews": 9,
         "avg_rating": null,
-        "negative": 0,
-        "neutral": 0,
-        "positive": 9
+        "negative": 2,
+        "neutral": 2,
+        "positive": 5
       },
       "warning": null,
       "warning_reason": null,
@@ -38310,7 +38352,7 @@
           "channel": "naver",
           "date": "2025-12-12",
           "rating": null,
-          "sentiment": "긍정",
+          "sentiment": "부정",
           "reviewer": "okdon815",
           "text": "다음엔 새메뉴 나왔던데 도장깨기 해야겠습니다"
         },
@@ -38318,7 +38360,7 @@
           "channel": "naver",
           "date": "2025-12-11",
           "rating": null,
-          "sentiment": "긍정",
+          "sentiment": "부정",
           "reviewer": "okdon815",
           "text": "다 먹고 생각나서 사진이 읎..."
         },
@@ -38334,7 +38376,7 @@
           "channel": "naver",
           "date": "2025-10-20",
           "rating": null,
-          "sentiment": "긍정",
+          "sentiment": "중립",
           "reviewer": "soji",
           "text": "nan"
         },
@@ -38472,13 +38514,13 @@
       "all_reviews_meta": [
         {
           "d": "2025-12-12",
-          "s": "긍정",
+          "s": "부정",
           "c": "naver",
           "r": null
         },
         {
           "d": "2025-12-11",
-          "s": "긍정",
+          "s": "부정",
           "c": "naver",
           "r": null
         },
@@ -38514,13 +38556,13 @@
         },
         {
           "d": "2025-10-20",
-          "s": "긍정",
+          "s": "중립",
           "c": "naver",
           "r": null
         },
         {
           "d": "2025-09-22",
-          "s": "긍정",
+          "s": "중립",
           "c": "naver",
           "r": null
         }
@@ -39432,7 +39474,7 @@
         "naver": {
           "count": 10,
           "avg_rating": null,
-          "recent_negative": 0,
+          "recent_negative": 1,
           "place_id": "1640763912",
           "url": "https://pcmap.place.naver.com/restaurant/1640763912/review/visitor"
         },
@@ -39468,13 +39510,13 @@
       "totals": {
         "reviews": 17,
         "avg_rating": 2.86,
-        "negative": 3,
+        "negative": 4,
         "neutral": 1,
-        "positive": 13
+        "positive": 12
       },
       "warning": null,
       "warning_reason": null,
-      "recent7_negative": 0,
+      "recent7_negative": 1,
       "recent_samples": [
         {
           "channel": "naver",
@@ -39720,7 +39762,7 @@
         },
         {
           "d": "2026-04-22",
-          "s": "긍정",
+          "s": "부정",
           "c": "naver",
           "r": null
         }
@@ -40416,7 +40458,7 @@
         "naver": {
           "count": 10,
           "avg_rating": null,
-          "recent_negative": 0,
+          "recent_negative": 1,
           "place_id": "1103560891",
           "url": "https://pcmap.place.naver.com/restaurant/1103560891/review/visitor"
         },
@@ -40452,9 +40494,9 @@
       "totals": {
         "reviews": 15,
         "avg_rating": 3.4,
-        "negative": 1,
+        "negative": 2,
         "neutral": 2,
-        "positive": 12
+        "positive": 11
       },
       "warning": null,
       "warning_reason": null,
@@ -40674,7 +40716,7 @@
         },
         {
           "d": "2026-04-15",
-          "s": "긍정",
+          "s": "부정",
           "c": "naver",
           "r": null
         },
@@ -40998,7 +41040,7 @@
         "naver": {
           "count": 10,
           "avg_rating": null,
-          "recent_negative": 0,
+          "recent_negative": 1,
           "place_id": "1537953445",
           "url": "https://pcmap.place.naver.com/restaurant/1537953445/review/visitor"
         },
@@ -41034,9 +41076,9 @@
       "totals": {
         "reviews": 15,
         "avg_rating": 5.0,
-        "negative": 0,
+        "negative": 1,
         "neutral": 0,
-        "positive": 15
+        "positive": 14
       },
       "warning": null,
       "warning_reason": null,
@@ -41262,7 +41304,7 @@
         },
         {
           "d": "2026-04-15",
-          "s": "긍정",
+          "s": "부정",
           "c": "naver",
           "r": null
         },
@@ -41329,8 +41371,8 @@
         "reviews": 17,
         "avg_rating": 4.0,
         "negative": 1,
-        "neutral": 1,
-        "positive": 15
+        "neutral": 2,
+        "positive": 14
       },
       "warning": null,
       "warning_reason": null,
@@ -41556,7 +41598,7 @@
         },
         {
           "d": "2026-03-18",
-          "s": "긍정",
+          "s": "중립",
           "c": "naver",
           "r": null
         },
@@ -42462,7 +42504,7 @@
         "naver": {
           "count": 10,
           "avg_rating": null,
-          "recent_negative": 0,
+          "recent_negative": 1,
           "place_id": "1187495913",
           "url": "https://pcmap.place.naver.com/restaurant/1187495913/review/visitor"
         },
@@ -42498,9 +42540,9 @@
       "totals": {
         "reviews": 13,
         "avg_rating": 5.0,
-        "negative": 0,
+        "negative": 1,
         "neutral": 0,
-        "positive": 13
+        "positive": 12
       },
       "warning": null,
       "warning_reason": null,
@@ -42720,7 +42762,7 @@
         },
         {
           "d": "2026-04-17",
-          "s": "긍정",
+          "s": "부정",
           "c": "naver",
           "r": null
         },
@@ -43386,9 +43428,9 @@
       "totals": {
         "reviews": 14,
         "avg_rating": 3.5,
-        "negative": 0,
-        "neutral": 3,
-        "positive": 11
+        "negative": 1,
+        "neutral": 5,
+        "positive": 8
       },
       "warning": null,
       "warning_reason": null,
@@ -43608,7 +43650,7 @@
         },
         {
           "d": "2025-06-25",
-          "s": "긍정",
+          "s": "중립",
           "c": "naver",
           "r": null
         },
@@ -43620,13 +43662,13 @@
         },
         {
           "d": "2025-06-08",
-          "s": "긍정",
+          "s": "부정",
           "c": "naver",
           "r": null
         },
         {
           "d": "2025-05-22",
-          "s": "긍정",
+          "s": "중립",
           "c": "naver",
           "r": null
         }
@@ -44388,7 +44430,7 @@
         "naver": {
           "count": 8,
           "avg_rating": null,
-          "recent_negative": 0,
+          "recent_negative": 2,
           "place_id": "1365295999",
           "url": "https://pcmap.place.naver.com/restaurant/1365295999/review/visitor"
         },
@@ -44424,13 +44466,13 @@
       "totals": {
         "reviews": 25,
         "avg_rating": 2.71,
-        "negative": 8,
+        "negative": 10,
         "neutral": 4,
-        "positive": 13
+        "positive": 11
       },
-      "warning": null,
-      "warning_reason": null,
-      "recent7_negative": 0,
+      "warning": "yellow",
+      "warning_reason": "최근 7일 부정 1건, 최근 30일 부정률 40% (2/5)",
+      "recent7_negative": 1,
       "recent_samples": [
         {
           "channel": "naver",
@@ -44444,7 +44486,7 @@
           "channel": "naver",
           "date": "2026-04-21",
           "rating": null,
-          "sentiment": "긍정",
+          "sentiment": "부정",
           "reviewer": "미역이9854",
           "text": "타지역 체인점에서 맛있게 먹은 기억이 있어서 와본건데 당황스럽네요"
         },
@@ -44452,7 +44494,7 @@
           "channel": "naver",
           "date": "2026-04-10",
           "rating": null,
-          "sentiment": "긍정",
+          "sentiment": "부정",
           "reviewer": "5050히히",
           "text": "그리고 앞치마 달라고 했는데 부엌에서 응대로 \"부엌 문 옆에 있어요\"라고 얘기하는데 알고 보니 서랍 밑 칸에 있는데 그거 말로 하면 어떻게 아는 위치였음. 보통 직원이\" 잠시만요 가져다 드릴게요 이렇게 응대 하지 않…"
         },
@@ -44634,13 +44676,13 @@
         },
         {
           "d": "2026-04-21",
-          "s": "긍정",
+          "s": "부정",
           "c": "naver",
           "r": null
         },
         {
           "d": "2026-04-10",
-          "s": "긍정",
+          "s": "부정",
           "c": "naver",
           "r": null
         },
@@ -45007,8 +45049,8 @@
         "reviews": 19,
         "avg_rating": 4.33,
         "negative": 1,
-        "neutral": 0,
-        "positive": 18
+        "neutral": 2,
+        "positive": 16
       },
       "warning": null,
       "warning_reason": null,
@@ -45034,7 +45076,7 @@
           "channel": "naver",
           "date": "2026-01-05",
           "rating": null,
-          "sentiment": "긍정",
+          "sentiment": "중립",
           "reviewer": "박하사탕202호",
           "text": "잘 알아보고 가거나 배민 배달팁 적으니까 그냥 배달시켜 먹는 걸 추천."
         },
@@ -45192,7 +45234,7 @@
         },
         {
           "d": "2026-01-05",
-          "s": "긍정",
+          "s": "중립",
           "c": "naver",
           "r": null
         },
@@ -45210,7 +45252,7 @@
         },
         {
           "d": "2025-10-05",
-          "s": "긍정",
+          "s": "중립",
           "c": "naver",
           "r": null
         },
@@ -46483,8 +46525,8 @@
         "reviews": 10,
         "avg_rating": null,
         "negative": 0,
-        "neutral": 0,
-        "positive": 10
+        "neutral": 1,
+        "positive": 9
       },
       "warning": null,
       "warning_reason": null,
@@ -46710,7 +46752,7 @@
         },
         {
           "d": "2026-04-05",
-          "s": "긍정",
+          "s": "중립",
           "c": "naver",
           "r": null
         }
@@ -47053,8 +47095,8 @@
         "reviews": 12,
         "avg_rating": 5.0,
         "negative": 0,
-        "neutral": 0,
-        "positive": 12
+        "neutral": 1,
+        "positive": 11
       },
       "warning": null,
       "warning_reason": null,
@@ -48817,8 +48859,8 @@
         "reviews": 17,
         "avg_rating": 3.43,
         "negative": 2,
-        "neutral": 2,
-        "positive": 13
+        "neutral": 3,
+        "positive": 12
       },
       "warning": null,
       "warning_reason": null,
@@ -49068,7 +49110,7 @@
         },
         {
           "d": "2026-04-22",
-          "s": "긍정",
+          "s": "중립",
           "c": "naver",
           "r": null
         },
@@ -50299,8 +50341,8 @@
         "reviews": 16,
         "avg_rating": 2.67,
         "negative": 3,
-        "neutral": 1,
-        "positive": 12
+        "neutral": 2,
+        "positive": 11
       },
       "warning": null,
       "warning_reason": null,
@@ -50326,7 +50368,7 @@
           "channel": "naver",
           "date": "2026-03-18",
           "rating": null,
-          "sentiment": "긍정",
+          "sentiment": "중립",
           "reviewer": "캐슈",
           "text": "집 앞에 있어서 한번 와바야지 하다가 메뉴가 회 위주라 아이 먹을 게 없을거 같아서 아이 없는 탐을 타서 왔습니다~"
         },
@@ -50496,7 +50538,7 @@
         },
         {
           "d": "2026-03-18",
-          "s": "긍정",
+          "s": "중립",
           "c": "naver",
           "r": null
         },
@@ -51205,8 +51247,8 @@
         "reviews": 30,
         "avg_rating": 3.75,
         "negative": 6,
-        "neutral": 1,
-        "positive": 23
+        "neutral": 2,
+        "positive": 22
       },
       "warning": null,
       "warning_reason": null,
@@ -51468,7 +51510,7 @@
         },
         {
           "d": "2026-03-28",
-          "s": "긍정",
+          "s": "중립",
           "c": "naver",
           "r": null
         },
@@ -52111,8 +52153,8 @@
         "reviews": 17,
         "avg_rating": 3.71,
         "negative": 2,
-        "neutral": 0,
-        "positive": 15
+        "neutral": 1,
+        "positive": 14
       },
       "warning": null,
       "warning_reason": null,
@@ -52154,7 +52196,7 @@
           "channel": "naver",
           "date": "2026-04-22",
           "rating": null,
-          "sentiment": "긍정",
+          "sentiment": "중립",
           "reviewer": "ksj****",
           "text": "육회랑 연어덮밥 세트로해서 먹었는데"
         }
@@ -52320,7 +52362,7 @@
         },
         {
           "d": "2026-04-22",
-          "s": "긍정",
+          "s": "중립",
           "c": "naver",
           "r": null
         },
@@ -52404,9 +52446,9 @@
       "totals": {
         "reviews": 24,
         "avg_rating": 4.14,
-        "negative": 3,
-        "neutral": 0,
-        "positive": 21
+        "negative": 4,
+        "neutral": 2,
+        "positive": 18
       },
       "warning": null,
       "warning_reason": null,
@@ -52440,7 +52482,7 @@
           "channel": "naver",
           "date": "2025-09-26",
           "rating": null,
-          "sentiment": "긍정",
+          "sentiment": "부정",
           "reviewer": "jshysjj6490",
           "text": "육회에 노른자가 없어요… 아무리 비용 절감을 해도, 본질을 해치면 안되는거 아닌가요…ㅠㅠ… 이상한 치즈소스는 빵에 더 잘 어울리는 맛이지 날것에는 별로인거같아요…"
         },
@@ -52608,7 +52650,7 @@
         },
         {
           "d": "2025-09-26",
-          "s": "긍정",
+          "s": "부정",
           "c": "naver",
           "r": null
         },
@@ -52638,13 +52680,13 @@
         },
         {
           "d": "2025-08-30",
-          "s": "긍정",
+          "s": "중립",
           "c": "naver",
           "r": null
         },
         {
           "d": "2025-08-27",
-          "s": "긍정",
+          "s": "중립",
           "c": "naver",
           "r": null
         },
@@ -53004,9 +53046,9 @@
       "totals": {
         "reviews": 17,
         "avg_rating": 4.0,
-        "negative": 1,
+        "negative": 2,
         "neutral": 1,
-        "positive": 15
+        "positive": 14
       },
       "warning": null,
       "warning_reason": null,
@@ -53232,7 +53274,7 @@
         },
         {
           "d": "2026-03-14",
-          "s": "긍정",
+          "s": "부정",
           "c": "naver",
           "r": null
         },
@@ -53299,8 +53341,8 @@
         "reviews": 18,
         "avg_rating": 4.12,
         "negative": 2,
-        "neutral": 0,
-        "positive": 16
+        "neutral": 1,
+        "positive": 15
       },
       "warning": null,
       "warning_reason": null,
@@ -53326,7 +53368,7 @@
           "channel": "naver",
           "date": "2026-02-06",
           "rating": null,
-          "sentiment": "긍정",
+          "sentiment": "중립",
           "reviewer": "s0****",
           "text": "굽기가 이븐하지 못함"
         },
@@ -53496,7 +53538,7 @@
         },
         {
           "d": "2026-02-06",
-          "s": "긍정",
+          "s": "중립",
           "c": "naver",
           "r": null
         },
@@ -54097,8 +54139,8 @@
         "reviews": 18,
         "avg_rating": 3.33,
         "negative": 4,
-        "neutral": 0,
-        "positive": 14
+        "neutral": 1,
+        "positive": 13
       },
       "warning": null,
       "warning_reason": null,
@@ -54140,7 +54182,7 @@
           "channel": "naver",
           "date": "2026-01-18",
           "rating": null,
-          "sentiment": "긍정",
+          "sentiment": "중립",
           "reviewer": "불루42",
           "text": "첨엔 안매운데 하고는 소스 다 들이부어서.."
         }
@@ -54306,7 +54348,7 @@
         },
         {
           "d": "2026-01-18",
-          "s": "긍정",
+          "s": "중립",
           "c": "naver",
           "r": null
         },
@@ -54385,8 +54427,8 @@
         "reviews": 15,
         "avg_rating": 4.17,
         "negative": 1,
-        "neutral": 0,
-        "positive": 14
+        "neutral": 1,
+        "positive": 13
       },
       "warning": null,
       "warning_reason": null,
@@ -54404,7 +54446,7 @@
           "channel": "naver",
           "date": "2026-04-07",
           "rating": null,
-          "sentiment": "긍정",
+          "sentiment": "중립",
           "reviewer": "glass y 2272",
           "text": "포장 주문하니까 육회덮밥이 6500원이었어용"
         },
@@ -54570,7 +54612,7 @@
         },
         {
           "d": "2026-04-07",
-          "s": "긍정",
+          "s": "중립",
           "c": "naver",
           "r": null
         },
@@ -55249,8 +55291,8 @@
         "reviews": 18,
         "avg_rating": 2.5,
         "negative": 5,
-        "neutral": 0,
-        "positive": 13
+        "neutral": 2,
+        "positive": 11
       },
       "warning": "yellow",
       "warning_reason": "최근 7일 부정 2건, 최근 30일 부정률 66% (2/3)",
@@ -55494,13 +55536,13 @@
         },
         {
           "d": "2025-10-23",
-          "s": "긍정",
+          "s": "중립",
           "c": "naver",
           "r": null
         },
         {
           "d": "2025-09-26",
-          "s": "긍정",
+          "s": "중립",
           "c": "naver",
           "r": null
         },
@@ -55560,9 +55602,9 @@
       "totals": {
         "reviews": 14,
         "avg_rating": 3.75,
-        "negative": 1,
+        "negative": 2,
         "neutral": 1,
-        "positive": 12
+        "positive": 11
       },
       "warning": null,
       "warning_reason": null,
@@ -55596,7 +55638,7 @@
           "channel": "naver",
           "date": "2025-10-21",
           "rating": null,
-          "sentiment": "긍정",
+          "sentiment": "부정",
           "reviewer": "비밀8365",
           "text": "상추가 썩어있어 얘기했더니 멀쩡하다고 하시면 이것도 멀쩡한건가요…? 안에보니 쫌 더 있네요"
         },
@@ -55764,7 +55806,7 @@
         },
         {
           "d": "2025-10-21",
-          "s": "긍정",
+          "s": "부정",
           "c": "naver",
           "r": null
         },
@@ -59964,9 +60006,9 @@
       "totals": {
         "reviews": 13,
         "avg_rating": 5.0,
-        "negative": 0,
-        "neutral": 0,
-        "positive": 13
+        "negative": 1,
+        "neutral": 1,
+        "positive": 11
       },
       "warning": null,
       "warning_reason": null,
@@ -59984,7 +60026,7 @@
           "channel": "naver",
           "date": "2026-01-16",
           "rating": null,
-          "sentiment": "긍정",
+          "sentiment": "부정",
           "reviewer": "R빠ya",
           "text": "얼큰소고기우동이랑 스테이크초밥을 주문했는데 얼큰소고기우동은 약간 육개장? 같은 맛이었고 뭔가 술안주 같은 느낌도 들었어요 ㅎㅎ"
         },
@@ -60144,7 +60186,7 @@
         },
         {
           "d": "2026-01-16",
-          "s": "긍정",
+          "s": "부정",
           "c": "naver",
           "r": null
         },
@@ -60174,7 +60216,7 @@
         },
         {
           "d": "2025-08-08",
-          "s": "긍정",
+          "s": "중립",
           "c": "naver",
           "r": null
         },
@@ -60247,8 +60289,8 @@
         "reviews": 27,
         "avg_rating": 4.47,
         "negative": 1,
-        "neutral": 1,
-        "positive": 25
+        "neutral": 2,
+        "positive": 24
       },
       "warning": null,
       "warning_reason": null,
@@ -60282,7 +60324,7 @@
           "channel": "naver",
           "date": "2025-12-14",
           "rating": null,
-          "sentiment": "긍정",
+          "sentiment": "중립",
           "reviewer": "맛도리 킬러",
           "text": "근데 육회 익힌 거랑 안 익힌 거 반반으로 먹고싶은데 그건 없더라고요. 모듬초밥에는 연어가 섞여 있어서 아쉬워요."
         },
@@ -60450,7 +60492,7 @@
         },
         {
           "d": "2025-12-14",
-          "s": "긍정",
+          "s": "중립",
           "c": "naver",
           "r": null
         },
@@ -60553,8 +60595,8 @@
         "reviews": 19,
         "avg_rating": 4.67,
         "negative": 0,
-        "neutral": 1,
-        "positive": 18
+        "neutral": 2,
+        "positive": 17
       },
       "warning": null,
       "warning_reason": null,
@@ -60762,7 +60804,7 @@
         },
         {
           "d": "2025-11-29",
-          "s": "긍정",
+          "s": "중립",
           "c": "naver",
           "r": null
         },
@@ -61710,9 +61752,9 @@
       "totals": {
         "reviews": 21,
         "avg_rating": 2.09,
-        "negative": 8,
+        "negative": 13,
         "neutral": 0,
-        "positive": 13
+        "positive": 8
       },
       "warning": null,
       "warning_reason": null,
@@ -61722,7 +61764,7 @@
           "channel": "naver",
           "date": "2026-03-08",
           "rating": null,
-          "sentiment": "긍정",
+          "sentiment": "부정",
           "reviewer": "클클클",
           "text": "식당에서 이런경험은 처음이라 영수증 달라고 해서 씁니다. 배달로는 진짜 많이 시켜먹다가 요즘 공부하면서 주변이라 먹으려고 갔더니 메뉴판보고 알아서 시키라고 하더니 말투부터 표정에서 결제하는순간까지 참..카드 휙 뺏어…"
         },
@@ -61746,7 +61788,7 @@
           "channel": "naver",
           "date": "2026-02-09",
           "rating": null,
-          "sentiment": "긍정",
+          "sentiment": "부정",
           "reviewer": "맛집탐방고고씽가자",
           "text": "근처에 연어 파는 데가 여기밖에 없어서 어쩔 수 없이 오는데 매번 올 때마다 불친절하고 무례하게 얘기해서 다신 안 와야지라는 생각이 매번 드네요. 오늘로써 앞으로는 차라리 다른 먼 지점을 가서라도 먹어야겠다는 확신이…"
         },
@@ -61754,7 +61796,7 @@
           "channel": "naver",
           "date": "2026-01-11",
           "rating": null,
-          "sentiment": "긍정",
+          "sentiment": "부정",
           "reviewer": "ㅇㅇㅇ4246",
           "text": "진짜 너무 불친절!! 빨리 근처에서 먹으려고 몇번 왔는데 매번 기분이 너무 나빠요 웬만하면 안쓰는데 이번엔 진짜 다신 안와야겠다고 생각했습니다"
         }
@@ -61890,7 +61932,7 @@
         },
         {
           "d": "2026-03-08",
-          "s": "긍정",
+          "s": "부정",
           "c": "naver",
           "r": null
         },
@@ -61908,13 +61950,13 @@
         },
         {
           "d": "2026-02-09",
-          "s": "긍정",
+          "s": "부정",
           "c": "naver",
           "r": null
         },
         {
           "d": "2026-01-11",
-          "s": "긍정",
+          "s": "부정",
           "c": "naver",
           "r": null
         },
@@ -61926,13 +61968,13 @@
         },
         {
           "d": "2025-12-05",
-          "s": "긍정",
+          "s": "부정",
           "c": "naver",
           "r": null
         },
         {
           "d": "2025-11-26",
-          "s": "긍정",
+          "s": "부정",
           "c": "naver",
           "r": null
         },
@@ -62286,9 +62328,9 @@
       "totals": {
         "reviews": 33,
         "avg_rating": 3.3,
-        "negative": 8,
-        "neutral": 2,
-        "positive": 23
+        "negative": 9,
+        "neutral": 4,
+        "positive": 20
       },
       "warning": null,
       "warning_reason": null,
@@ -62314,7 +62356,7 @@
           "channel": "naver",
           "date": "2026-01-24",
           "rating": null,
-          "sentiment": "긍정",
+          "sentiment": "부정",
           "reviewer": "쥬슐랭",
           "text": "음식이 전반적으로 달아요 (ㅠㅠ)"
         },
@@ -62330,7 +62372,7 @@
           "channel": "naver",
           "date": "2026-01-20",
           "rating": null,
-          "sentiment": "긍정",
+          "sentiment": "중립",
           "reviewer": "KMK43",
           "text": "표정을 눌러 반응을 남겨 보세요!"
         }
@@ -62520,7 +62562,7 @@
         },
         {
           "d": "2026-01-24",
-          "s": "긍정",
+          "s": "부정",
           "c": "naver",
           "r": null
         },
@@ -62532,7 +62574,7 @@
         },
         {
           "d": "2026-01-20",
-          "s": "긍정",
+          "s": "중립",
           "c": "naver",
           "r": null
         },
@@ -62550,7 +62592,7 @@
         },
         {
           "d": "2025-12-19",
-          "s": "긍정",
+          "s": "중립",
           "c": "naver",
           "r": null
         },
@@ -63247,8 +63289,8 @@
         "reviews": 18,
         "avg_rating": 4.38,
         "negative": 0,
-        "neutral": 2,
-        "positive": 16
+        "neutral": 4,
+        "positive": 14
       },
       "warning": null,
       "warning_reason": null,
@@ -63474,7 +63516,7 @@
         },
         {
           "d": "2026-01-03",
-          "s": "긍정",
+          "s": "중립",
           "c": "naver",
           "r": null
         },
@@ -63486,7 +63528,7 @@
         },
         {
           "d": "2025-12-19",
-          "s": "긍정",
+          "s": "중립",
           "c": "naver",
           "r": null
         }
@@ -64428,9 +64470,9 @@
       "totals": {
         "reviews": 14,
         "avg_rating": 4.2,
-        "negative": 1,
+        "negative": 2,
         "neutral": 0,
-        "positive": 13
+        "positive": 12
       },
       "warning": null,
       "warning_reason": null,
@@ -64644,7 +64686,7 @@
         },
         {
           "d": "2025-05-24",
-          "s": "긍정",
+          "s": "부정",
           "c": "naver",
           "r": null
         },
@@ -65881,8 +65923,8 @@
         "reviews": 15,
         "avg_rating": 3.4,
         "negative": 2,
-        "neutral": 0,
-        "positive": 13
+        "neutral": 1,
+        "positive": 12
       },
       "warning": null,
       "warning_reason": null,
@@ -66102,7 +66144,7 @@
         },
         {
           "d": "2026-04-02",
-          "s": "긍정",
+          "s": "중립",
           "c": "naver",
           "r": null
         },
@@ -67080,9 +67122,9 @@
       "totals": {
         "reviews": 23,
         "avg_rating": 3.0,
-        "negative": 5,
-        "neutral": 2,
-        "positive": 16
+        "negative": 6,
+        "neutral": 4,
+        "positive": 13
       },
       "warning": null,
       "warning_reason": null,
@@ -67108,7 +67150,7 @@
           "channel": "naver",
           "date": "2026-03-15",
           "rating": null,
-          "sentiment": "긍정",
+          "sentiment": "중립",
           "reviewer": "예쁜여우 75",
           "text": "육회바른연어 가격이 비싸긴 하네요"
         },
@@ -67116,7 +67158,7 @@
           "channel": "naver",
           "date": "2026-03-12",
           "rating": null,
-          "sentiment": "긍정",
+          "sentiment": "부정",
           "reviewer": "tkvkfdbrtk",
           "text": "나쁘게 먹어야할지 포장 및 배달이 서로 다르면 어떡하죠? 맨날 다른 건가요…?"
         },
@@ -67284,13 +67326,13 @@
         },
         {
           "d": "2026-03-15",
-          "s": "긍정",
+          "s": "중립",
           "c": "naver",
           "r": null
         },
         {
           "d": "2026-03-12",
-          "s": "긍정",
+          "s": "부정",
           "c": "naver",
           "r": null
         },
@@ -67302,7 +67344,7 @@
         },
         {
           "d": "2026-01-07",
-          "s": "긍정",
+          "s": "중립",
           "c": "naver",
           "r": null
         },
@@ -67344,7 +67386,7 @@
         "naver": {
           "count": 10,
           "avg_rating": null,
-          "recent_negative": 0,
+          "recent_negative": 1,
           "place_id": "1424325675",
           "url": "https://pcmap.place.naver.com/restaurant/1424325675/review/visitor"
         },
@@ -67380,13 +67422,13 @@
       "totals": {
         "reviews": 26,
         "avg_rating": 4.06,
-        "negative": 3,
+        "negative": 4,
         "neutral": 0,
-        "positive": 23
+        "positive": 22
       },
       "warning": null,
       "warning_reason": null,
-      "recent7_negative": 0,
+      "recent7_negative": 1,
       "recent_samples": [
         {
           "channel": "naver",
@@ -67620,7 +67662,7 @@
         },
         {
           "d": "2026-04-24",
-          "s": "긍정",
+          "s": "부정",
           "c": "naver",
           "r": null
         },
@@ -67656,7 +67698,7 @@
         "naver": {
           "count": 10,
           "avg_rating": null,
-          "recent_negative": 0,
+          "recent_negative": 1,
           "place_id": "1581348337",
           "url": "https://pcmap.place.naver.com/restaurant/1581348337/review/visitor"
         },
@@ -67692,13 +67734,13 @@
       "totals": {
         "reviews": 35,
         "avg_rating": 4.24,
-        "negative": 3,
+        "negative": 4,
         "neutral": 2,
-        "positive": 30
+        "positive": 29
       },
       "warning": null,
       "warning_reason": null,
-      "recent7_negative": 0,
+      "recent7_negative": 1,
       "recent_samples": [
         {
           "channel": "naver",
@@ -67720,7 +67762,7 @@
           "channel": "naver",
           "date": "2026-04-24",
           "rating": null,
-          "sentiment": "긍정",
+          "sentiment": "부정",
           "reviewer": "jav****",
           "text": "먹는순간 참기름향이 확 올라오고 너무 맛있어요ㅠㅠ"
         },
@@ -67902,7 +67944,7 @@
         },
         {
           "d": "2026-04-24",
-          "s": "긍정",
+          "s": "부정",
           "c": "naver",
           "r": null
         },
@@ -68395,8 +68437,8 @@
         "reviews": 17,
         "avg_rating": 3.86,
         "negative": 2,
-        "neutral": 0,
-        "positive": 15
+        "neutral": 3,
+        "positive": 12
       },
       "warning": null,
       "warning_reason": null,
@@ -68414,7 +68456,7 @@
           "channel": "naver",
           "date": "2025-10-10",
           "rating": null,
-          "sentiment": "긍정",
+          "sentiment": "중립",
           "reviewer": "꿈미래30",
           "text": "포장해왔는데 대기장소가 없네요.ㅜㅜ맛있어요."
         },
@@ -68586,7 +68628,7 @@
         },
         {
           "d": "2025-10-10",
-          "s": "긍정",
+          "s": "중립",
           "c": "naver",
           "r": null
         },
@@ -68946,9 +68988,9 @@
       "totals": {
         "reviews": 27,
         "avg_rating": 3.71,
-        "negative": 3,
-        "neutral": 4,
-        "positive": 20
+        "negative": 4,
+        "neutral": 5,
+        "positive": 18
       },
       "warning": null,
       "warning_reason": null,
@@ -69168,7 +69210,7 @@
         },
         {
           "d": "2025-08-08",
-          "s": "긍정",
+          "s": "중립",
           "c": "naver",
           "r": null
         }
@@ -69222,9 +69264,9 @@
       "totals": {
         "reviews": 16,
         "avg_rating": 3.67,
-        "negative": 2,
+        "negative": 3,
         "neutral": 0,
-        "positive": 14
+        "positive": 13
       },
       "warning": null,
       "warning_reason": null,
@@ -69469,8 +69511,8 @@
         "reviews": 25,
         "avg_rating": 3.87,
         "negative": 3,
-        "neutral": 2,
-        "positive": 20
+        "neutral": 3,
+        "positive": 19
       },
       "warning": null,
       "warning_reason": null,
@@ -69488,7 +69530,7 @@
           "channel": "naver",
           "date": "2026-04-24",
           "rating": null,
-          "sentiment": "긍정",
+          "sentiment": "중립",
           "reviewer": "뿌셩뿌셩",
           "text": "육회쫄면이 맛있다고 해서 왔다가"
         },
@@ -69654,7 +69696,7 @@
         },
         {
           "d": "2026-04-24",
-          "s": "긍정",
+          "s": "중립",
           "c": "naver",
           "r": null
         },
@@ -70021,8 +70063,8 @@
         "reviews": 23,
         "avg_rating": 4.69,
         "negative": 1,
-        "neutral": 0,
-        "positive": 22
+        "neutral": 1,
+        "positive": 21
       },
       "warning": null,
       "warning_reason": null,
@@ -70032,7 +70074,7 @@
           "channel": "naver",
           "date": "2026-03-13",
           "rating": null,
-          "sentiment": "긍정",
+          "sentiment": "중립",
           "reviewer": "티모72",
           "text": "입맛이 없을때ㆍ유난히 연어초밥만 좋아하시어"
         },
@@ -70224,7 +70266,7 @@
         },
         {
           "d": "2026-03-13",
-          "s": "긍정",
+          "s": "중립",
           "c": "naver",
           "r": null
         },
@@ -70333,8 +70375,8 @@
         "reviews": 25,
         "avg_rating": 3.0,
         "negative": 7,
-        "neutral": 0,
-        "positive": 18
+        "neutral": 1,
+        "positive": 17
       },
       "warning": null,
       "warning_reason": null,
@@ -70578,7 +70620,7 @@
         },
         {
           "d": "2025-07-02",
-          "s": "긍정",
+          "s": "중립",
           "c": "naver",
           "r": null
         },
@@ -71190,7 +71232,7 @@
         "naver": {
           "count": 10,
           "avg_rating": null,
-          "recent_negative": 0,
+          "recent_negative": 1,
           "place_id": "1027607661",
           "url": "https://pcmap.place.naver.com/restaurant/1027607661/review/visitor"
         },
@@ -71226,13 +71268,13 @@
       "totals": {
         "reviews": 52,
         "avg_rating": 3.5,
-        "negative": 12,
+        "negative": 13,
         "neutral": 4,
-        "positive": 36
+        "positive": 35
       },
       "warning": null,
       "warning_reason": null,
-      "recent7_negative": 0,
+      "recent7_negative": 1,
       "recent_samples": [
         {
           "channel": "naver",
@@ -71484,7 +71526,7 @@
         },
         {
           "d": "2026-04-22",
-          "s": "긍정",
+          "s": "부정",
           "c": "naver",
           "r": null
         },
@@ -71802,7 +71844,7 @@
         "naver": {
           "count": 10,
           "avg_rating": null,
-          "recent_negative": 0,
+          "recent_negative": 1,
           "place_id": "1191566043",
           "url": "https://pcmap.place.naver.com/restaurant/1191566043/review/visitor"
         },
@@ -71838,19 +71880,19 @@
       "totals": {
         "reviews": 31,
         "avg_rating": 2.71,
-        "negative": 12,
+        "negative": 14,
         "neutral": 1,
-        "positive": 18
+        "positive": 16
       },
       "warning": null,
       "warning_reason": null,
-      "recent7_negative": 0,
+      "recent7_negative": 1,
       "recent_samples": [
         {
           "channel": "naver",
           "date": "2026-04-23",
           "rating": null,
-          "sentiment": "긍정",
+          "sentiment": "부정",
           "reviewer": "Feuy",
           "text": "와 여자직원 진짜 레전드 ㅋㅋㅋㅋㅋㅋ 손님이 말하는데 걍무시 까고 개퉁명 ㅋㅋㅋㅋㅋ엌 들어오면 무시는 물론이고 주문하는도중에 쌩~지나감 지금 앉아서 먹고 있는데 5명 들어왔고 모두한테 그랫음 ㅋㅋㅋㅋㅋㅋ남자사장님은 …"
         },
@@ -71858,7 +71900,7 @@
           "channel": "naver",
           "date": "2026-02-15",
           "rating": null,
-          "sentiment": "긍정",
+          "sentiment": "부정",
           "reviewer": "핑핑이s",
           "text": "여성직원분이 너무 불친절했어요 저녁 6시좀 넘어서 친구와 함께 갔는데요 직원분이 주문안받으시고 멀리 가게시길래 저희 주문좀 할게요!라고 했는데 저희시선에서 보이지도 않는곳에서 뭐요 하시면서 화난톤으로 퉁명스럽게 하시…"
         },
@@ -72024,13 +72066,13 @@
         },
         {
           "d": "2026-04-23",
-          "s": "긍정",
+          "s": "부정",
           "c": "naver",
           "r": null
         },
         {
           "d": "2026-02-15",
-          "s": "긍정",
+          "s": "부정",
           "c": "naver",
           "r": null
         },
@@ -72096,7 +72138,7 @@
         "naver": {
           "count": 10,
           "avg_rating": null,
-          "recent_negative": 0,
+          "recent_negative": 2,
           "place_id": "1368325406",
           "url": "https://pcmap.place.naver.com/restaurant/1368325406/review/visitor"
         },
@@ -72132,12 +72174,12 @@
       "totals": {
         "reviews": 21,
         "avg_rating": 3.18,
-        "negative": 4,
-        "neutral": 3,
-        "positive": 14
+        "negative": 6,
+        "neutral": 4,
+        "positive": 11
       },
-      "warning": null,
-      "warning_reason": null,
+      "warning": "yellow",
+      "warning_reason": "최근 7일 부정 0건, 최근 30일 부정률 33% (2/6)",
       "recent7_negative": 0,
       "recent_samples": [
         {
@@ -72152,7 +72194,7 @@
           "channel": "naver",
           "date": "2026-04-14",
           "rating": null,
-          "sentiment": "긍정",
+          "sentiment": "부정",
           "reviewer": "ekg****",
           "text": "여자 알바생분 태도 너무 심각해요 이건 아닌거같아요"
         },
@@ -72324,7 +72366,7 @@
         },
         {
           "d": "2026-04-14",
-          "s": "긍정",
+          "s": "부정",
           "c": "naver",
           "r": null
         },
@@ -72348,13 +72390,13 @@
         },
         {
           "d": "2026-04-11",
-          "s": "긍정",
+          "s": "부정",
           "c": "naver",
           "r": null
         },
         {
           "d": "2026-03-24",
-          "s": "긍정",
+          "s": "중립",
           "c": "naver",
           "r": null
         },
@@ -73008,9 +73050,9 @@
       "totals": {
         "reviews": 43,
         "avg_rating": 3.44,
-        "negative": 11,
+        "negative": 12,
         "neutral": 3,
-        "positive": 29
+        "positive": 28
       },
       "warning": null,
       "warning_reason": null,
@@ -73272,7 +73314,7 @@
         },
         {
           "d": "2026-01-22",
-          "s": "긍정",
+          "s": "부정",
           "c": "naver",
           "r": null
         }
@@ -73781,7 +73823,7 @@
       "store": "육회바른연어 대전시청역점",
       "date": "2026-04-25",
       "rating": null,
-      "sentiment": "긍정",
+      "sentiment": "부정",
       "text": "음식이 늦게 나와요 지금도 기다리는중ㅜ"
     },
     {
@@ -73821,7 +73863,7 @@
       "store": "육회바른연어 경희대점",
       "date": "2026-04-25",
       "rating": null,
-      "sentiment": "긍정",
+      "sentiment": "부정",
       "text": "훔 너무 마싯네요오 소스맛도 사기인듯!"
     },
     {
