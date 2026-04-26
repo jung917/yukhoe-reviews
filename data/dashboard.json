@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-04-26T12:58:02",
+  "generated_at": "2026-04-26T13:06:37",
   "data_window_days": 30,
   "recent_days": 7,
   "summary": {
@@ -6249,8 +6249,8 @@
         "reviews": 11,
         "avg_rating": 4.0,
         "negative": 0,
-        "neutral": 1,
-        "positive": 10
+        "neutral": 0,
+        "positive": 11
       },
       "warning": null,
       "warning_reason": null,
@@ -6464,7 +6464,7 @@
         },
         {
           "d": "2026-04-24",
-          "s": "중립",
+          "s": "긍정",
           "c": "naver",
           "r": null
         },
@@ -19509,8 +19509,8 @@
         "reviews": 14,
         "avg_rating": 4.0,
         "negative": 1,
-        "neutral": 1,
-        "positive": 12
+        "neutral": 2,
+        "positive": 11
       },
       "warning": null,
       "warning_reason": null,
@@ -19552,7 +19552,7 @@
           "channel": "naver",
           "date": "2026-01-10",
           "rating": null,
-          "sentiment": "긍정",
+          "sentiment": "중립",
           "reviewer": "리버풀코리아",
           "text": "맛은 있는데 곱배기 아니면 남자성인은 양이 적을듯하네요"
         }
@@ -19724,7 +19724,7 @@
         },
         {
           "d": "2026-01-10",
-          "s": "긍정",
+          "s": "중립",
           "c": "naver",
           "r": null
         },
@@ -19815,8 +19815,8 @@
         "reviews": 10,
         "avg_rating": null,
         "negative": 0,
-        "neutral": 1,
-        "positive": 9
+        "neutral": 0,
+        "positive": 10
       },
       "warning": null,
       "warning_reason": null,
@@ -20030,7 +20030,7 @@
         },
         {
           "d": "2026-03-14",
-          "s": "중립",
+          "s": "긍정",
           "c": "naver",
           "r": null
         },
@@ -20955,8 +20955,8 @@
         "reviews": 14,
         "avg_rating": 3.75,
         "negative": 3,
-        "neutral": 0,
-        "positive": 11
+        "neutral": 2,
+        "positive": 9
       },
       "warning": null,
       "warning_reason": null,
@@ -21176,7 +21176,7 @@
         },
         {
           "d": "2025-10-26",
-          "s": "긍정",
+          "s": "중립",
           "c": "naver",
           "r": null
         },
@@ -21188,7 +21188,7 @@
         },
         {
           "d": "2025-09-13",
-          "s": "긍정",
+          "s": "중립",
           "c": "naver",
           "r": null
         },
@@ -22136,7 +22136,7 @@
         "naver": {
           "count": 10,
           "avg_rating": null,
-          "recent_negative": 0,
+          "recent_negative": 1,
           "place_id": "2080782595",
           "url": "https://pcmap.place.naver.com/restaurant/2080782595/review/visitor"
         },
@@ -22172,13 +22172,13 @@
       "totals": {
         "reviews": 10,
         "avg_rating": null,
-        "negative": 0,
-        "neutral": 2,
+        "negative": 1,
+        "neutral": 1,
         "positive": 8
       },
       "warning": null,
       "warning_reason": null,
-      "recent7_negative": 0,
+      "recent7_negative": 1,
       "recent_samples": [
         {
           "channel": "naver",
@@ -22216,7 +22216,7 @@
           "channel": "naver",
           "date": "2026-04-23",
           "rating": null,
-          "sentiment": "중립",
+          "sentiment": "부정",
           "reviewer": "alw****",
           "text": "맨날와도 안질리는맛"
         }
@@ -22370,7 +22370,7 @@
         },
         {
           "d": "2026-04-23",
-          "s": "중립",
+          "s": "부정",
           "c": "naver",
           "r": null
         },
@@ -41040,7 +41040,7 @@
         "naver": {
           "count": 10,
           "avg_rating": null,
-          "recent_negative": 1,
+          "recent_negative": 0,
           "place_id": "1537953445",
           "url": "https://pcmap.place.naver.com/restaurant/1537953445/review/visitor"
         },
@@ -41076,9 +41076,9 @@
       "totals": {
         "reviews": 15,
         "avg_rating": 5.0,
-        "negative": 1,
+        "negative": 0,
         "neutral": 0,
-        "positive": 14
+        "positive": 15
       },
       "warning": null,
       "warning_reason": null,
@@ -41304,7 +41304,7 @@
         },
         {
           "d": "2026-04-15",
-          "s": "부정",
+          "s": "긍정",
           "c": "naver",
           "r": null
         },
@@ -45048,8 +45048,8 @@
       "totals": {
         "reviews": 19,
         "avg_rating": 4.33,
-        "negative": 1,
-        "neutral": 2,
+        "negative": 2,
+        "neutral": 1,
         "positive": 16
       },
       "warning": null,
@@ -45252,7 +45252,7 @@
         },
         {
           "d": "2025-10-05",
-          "s": "중립",
+          "s": "부정",
           "c": "naver",
           "r": null
         },
@@ -46525,8 +46525,8 @@
         "reviews": 10,
         "avg_rating": null,
         "negative": 0,
-        "neutral": 1,
-        "positive": 9
+        "neutral": 0,
+        "positive": 10
       },
       "warning": null,
       "warning_reason": null,
@@ -46752,7 +46752,7 @@
         },
         {
           "d": "2026-04-05",
-          "s": "중립",
+          "s": "긍정",
           "c": "naver",
           "r": null
         }
@@ -52446,8 +52446,8 @@
       "totals": {
         "reviews": 24,
         "avg_rating": 4.14,
-        "negative": 4,
-        "neutral": 2,
+        "negative": 5,
+        "neutral": 1,
         "positive": 18
       },
       "warning": null,
@@ -52686,7 +52686,7 @@
         },
         {
           "d": "2025-08-27",
-          "s": "중립",
+          "s": "부정",
           "c": "naver",
           "r": null
         },
@@ -53340,8 +53340,8 @@
       "totals": {
         "reviews": 18,
         "avg_rating": 4.12,
-        "negative": 2,
-        "neutral": 1,
+        "negative": 3,
+        "neutral": 0,
         "positive": 15
       },
       "warning": null,
@@ -53368,7 +53368,7 @@
           "channel": "naver",
           "date": "2026-02-06",
           "rating": null,
-          "sentiment": "중립",
+          "sentiment": "부정",
           "reviewer": "s0****",
           "text": "굽기가 이븐하지 못함"
         },
@@ -53538,7 +53538,7 @@
         },
         {
           "d": "2026-02-06",
-          "s": "중립",
+          "s": "부정",
           "c": "naver",
           "r": null
         },
@@ -54138,8 +54138,8 @@
       "totals": {
         "reviews": 18,
         "avg_rating": 3.33,
-        "negative": 4,
-        "neutral": 1,
+        "negative": 5,
+        "neutral": 0,
         "positive": 13
       },
       "warning": null,
@@ -54182,7 +54182,7 @@
           "channel": "naver",
           "date": "2026-01-18",
           "rating": null,
-          "sentiment": "중립",
+          "sentiment": "부정",
           "reviewer": "불루42",
           "text": "첨엔 안매운데 하고는 소스 다 들이부어서.."
         }
@@ -54348,7 +54348,7 @@
         },
         {
           "d": "2026-01-18",
-          "s": "중립",
+          "s": "부정",
           "c": "naver",
           "r": null
         },
@@ -67123,8 +67123,8 @@
         "reviews": 23,
         "avg_rating": 3.0,
         "negative": 6,
-        "neutral": 4,
-        "positive": 13
+        "neutral": 5,
+        "positive": 12
       },
       "warning": null,
       "warning_reason": null,
@@ -67166,7 +67166,7 @@
           "channel": "naver",
           "date": "2026-01-12",
           "rating": null,
-          "sentiment": "긍정",
+          "sentiment": "중립",
           "reviewer": "끼끼거북이",
           "text": "맛나요 그치만 트러플감튀 시즈닝을 빼먹으셧나바요 흑흑 아쉬와요"
         }
@@ -67338,7 +67338,7 @@
         },
         {
           "d": "2026-01-12",
-          "s": "긍정",
+          "s": "중립",
           "c": "naver",
           "r": null
         },
@@ -68437,8 +68437,8 @@
         "reviews": 17,
         "avg_rating": 3.86,
         "negative": 2,
-        "neutral": 3,
-        "positive": 12
+        "neutral": 4,
+        "positive": 11
       },
       "warning": null,
       "warning_reason": null,
@@ -68472,7 +68472,7 @@
           "channel": "naver",
           "date": "2025-10-02",
           "rating": null,
-          "sentiment": "긍정",
+          "sentiment": "중립",
           "reviewer": "솔직히리뷰안하면큰일남",
           "text": "가격이 올랐는데 육회양이 많이 줄었네요"
         },
@@ -68640,7 +68640,7 @@
         },
         {
           "d": "2025-10-02",
-          "s": "긍정",
+          "s": "중립",
           "c": "naver",
           "r": null
         },
@@ -69511,8 +69511,8 @@
         "reviews": 25,
         "avg_rating": 3.87,
         "negative": 3,
-        "neutral": 3,
-        "positive": 19
+        "neutral": 2,
+        "positive": 20
       },
       "warning": null,
       "warning_reason": null,
@@ -69530,7 +69530,7 @@
           "channel": "naver",
           "date": "2026-04-24",
           "rating": null,
-          "sentiment": "중립",
+          "sentiment": "긍정",
           "reviewer": "뿌셩뿌셩",
           "text": "육회쫄면이 맛있다고 해서 왔다가"
         },
@@ -69696,7 +69696,7 @@
         },
         {
           "d": "2026-04-24",
-          "s": "중립",
+          "s": "긍정",
           "c": "naver",
           "r": null
         },

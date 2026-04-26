@@ -404,7 +404,7 @@ footer {
 let DATA = null;
 let chBar = null, sentPie = null, modalChart = null;
 let regionFilter = 'all';
-let periodDays = 'all';   // 'all' | 1 | 7 | 30 | 180 | 'custom'
+let periodDays = '30';   // 기본 30일 (워닝이 잘 보이도록). 'all' | 1 | 7 | 30 | 180 | 'custom'
 let periodFrom = null, periodTo = null;  // Date — custom 모드용
 let sortKey = 'reviews';
 
@@ -456,14 +456,42 @@ function renderKPIs() {
 }
 
 function renderWarnings() {
-  const ws = DATA.warnings;
-  document.getElementById('warn-count').textContent = ws.length;
+  // 동적 워닝 — 현재 선택된 지역+기간 적용
+  const dynWarns = [];
+  for (const s of DATA.stores) {
+    if (regionFilter !== 'all' && s.region !== regionFilter) continue;
+    const ps = s._period || applyPeriodToStore(s);
+    if (ps.warning) {
+      // 기간 내 부정 샘플 추출 (recent_samples 중 기간에 들어가는 것)
+      let from = null, to = null;
+      if (periodDays === 'custom') { from = periodFrom; to = periodTo; }
+      else if (periodDays !== 'all') {
+        to = new Date(DATA.generated_at);
+        from = new Date(to); from.setDate(from.getDate() - Number(periodDays));
+      }
+      const samples = (s.recent_samples || []).filter(r => {
+        if (r.sentiment !== '부정') return false;
+        if (!from && !to) return true;
+        const d = new Date(r.date);
+        if (from && d < from) return false;
+        if (to && d > to) return false;
+        return true;
+      }).slice(0, 3);
+      dynWarns.push({
+        level: ps.warning, store_name: s.store_name, branch: s.branch,
+        reason: ps.warning_reason, samples: samples,
+      });
+    }
+  }
+  dynWarns.sort((a, b) => (a.level === 'red' ? 0 : 1) - (b.level === 'red' ? 0 : 1));
+
+  document.getElementById('warn-count').textContent = dynWarns.length;
   const grid = document.getElementById('warn-grid');
-  if (!ws.length) {
-    grid.innerHTML = '<div class="empty" style="grid-column: 1 / -1;">현재 워닝 매장 없음. 모니터링 정상.</div>';
+  if (!dynWarns.length) {
+    grid.innerHTML = '<div class="empty" style="grid-column: 1 / -1;">선택 기간/지역에 워닝 매장 없음.</div>';
     return;
   }
-  grid.innerHTML = ws.map(w => `
+  grid.innerHTML = dynWarns.map(w => `
     <div class="warn-card ${w.level}" onclick="openStore('${w.store_name.replace(/'/g, "\\'")}')">
       <div class="head">
         <div class="branch">${w.branch || w.store_name}</div>
@@ -478,6 +506,13 @@ function renderWarnings() {
       `).join('') : ''}
     </div>
   `).join('');
+  // KPI 워닝 카운트도 갱신
+  const redN = dynWarns.filter(w => w.level === 'red').length;
+  const yelN = dynWarns.filter(w => w.level === 'yellow').length;
+  const kpiR = document.querySelector('#kpi-strip .kpi.warn-red .value');
+  const kpiY = document.querySelector('#kpi-strip .kpi.warn-yel .value');
+  if (kpiR) kpiR.textContent = redN.toLocaleString('ko-KR');
+  if (kpiY) kpiY.textContent = yelN.toLocaleString('ko-KR');
 }
 
 function renderCharts() {
@@ -578,6 +613,34 @@ function applyPeriodToStore(s) {
   for (const src of SOURCES) {
     stats.byChannel[src] = filtered.filter(r => r.c === src).length;
   }
+  // 워닝 동적 계산 (기간 기반)
+  const sentTotal = stats.pos + stats.neg + stats.neu;
+  const negRatio = sentTotal ? stats.neg / sentTotal : 0;
+  let warning = null;
+  let reason = null;
+  // 기간 길이에 따라 임계값 조정 (짧을수록 민감)
+  let minSamples = 5;
+  let redNeg = 3, yelNeg = 2;
+  const days = periodDays === 'all' ? 365 : periodDays === 'custom'
+    ? (from && to ? Math.max(1, Math.round((to - from) / 86400000)) : 30)
+    : Number(periodDays);
+  if (days <= 1)        { minSamples = 1; redNeg = 1; yelNeg = 1; }
+  else if (days <= 7)   { minSamples = 3; redNeg = 3; yelNeg = 2; }
+  else if (days <= 30)  { minSamples = 5; redNeg = 4; yelNeg = 2; }
+  else if (days <= 180) { minSamples = 10; redNeg = 8; yelNeg = 4; }
+  else                  { minSamples = 15; redNeg = 15; yelNeg = 8; }
+
+  if (sentTotal >= minSamples && (stats.neg >= redNeg || negRatio >= 0.5)) {
+    warning = 'red';
+    reason = `최근 ${days}일 부정 ${stats.neg}건 / 부정률 ${Math.round(negRatio*100)}% (${stats.neg}/${sentTotal})`;
+  } else if (sentTotal >= Math.max(3, Math.floor(minSamples * 0.6))
+             && (stats.neg >= yelNeg || negRatio >= 0.3)) {
+    warning = 'yellow';
+    reason = `최근 ${days}일 부정 ${stats.neg}건 / 부정률 ${Math.round(negRatio*100)}% (${stats.neg}/${sentTotal})`;
+  }
+  stats.warning = warning;
+  stats.warning_reason = reason;
+  stats.days = days;
   return stats;
 }
 
@@ -595,8 +658,15 @@ function renderStores() {
     stores = stores.filter(s => s.region === regionFilter);
   }
 
-  // 기간 통계 계산해서 카드에 사용
-  stores.forEach(s => { s._period = applyPeriodToStore(s); });
+  // 기간 통계 캐시 무효화 후 재계산 (필터 변경 시 항상 fresh)
+  DATA.stores.forEach(s => { s._period = applyPeriodToStore(s); });
+  // 워닝 섹션 동기 갱신 (지역/기간 변경 시)
+  renderWarnings();
+  // 헤더 메타 동적 갱신
+  const days = periodDays === 'all' ? '전체' :
+               periodDays === 'custom' ? '직접지정' : `${periodDays}일`;
+  const region = regionFilter === 'all' ? '전국' : regionFilter;
+  document.getElementById('meta-window').textContent = `(${region} · ${days})`;
 
   stores.sort((a, b) => {
     if (sortKey === 'reviews') return b._period.reviews - a._period.reviews;
@@ -620,15 +690,16 @@ function renderStores() {
 
 function storeCardHtml(s) {
   const ps = s._period || {reviews: s.totals.reviews, avg_rating: s.totals.avg_rating,
-                            neg: s.totals.negative, byChannel: {}};
-  const wcls = s.warning === 'red' ? 'has-warn-red' : (s.warning === 'yellow' ? 'has-warn-yel' : '');
+                            neg: s.totals.negative, byChannel: {}, warning: null};
+  const dynW = ps.warning;  // 기간 기반 동적 워닝
+  const wcls = dynW === 'red' ? 'has-warn-red' : (dynW === 'yellow' ? 'has-warn-yel' : '');
 
-  // 7일 내 부정이 있으면 매장명 옆에 ⚠ 표시 (warning 이상 등급)
+  // 워닝 아이콘 — 동적 (선택 기간 기준)
   let warnIco = '';
-  if (s.warning === 'red')      warnIco = `<span class="warn-ico red" title="${s.warning_reason || ''}">⚠ ${s.recent7_negative || ''}</span>`;
-  else if (s.warning === 'yellow') warnIco = `<span class="warn-ico yel" title="${s.warning_reason || ''}">⚠ ${s.recent7_negative || ''}</span>`;
-  else if ((s.recent7_negative || 0) > 0)
-    warnIco = `<span class="warn-ico yel" title="최근 7일 부정 ${s.recent7_negative}건">⚠ ${s.recent7_negative}</span>`;
+  if (dynW === 'red')      warnIco = `<span class="warn-ico red" title="${ps.warning_reason || ''}">⚠ ${ps.neg}</span>`;
+  else if (dynW === 'yellow') warnIco = `<span class="warn-ico yel" title="${ps.warning_reason || ''}">⚠ ${ps.neg}</span>`;
+  else if ((ps.neg || 0) > 0)
+    warnIco = `<span class="warn-ico yel" title="기간 내 부정 ${ps.neg}건" style="opacity:.6">⚠ ${ps.neg}</span>`;
 
   const channels = SOURCES.map(src => {
     const cnt = ps.byChannel[src] ?? (s.channels[src]?.count || 0);
