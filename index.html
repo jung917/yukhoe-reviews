@@ -643,7 +643,8 @@ const GUIDE_HTML = `
 function fmtNum(n) { return (n ?? 0).toLocaleString('ko-KR'); }
 
 async function load() {
-  const resp = await fetch('data/dashboard.json');
+  // 캐시 무효화 — 매 페이지 로드마다 fresh fetch
+  const resp = await fetch('dashboard.json?t=' + Date.now(), { cache: 'no-store' });
   DATA = await resp.json();
   render();
 }
