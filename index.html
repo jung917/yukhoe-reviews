@@ -615,30 +615,47 @@ function renderCharts(stores) {
 
   const ctx1 = document.getElementById('ch-bar').getContext('2d');
   if (chBar) chBar.destroy();
-  // 가로 막대 + 라벨에 값 포함 + log 스케일 (네이버/카카오/구글 격차 시각화)
   const fmtN = n => n.toLocaleString('ko-KR');
+  // 라벨에는 실제 값 (0 포함) — 항상 5채널 모두 표시
   const labels = SOURCES.map(c => `${SOURCE_LABEL[c]} (${fmtN(chCount[c])})`);
-  const dataVals = SOURCES.map(c => chCount[c]);
-  const useLog = Math.max(...dataVals) > 0
-                 && Math.max(...dataVals) / Math.max(1, Math.min(...dataVals.filter(v=>v>0)||[1])) > 10;
+  const rawVals = SOURCES.map(c => chCount[c]);
+  const positives = rawVals.filter(v => v > 0);
+  const ratio = positives.length
+    ? Math.max(...positives) / Math.max(1, Math.min(...positives))
+    : 1;
+  const useLog = positives.length > 1 && ratio > 10;
+  // log 사용 시 0은 0.5로 (막대 표시용); 라벨엔 진짜 값 표시
+  // linear도 0이면 막대 안 보이니 항상 최소값 부여
+  const minStub = useLog ? 0.5 : Math.max(1, (Math.max(...rawVals) || 1) * 0.012);
+  const displayVals = rawVals.map(v => v > 0 ? v : minStub);
   chBar = new Chart(ctx1, {
     type: 'bar',
     data: {
       labels: labels,
       datasets: [{
         label: '리뷰 수',
-        data: dataVals,
-        backgroundColor: SOURCES.map(c => SOURCE_COLOR[c]),
+        data: displayVals,
+        // 0인 채널은 살짝 흐리게 (스텁이라는 시각 신호)
+        backgroundColor: SOURCES.map((c, i) =>
+          rawVals[i] > 0 ? SOURCE_COLOR[c] : SOURCE_COLOR[c] + '55'),  // alpha 33%
         borderRadius: 4,
       }],
     },
     options: {
-      indexAxis: 'y',  // 가로 막대 (작은 값도 잘 보임)
+      indexAxis: 'y',
       responsive: true, maintainAspectRatio: false,
-      plugins: { legend: { display: false } },
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          callbacks: {
+            label: (item) => `리뷰 ${fmtN(rawVals[item.dataIndex])}건`,
+          },
+        },
+      },
       scales: {
         x: {
-          beginAtZero: true,
+          beginAtZero: !useLog,
+          min: useLog ? 0.5 : 0,
           type: useLog ? 'logarithmic' : 'linear',
           ticks: { color: getCss('--text-muted'), font: { size: 10 } },
           grid: { color: getCss('--border') },
