@@ -71,19 +71,21 @@ header h1::before {
 
 /* KPI */
 .kpi-strip {
-  display: grid; grid-template-columns: repeat(6, 1fr); gap: 12px;
+  display: grid; grid-template-columns: repeat(7, 1fr); gap: 10px;
   margin-bottom: 24px;
 }
-@media (max-width: 1100px) { .kpi-strip { grid-template-columns: repeat(3, 1fr); } }
-@media (max-width: 600px)  { .kpi-strip { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 1300px) { .kpi-strip { grid-template-columns: repeat(4, 1fr); } }
+@media (max-width: 800px)  { .kpi-strip { grid-template-columns: repeat(2, 1fr); } }
 .kpi {
   background: var(--bg-card); border: 1px solid var(--border);
-  border-radius: 10px; padding: 16px;
+  border-radius: 10px; padding: 14px;
 }
 .kpi .label { font-size: 12px; color: var(--text-secondary); margin-bottom: 6px; }
-.kpi .value { font-size: 24px; font-weight: 700; color: var(--text-primary); }
+.kpi .value { font-size: 22px; font-weight: 700; color: var(--text-primary); }
 .kpi.warn-red .value { color: var(--neg); }
 .kpi.warn-yel .value { color: #facc15; }
+.kpi.poison    .value { color: #ec4899; }   /* 배탈 = 핫 핑크 */
+.kpi.poison    { border-color: #ec4899; }   /* 강조 보더 */
 
 /* Section heading */
 .section { margin: 32px 0; }
@@ -245,7 +247,7 @@ body.theme-light .filter-row-inline .label-mini { background: #fee2e2; }
   white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
 }
 .store-card .stats {
-  display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 10px;
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin-bottom: 10px;
 }
 .store-card .stat {
   text-align: center; background: var(--bg-elev);
@@ -254,6 +256,9 @@ body.theme-light .filter-row-inline .label-mini { background: #fee2e2; }
 .store-card .stat .v { font-size: 14px; font-weight: 700; color: var(--text-primary); }
 .store-card .stat .l { font-size: 10px; color: var(--text-muted); margin-top: 2px; }
 .store-card .stat.neg .v { color: var(--neg); }
+.store-card .stat.poison { background: rgba(236, 72, 153, 0.12); }
+.store-card .stat.poison .v { color: #ec4899; }
+.store-card .stat.poison .l { color: #ec4899; font-weight: 600; }
 .store-card .channels {
   display: flex; flex-wrap: wrap; gap: 4px;
 }
@@ -668,6 +673,7 @@ function renderKPIs(stores) {
   const list = stores || DATA.stores;
   let totalReviews = 0, sumRating = 0, ratingCount = 0;
   let storesWithData = 0;
+  let storesWithPoison = 0;   // 배탈 키워드 1건 이상 매장 수
   const chCount = {};
   for (const src of SOURCES) chCount[src] = 0;
   for (const s of list) {
@@ -680,6 +686,7 @@ function renderKPIs(stores) {
     if (ps && ps.byChannel) {
       for (const src of SOURCES) chCount[src] += (ps.byChannel[src] || 0);
     }
+    if (ps && ps.poison > 0) storesWithPoison++;
   }
   const avg = ratingCount ? (sumRating / ratingCount).toFixed(2) : '—';
   const activeCh = SOURCES.filter(c => chCount[c] > 0).length;
@@ -690,6 +697,7 @@ function renderKPIs(stores) {
     {label: '평균 평점', value: avg},
     {label: '워닝 (빨강)', value: '0', cls: 'warn-red'},   // renderWarnings에서 갱신
     {label: '워닝 (노랑)', value: '0', cls: 'warn-yel'},
+    {label: '⚠ 배탈 매장', value: fmtNum(storesWithPoison), cls: 'poison'},
     {label: '활성 채널', value: activeCh + ' / 5'},
   ];
   document.getElementById('kpi-strip').innerHTML = html.map(k =>
@@ -911,6 +919,7 @@ function applyPeriodToStore(s) {
     pos: filtered.filter(r => r.s === '긍정').length,
     neg: filtered.filter(r => r.s === '부정').length,
     neu: filtered.filter(r => r.s === '중립').length,
+    poison: filtered.filter(r => r.p === 1).length,   // 배탈 의심 리뷰 수
   };
   const ratings = filtered.map(r => r.r).filter(r => r > 0);
   stats.avg_rating = ratings.length
@@ -1027,6 +1036,7 @@ function storeCardHtml(s) {
         <div class="stat"><div class="v">${fmtNum(ps.reviews)}</div><div class="l">리뷰</div></div>
         <div class="stat"><div class="v">${ps.avg_rating ? '★'+ps.avg_rating : '—'}</div><div class="l">평점</div></div>
         <div class="stat ${ps.neg ? 'neg' : ''}"><div class="v">${fmtNum(ps.neg)}</div><div class="l">부정</div></div>
+        <div class="stat ${(ps.poison||0) > 0 ? 'poison' : ''}"><div class="v">${fmtNum(ps.poison || 0)}</div><div class="l">배탈</div></div>
       </div>
       <div class="channels">${channels}</div>
     </div>
