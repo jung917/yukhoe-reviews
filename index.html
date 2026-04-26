@@ -296,13 +296,30 @@ body.theme-light .ch-pill.has.kakao { color: #b58c00; }
 }
 .modal-channels .ch:last-child { border-bottom: 0; }
 .modal-channels .ch a { color: var(--accent); text-decoration: none; font-size: 11px; }
-.modal-reviews .review-item {
-  background: var(--bg-elev); border-radius: 6px; padding: 10px 12px; margin-bottom: 6px;
-  font-size: 13px;
+.modal-reviews { margin-top: 14px; }
+.modal-reviews .reviews-scroll {
+  max-height: 460px; overflow-y: auto;
+  padding-right: 6px;
+  border: 1px solid var(--border); border-radius: 8px;
+  background: var(--bg-elev);
 }
+.modal-reviews .reviews-scroll::-webkit-scrollbar { width: 8px; }
+.modal-reviews .reviews-scroll::-webkit-scrollbar-thumb {
+  background: var(--border); border-radius: 4px;
+}
+.modal-reviews .review-item {
+  background: var(--bg-card); border-bottom: 1px solid var(--border);
+  padding: 10px 14px;
+  font-size: 13px; line-height: 1.55;
+}
+.modal-reviews .review-item:last-child { border-bottom: 0; }
 .modal-reviews .review-item .meta {
-  font-size: 11px; color: var(--text-muted); margin-bottom: 4px;
-  display: flex; gap: 8px; align-items: center;
+  font-size: 11px; color: var(--text-muted); margin-bottom: 6px;
+  display: flex; gap: 8px; align-items: center; flex-wrap: wrap;
+}
+.modal-reviews .review-item .body {
+  white-space: pre-wrap; word-break: break-word;
+  color: var(--text-primary);
 }
 .sentiment-pos { color: var(--pos); }
 .sentiment-neg { color: var(--neg); }
@@ -554,12 +571,15 @@ function renderWarnings() {
         <span class="badge">${w.level === 'red' ? '🔴 위험' : '⚠ 경고'}</span>
       </div>
       <div class="reason">${w.reason}</div>
-      ${w.samples.length ? w.samples.slice(0,2).map(s => `
+      ${w.samples.length ? w.samples.slice(0,2).map(s => {
+        const t = String(s.text || '');
+        const short = t.length > 100 ? t.slice(0, 100) + '…' : t;
+        return `
         <div class="sample">
           <div class="meta">${SOURCE_LABEL[s.channel] || s.channel} · ${s.date} ${s.rating ? '· ★' + s.rating : ''}</div>
-          ${escapeHtml(s.text)}
-        </div>
-      `).join('') : ''}
+          ${escapeHtml(short)}
+        </div>`;
+      }).join('') : ''}
     </div>
   `).join('');
   // KPI 워닝 카운트도 갱신
@@ -849,8 +869,10 @@ function openStore(storeName) {
       </div>
     </div>
     <div class="modal-reviews">
-      <h3 style="margin:14px 0 8px;font-size:13px">최근 리뷰 (최대 5건)</h3>
-      ${s.recent_samples.length ? s.recent_samples.map(r => `
+      <h3 style="margin:14px 0 8px;font-size:13px">
+        최근 리뷰 <span style="color:var(--text-muted);font-weight:400;">(최대 ${s.recent_samples.length}건 · 스크롤)</span>
+      </h3>
+      ${s.recent_samples.length ? `<div class="reviews-scroll">${s.recent_samples.map(r => `
         <div class="review-item">
           <div class="meta">
             <b>${SOURCE_LABEL[r.channel] || r.channel}</b> · ${r.date}
@@ -858,9 +880,9 @@ function openStore(storeName) {
             ${r.sentiment ? ` · <span class="sentiment-${r.sentiment==='긍정'?'pos':r.sentiment==='부정'?'neg':'neu'}">${r.sentiment}</span>` : ''}
             ${r.reviewer ? ` · ${r.reviewer}` : ''}
           </div>
-          ${escapeHtml(r.text)}
+          <div class="body">${escapeHtml(r.text)}</div>
         </div>
-      `).join('') : '<div class="empty">수집된 리뷰가 없습니다.</div>'}
+      `).join('')}</div>` : '<div class="empty">수집된 리뷰가 없습니다.</div>'}
     </div>
   `;
   document.getElementById('modal').classList.add('open');
