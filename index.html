@@ -661,7 +661,12 @@ function renderCharts(stores) {
           grid: { color: getCss('--border') },
         },
         y: {
-          ticks: { color: getCss('--text-secondary'), font: { size: 11 } },
+          ticks: {
+            color: getCss('--text-secondary'),
+            font: { size: 11 },
+            autoSkip: false,        // 5개 라벨 절대 생략 X
+            maxTicksLimit: 10,
+          },
           grid: { display: false },
         },
       },
