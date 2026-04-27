@@ -1062,6 +1062,26 @@ function storeCardHtml(s) {
 // 모달 내부 필터 state
 let modalFilter = { period: 'all', sentiment: 'all', channel: 'all', store: null };
 
+function modalAllSamples(s) {
+  // recent + negative + poison 합치고 dedup (매장 모달용 통합 풀)
+  const all = [
+    ...(s.recent_samples || []),
+    ...(s.negative_samples || []),
+    ...(s.poison_samples || []),
+  ];
+  const seen = new Set();
+  const out = [];
+  for (const r of all) {
+    const k = `${r.date}|${r.channel}|${r.reviewer}|${(r.text||'').slice(0,80)}`;
+    if (seen.has(k)) continue;
+    seen.add(k);
+    out.push(r);
+  }
+  // 날짜 내림차순
+  out.sort((a, b) => (a.date < b.date ? 1 : -1));
+  return out;
+}
+
 function applyModalFilter(samples) {
   let from = null, to = null;
   if (modalFilter.period !== 'all') {
@@ -1084,7 +1104,7 @@ function applyModalFilter(samples) {
 function renderModalReviews() {
   const s = modalFilter.store;
   if (!s) return;
-  const filtered = applyModalFilter(s.recent_samples || []);
+  const filtered = applyModalFilter(modalAllSamples(s));
   const cont = document.getElementById('modal-reviews-list');
   if (!cont) return;
   cont.innerHTML = filtered.length
