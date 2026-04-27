@@ -309,6 +309,22 @@ body.theme-light .ch-pill.has.kakao { color: #b58c00; }
 }
 .modal-channels .ch:last-child { border-bottom: 0; }
 .modal-channels .ch a { color: var(--accent); text-decoration: none; font-size: 11px; }
+.modal-filter-row {
+  display: flex; flex-wrap: wrap; gap: 5px; align-items: center;
+  margin-bottom: 8px; padding: 8px 10px;
+  background: var(--bg-elev); border-radius: 8px; border: 1px solid var(--border);
+}
+.modal-chip {
+  padding: 3px 9px; border-radius: 11px; font-size: 11px;
+  background: var(--bg-card); border: 1px solid var(--border);
+  color: var(--text-secondary); cursor: pointer; user-select: none;
+  font-weight: 600;
+}
+.modal-chip:hover { color: var(--text-primary); }
+.modal-chip.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+.modal-divider {
+  width: 1px; height: 18px; background: var(--border); margin: 0 8px;
+}
 .modal-reviews { margin-top: 14px; }
 .modal-reviews .reviews-scroll {
   max-height: 460px; overflow-y: auto;
@@ -1043,9 +1059,62 @@ function storeCardHtml(s) {
   `;
 }
 
+// 모달 내부 필터 state
+let modalFilter = { period: 'all', sentiment: 'all', channel: 'all', store: null };
+
+function applyModalFilter(samples) {
+  let from = null, to = null;
+  if (modalFilter.period !== 'all') {
+    to = new Date(DATA.generated_at);
+    from = new Date(to);
+    from.setDate(from.getDate() - Number(modalFilter.period));
+  }
+  return samples.filter(r => {
+    if (modalFilter.sentiment !== 'all' && r.sentiment !== modalFilter.sentiment) return false;
+    if (modalFilter.channel !== 'all' && r.channel !== modalFilter.channel) return false;
+    if (from || to) {
+      const d = new Date(r.date);
+      if (from && d < from) return false;
+      if (to && d > to) return false;
+    }
+    return true;
+  });
+}
+
+function renderModalReviews() {
+  const s = modalFilter.store;
+  if (!s) return;
+  const filtered = applyModalFilter(s.recent_samples || []);
+  const cont = document.getElementById('modal-reviews-list');
+  if (!cont) return;
+  cont.innerHTML = filtered.length
+    ? filtered.map(r => `
+        <div class="review-item">
+          <div class="meta">
+            <span class="ch-color-${r.channel}">${SOURCE_LABEL[r.channel] || r.channel}</span> · ${r.date}
+            ${r.rating ? ` · ★${r.rating}` : ''}
+            ${r.sentiment ? ` · <span class="sentiment-${r.sentiment==='긍정'?'pos':r.sentiment==='부정'?'neg':'neu'}">${r.sentiment}</span>` : ''}
+            ${r.reviewer ? ` · ${r.reviewer}` : ''}
+          </div>
+          <div class="body">${escapeHtml(r.text)}</div>
+        </div>`).join('')
+    : '<div class="empty">필터 조건에 맞는 리뷰 없음.</div>';
+  document.getElementById('modal-review-count').textContent = `${filtered.length}건`;
+}
+
+function setModalFilter(kind, val) {
+  modalFilter[kind] = val;
+  document.querySelectorAll(`.modal-chip[data-kind="${kind}"]`).forEach(c => {
+    c.classList.toggle('active', c.dataset.val === String(val));
+  });
+  renderModalReviews();
+}
+
 function openStore(storeName) {
   const s = DATA.stores.find(x => x.store_name === storeName);
   if (!s) return;
+  // 모달 필터 초기화 + store 저장
+  modalFilter = { period: 'all', sentiment: 'all', channel: 'all', store: s };
   const body = document.getElementById('modal-body');
   body.innerHTML = `
     <div class="modal-head">
@@ -1066,25 +1135,40 @@ function openStore(storeName) {
       <div class="modal-channels"><h3 style="margin:0 0 8px;font-size:13px">채널별 링크</h3>
         ${SOURCES.map(src => {
           const c = s.channels[src] || {};
-          return `<div class="ch"><span>${SOURCE_LABEL[src]} · ${c.count || 0}건${c.avg_rating ? ' · ★'+c.avg_rating : ''}</span>${c.url ? `<a href="${c.url}" target="_blank" rel="noopener">열기 ↗</a>` : '<span style="color:var(--text-muted)">미수집</span>'}</div>`;
+          const hasData = (c.count || 0) > 0;
+          return `<div class="ch">
+            <span><span class="ch-color-${src}">${SOURCE_LABEL[src]}</span> · ${c.count || 0}건${c.avg_rating ? ' · ★'+c.avg_rating : ''}</span>
+            ${c.url ? `<a href="${c.url}" target="_blank" rel="noopener">열기 ↗</a>`
+              : (hasData ? '<span style="color:var(--text-muted)">데이터만</span>'
+                         : '<span style="color:var(--text-muted)">미수집</span>')}
+          </div>`;
         }).join('')}
       </div>
     </div>
     <div class="modal-reviews">
       <h3 style="margin:14px 0 8px;font-size:13px">
-        최근 리뷰 <span style="color:var(--text-muted);font-weight:400;">(최대 ${s.recent_samples.length}건 · 스크롤)</span>
+        리뷰 <span id="modal-review-count" style="color:var(--text-muted);font-weight:400;">${s.recent_samples.length}건</span>
+        <span style="color:var(--text-muted);font-weight:400;font-size:11px;"> · 매장 최신 100건 안에서 필터</span>
       </h3>
-      ${s.recent_samples.length ? `<div class="reviews-scroll">${s.recent_samples.map(r => `
-        <div class="review-item">
-          <div class="meta">
-            <span class="ch-color-${r.channel}">${SOURCE_LABEL[r.channel] || r.channel}</span> · ${r.date}
-            ${r.rating ? ` · ★${r.rating}` : ''}
-            ${r.sentiment ? ` · <span class="sentiment-${r.sentiment==='긍정'?'pos':r.sentiment==='부정'?'neg':'neu'}">${r.sentiment}</span>` : ''}
-            ${r.reviewer ? ` · ${r.reviewer}` : ''}
-          </div>
-          <div class="body">${escapeHtml(r.text)}</div>
-        </div>
-      `).join('')}</div>` : '<div class="empty">수집된 리뷰가 없습니다.</div>'}
+      <div class="modal-filter-row">
+        <span class="label-mini" style="color:var(--accent);">감성</span>
+        <span class="modal-chip active" data-kind="sentiment" data-val="all" onclick="setModalFilter('sentiment','all')">전체</span>
+        <span class="modal-chip" data-kind="sentiment" data-val="긍정" onclick="setModalFilter('sentiment','긍정')" style="color:var(--pos);">긍정</span>
+        <span class="modal-chip" data-kind="sentiment" data-val="중립" onclick="setModalFilter('sentiment','중립')" style="color:var(--neu);">중립</span>
+        <span class="modal-chip" data-kind="sentiment" data-val="부정" onclick="setModalFilter('sentiment','부정')" style="color:var(--neg);">부정</span>
+        <span class="modal-divider"></span>
+        <span class="label-mini" style="color:var(--accent);">채널</span>
+        <span class="modal-chip active" data-kind="channel" data-val="all" onclick="setModalFilter('channel','all')">전체</span>
+        ${SOURCES.map(src => `<span class="modal-chip ch-color-${src}" data-kind="channel" data-val="${src}" onclick="setModalFilter('channel','${src}')">${SOURCE_LABEL[src]}</span>`).join('')}
+        <span class="modal-divider"></span>
+        <span class="label-mini" style="color:var(--accent);">기간</span>
+        <span class="modal-chip active" data-kind="period" data-val="all" onclick="setModalFilter('period','all')">전체</span>
+        <span class="modal-chip" data-kind="period" data-val="1" onclick="setModalFilter('period','1')">1일</span>
+        <span class="modal-chip" data-kind="period" data-val="7" onclick="setModalFilter('period','7')">7일</span>
+        <span class="modal-chip" data-kind="period" data-val="30" onclick="setModalFilter('period','30')">30일</span>
+        <span class="modal-chip" data-kind="period" data-val="180" onclick="setModalFilter('period','180')">6개월</span>
+      </div>
+      <div class="reviews-scroll" id="modal-reviews-list"></div>
     </div>
   `;
   document.getElementById('modal').classList.add('open');
@@ -1108,6 +1192,9 @@ function openStore(storeName) {
                scales: { y: { beginAtZero: true, ticks: { color: getCss('--text-secondary') } },
                          x: { ticks: { color: getCss('--text-secondary') } } } },
   });
+
+  // 모달 내부 리뷰 렌더링 (필터 적용)
+  renderModalReviews();
 }
 
 function closeModal() {
