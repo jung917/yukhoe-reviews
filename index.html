@@ -1157,8 +1157,11 @@ function openStore(storeName) {
         ${SOURCES.map(src => {
           const c = s.channels[src] || {};
           const hasData = (c.count || 0) > 0;
+          const ratingTag = c.avg_rating
+            ? ` · ★${c.avg_rating}${c.rating_predicted ? '<sup style="color:var(--text-muted);font-size:9px;font-weight:400;" title="네이버는 별점이 없어 KcBERT 모델로 예측된 평점입니다 (정확도 88.3%)">(예측)</sup>' : ''}`
+            : '';
           return `<div class="ch">
-            <span><span class="ch-color-${src}">${SOURCE_LABEL[src]}</span> · ${c.count || 0}건${c.avg_rating ? ' · ★'+c.avg_rating : ''}</span>
+            <span><span class="ch-color-${src}">${SOURCE_LABEL[src]}</span> · ${c.count || 0}건${ratingTag}</span>
             ${c.url ? `<a href="${c.url}" target="_blank" rel="noopener">열기 ↗</a>`
               : (hasData ? '<span style="color:var(--text-muted)">데이터만</span>'
                          : '<span style="color:var(--text-muted)">미수집</span>')}
