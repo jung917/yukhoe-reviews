@@ -1044,7 +1044,7 @@ function storeCardHtml(s) {
     <div class="store-card ${wcls}" onclick="openStore('${s.store_name.replace(/'/g, "\\'")}')">
       <div class="name">
         ${warnIco}
-        <span class="branch-name">${s.branch}</span>
+        <span class="branch-name">${s.branch}${s.data_range_first ? ` <span style="font-size:10px;color:var(--text-muted);font-weight:400;">${s.data_range_first}~${s.data_range_last}</span>` : ''}</span>
         <span class="region-tag">${s.region || ''}</span>
       </div>
       <div class="addr">${s.address || ''}</div>
@@ -1140,7 +1140,7 @@ function openStore(storeName) {
   body.innerHTML = `
     <div class="modal-head">
       <div>
-        <h2>${s.branch}</h2>
+        <h2>${s.branch}${s.data_range_first ? ` <span style="font-size:12px;color:var(--text-muted);font-weight:400;">(${s.data_range_first} ~ ${s.data_range_last})</span>` : ''}</h2>
         <div class="addr">${s.store_name} · ${s.address || ''}</div>
       </div>
       <button class="modal-close" onclick="closeModal()">×</button>
@@ -1169,7 +1169,6 @@ function openStore(storeName) {
     <div class="modal-reviews">
       <h3 style="margin:14px 0 8px;font-size:13px">
         리뷰 <span id="modal-review-count" style="color:var(--text-muted);font-weight:400;">${modalAllSamples(s).length}건</span>
-        <span style="color:var(--text-muted);font-weight:400;font-size:11px;"> · 매장 sample 풀 (최신/채널별/부정/배탈 합) 안에서 필터</span>
       </h3>
       <div class="modal-filter-row">
         <span class="label-mini" style="color:var(--accent);">감성</span>
