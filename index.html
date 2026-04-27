@@ -342,6 +342,21 @@ body.theme-light .ch-pill.has.kakao { color: #b58c00; }
   font-size: 13px; line-height: 1.55;
 }
 .modal-reviews .review-item:last-child { border-bottom: 0; }
+.modal-reviews .review-item.poison {
+  background: rgba(239, 68, 68, 0.18);
+  border-left: 4px solid var(--neg);
+}
+body.theme-light .modal-reviews .review-item.poison {
+  background: #fee2e2;
+}
+.modal-reviews .review-item.poison .body::before {
+  content: '⚠ 배탈 의심 키워드';
+  display: inline-block;
+  font-size: 10px; font-weight: 700;
+  color: #fff; background: var(--neg);
+  padding: 1px 7px; border-radius: 4px;
+  margin-right: 6px; vertical-align: middle;
+}
 .modal-reviews .review-item .meta {
   font-size: 11px; color: var(--text-muted); margin-bottom: 6px;
   display: flex; gap: 8px; align-items: center; flex-wrap: wrap;
@@ -1110,7 +1125,7 @@ function renderModalReviews() {
   if (!cont) return;
   cont.innerHTML = filtered.length
     ? filtered.map(r => `
-        <div class="review-item">
+        <div class="review-item ${r.poison ? 'poison' : ''}">
           <div class="meta">
             <span class="ch-color-${r.channel}">${SOURCE_LABEL[r.channel] || r.channel}</span> · ${r.date}
             ${r.rating ? ` · ★${r.rating}` : ''}
