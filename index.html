@@ -1168,8 +1168,8 @@ function openStore(storeName) {
     </div>
     <div class="modal-reviews">
       <h3 style="margin:14px 0 8px;font-size:13px">
-        리뷰 <span id="modal-review-count" style="color:var(--text-muted);font-weight:400;">${s.recent_samples.length}건</span>
-        <span style="color:var(--text-muted);font-weight:400;font-size:11px;"> · 매장 최신 100건 안에서 필터</span>
+        리뷰 <span id="modal-review-count" style="color:var(--text-muted);font-weight:400;">${modalAllSamples(s).length}건</span>
+        <span style="color:var(--text-muted);font-weight:400;font-size:11px;"> · 매장 sample 풀 (최신/채널별/부정/배탈 합) 안에서 필터</span>
       </h3>
       <div class="modal-filter-row">
         <span class="label-mini" style="color:var(--accent);">감성</span>
