@@ -1063,10 +1063,11 @@ function storeCardHtml(s) {
 let modalFilter = { period: 'all', sentiment: 'all', channel: 'all', store: null };
 
 function modalAllSamples(s) {
-  // recent + negative + poison 합치고 dedup (매장 모달용 통합 풀)
+  // recent + negative + channel(채널별 최신) + poison 합치고 dedup (매장 모달용 통합 풀)
   const all = [
     ...(s.recent_samples || []),
     ...(s.negative_samples || []),
+    ...(s.channel_samples || []),
     ...(s.poison_samples || []),
   ];
   const seen = new Set();
