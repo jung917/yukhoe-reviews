@@ -1,0 +1,2215 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<!-- __GATE: 데이터 요청을 인증까지 보류하고 Firestore에서 공급 -->
+<script>
+window.__GATE = (function () {
+  var _resolve, ready = new Promise(function (r) { _resolve = r; });
+  var DATA = {};
+  var origFetch = window.fetch ? window.fetch.bind(window) : null;
+  function jsonResp(str) {
+    return new Response(str == null ? 'null' : str, { status: 200, headers: { 'Content-Type': 'application/json' } });
+  }
+  window.fetch = function (url, opts) {
+    var u = String(url);
+    if (u.indexOf('dashboard.json') !== -1) return ready.then(function () { return jsonResp(DATA['reviews_dashboard']); });
+    if (u.indexOf('reviews_all.json') !== -1) return ready.then(function () { return jsonResp(DATA['reviews_all']); });
+    return origFetch ? origFetch(url, opts) : Promise.reject(new Error('fetch unavailable'));
+  };
+  return { setData: function (k, v) { DATA[k] = v; }, unlock: function () { _resolve(); } };
+})();
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>육회바른연어 통합 리뷰 대시보드</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<style>
+:root {
+  --bg-primary: #0f1117;
+  --bg-card: #171a22;
+  --bg-elev: #1f232c;
+  --border: #2a2f3a;
+  --text-primary: #e8eaed;
+  --text-secondary: #9ba3af;
+  --text-muted: #6b7280;
+  --accent: #E4002B;
+  --accent-soft: #2a1014;
+  --pos: #10b981;
+  --neg: #ef4444;
+  --neu: #94a3b8;
+  --warn-red-bg: #2a1014;
+  --warn-red-bd: #ef4444;
+  --warn-yel-bg: #2a2210;
+  --warn-yel-bd: #facc15;
+}
+body.theme-light {
+  --bg-primary: #f6f7fb;
+  --bg-card: #ffffff;
+  --bg-elev: #f1f3f5;
+  --border: #e5e7eb;
+  --text-primary: #111827;
+  --text-secondary: #4b5563;
+  --text-muted: #9ca3af;
+  --accent-soft: #fef2f2;
+  --warn-red-bg: #fef2f2;
+  --warn-yel-bg: #fffbeb;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo",
+               "Noto Sans KR", "Malgun Gothic", sans-serif;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  line-height: 1.5;
+}
+.container { max-width: 1600px; margin: 0 auto; padding: 24px; }
+header {
+  display: flex; justify-content: space-between; align-items: flex-end;
+  flex-wrap: wrap; gap: 16px; margin-bottom: 28px;
+  padding-bottom: 20px; border-bottom: 1px solid var(--border);
+}
+header h1 {
+  margin: 0; font-size: 26px; font-weight: 700;
+  display: flex; align-items: center; gap: 12px;
+}
+header h1::before {
+  content: ''; width: 6px; height: 28px; background: var(--accent); border-radius: 3px;
+}
+.meta {
+  display: flex; gap: 16px; align-items: center;
+  font-size: 13px; color: var(--text-secondary);
+}
+.theme-toggle {
+  background: var(--bg-elev); border: 1px solid var(--border);
+  color: var(--text-primary); padding: 6px 14px; border-radius: 6px;
+  cursor: pointer; font-size: 13px;
+}
+.theme-toggle:hover { background: var(--accent); border-color: var(--accent); color: #fff; }
+
+/* KPI */
+.kpi-strip {
+  display: grid; grid-template-columns: repeat(8, 1fr); gap: 8px;
+  margin-bottom: 24px;
+}
+@media (max-width: 1500px) { .kpi-strip { grid-template-columns: repeat(4, 1fr); } }
+@media (max-width: 800px)  { .kpi-strip { grid-template-columns: repeat(2, 1fr); } }
+.kpi {
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: 10px; padding: 14px;
+}
+.kpi .label { font-size: 12px; color: var(--text-secondary); margin-bottom: 6px; }
+.kpi .value { font-size: 22px; font-weight: 700; color: var(--text-primary); }
+.kpi.warn-red .value { color: var(--neg); }
+.kpi.warn-yel .value { color: #facc15; }
+.kpi.poison    .value { color: #ec4899; }   /* 배탈 = 핫 핑크 */
+.kpi.poison    { border-color: #ec4899; }
+.kpi.rude      .value { color: #f97316; }   /* 불친절 = 오렌지 */
+.kpi.rude      { border-color: #f97316; }
+
+/* Section heading */
+.section { margin: 32px 0; }
+.section h2 {
+  font-size: 18px; font-weight: 600; margin: 0 0 14px;
+  display: flex; align-items: center; gap: 10px;
+}
+.section h2 .count {
+  font-size: 12px; padding: 2px 10px; border-radius: 10px;
+  background: var(--bg-elev); color: var(--text-secondary); font-weight: 500;
+}
+
+/* Warnings */
+.warn-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(360px, 1fr)); gap: 12px;
+}
+.warn-card {
+  border-radius: 10px; padding: 14px 16px;
+  background: var(--bg-card); border: 1px solid var(--border);
+}
+.warn-card.red {
+  background: var(--warn-red-bg); border: 1px solid var(--warn-red-bd);
+  border-left-width: 5px;
+  animation: pulse-red 1.8s ease-in-out infinite;
+}
+.warn-card.yellow {
+  background: var(--warn-yel-bg); border: 1px solid var(--warn-yel-bd);
+  border-left-width: 4px;
+}
+@keyframes pulse-red {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4); }
+  50%      { box-shadow: 0 0 0 6px rgba(239, 68, 68, 0); }
+}
+.warn-card .head {
+  display: flex; justify-content: space-between; align-items: center; gap: 8px;
+  margin-bottom: 8px;
+}
+.warn-card .branch { font-weight: 600; font-size: 14px; }
+.warn-card .badge {
+  font-size: 11px; padding: 2px 8px; border-radius: 4px; font-weight: 700;
+}
+.warn-card.red .badge    { background: var(--neg); color: #fff; }
+.warn-card.yellow .badge { background: #facc15; color: #000; }
+.warn-card .reason {
+  font-size: 12px; color: var(--text-secondary); margin-bottom: 8px;
+}
+.warn-card .sample {
+  font-size: 12px; padding: 8px; background: rgba(0,0,0,0.18);
+  border-radius: 6px; margin-top: 4px; line-height: 1.4;
+}
+body.theme-light .warn-card .sample { background: rgba(0,0,0,0.04); }
+.warn-card .sample .meta { color: var(--text-muted); font-size: 11px; }
+
+/* Charts row */
+.charts-row {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 24px;
+}
+@media (max-width: 900px) { .charts-row { grid-template-columns: 1fr; } }
+.chart-box {
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: 10px; padding: 16px;
+}
+.chart-box h3 { margin: 0 0 8px; font-size: 13px; font-weight: 600; }
+.chart-box canvas { max-height: 240px; }
+.chart-box.compact { padding: 10px 12px; }
+.chart-box.compact canvas { max-height: 120px; }
+.chart-box.donut { padding: 10px 12px; }
+.chart-box.donut canvas { max-height: 120px; }
+
+/* Filter bar */
+.filter-bar {
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: 10px; padding: 14px; margin-bottom: 14px;
+  display: flex; flex-wrap: wrap; gap: 10px; align-items: center;
+}
+.filter-bar input[type="text"] {
+  background: var(--bg-elev); border: 1px solid var(--border);
+  color: var(--text-primary); padding: 8px 12px; border-radius: 6px;
+  font-size: 13px; min-width: 200px; flex: 1 1 200px;
+}
+.chip {
+  padding: 6px 12px; border-radius: 16px; font-size: 12px;
+  background: var(--bg-elev); border: 1px solid var(--border);
+  cursor: pointer; color: var(--text-secondary);
+}
+.chip.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+.chip:hover { color: var(--text-primary); }
+.chip.sm { padding: 3px 8px; font-size: 11px; border-radius: 12px; }
+.filter-row-inline {
+  display: flex; flex-wrap: wrap; gap: 4px; align-items: center;
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: 10px; padding: 8px 12px; margin-top: 8px;
+  font-size: 11px;
+}
+.filter-row-inline .label-mini {
+  font-size: 12px; color: var(--accent);
+  margin: 0 6px 0 4px;
+  font-weight: 800;
+  letter-spacing: 0.3px;
+  padding: 3px 9px;
+  border-radius: 6px;
+  background: var(--accent-soft);
+  text-transform: uppercase;
+  flex-shrink: 0;
+}
+body.theme-light .filter-row-inline .label-mini { background: #fee2e2; }
+.filter-row-inline .label-mini:first-child { margin-left: 0; }
+.filter-row-inline .divider {
+  width: 1px; height: 22px; background: var(--border); margin: 0 16px;
+}
+.sort-select {
+  background: var(--bg-elev); border: 1px solid var(--border);
+  color: var(--text-primary); padding: 7px 10px; border-radius: 6px;
+  font-size: 12px; cursor: pointer;
+}
+
+/* Store grid */
+.store-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+  gap: 12px;
+}
+.store-card {
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: 10px; padding: 14px; cursor: pointer;
+  transition: transform 0.15s, border-color 0.15s;
+}
+.store-card:hover {
+  transform: translateY(-2px); border-color: var(--accent);
+}
+.store-card.has-warn-red {
+  border-left: 4px solid var(--neg);
+}
+.store-card.has-warn-yel {
+  border-left: 4px solid #facc15;
+}
+.store-card .name {
+  font-size: 14px; font-weight: 600; margin-bottom: 4px;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  display: flex; align-items: center; gap: 6px;
+}
+.store-card .name .warn-ico {
+  font-size: 13px; font-weight: 700;
+  padding: 1px 6px; border-radius: 4px;
+  flex-shrink: 0;
+}
+.store-card .name .warn-ico.red { background: var(--neg); color: #fff; }
+.store-card .name .warn-ico.yel { background: #facc15; color: #000; }
+.store-card .name .branch-name {
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  flex: 1; min-width: 0;
+}
+.store-card .name .region-tag {
+  font-size: 10px; padding: 1px 6px; border-radius: 8px;
+  background: var(--bg-elev); color: var(--text-secondary);
+  font-weight: 500; flex-shrink: 0;
+}
+.store-card .addr {
+  font-size: 11px; color: var(--text-muted); margin-bottom: 10px;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.store-card .stats {
+  display: grid; grid-template-columns: repeat(5, 1fr); gap: 5px; margin-bottom: 10px;
+}
+.store-card .stat {
+  text-align: center; background: var(--bg-elev);
+  padding: 6px 4px; border-radius: 5px;
+}
+.store-card .stat .v { font-size: 14px; font-weight: 700; color: var(--text-primary); }
+.store-card .stat .l { font-size: 10px; color: var(--text-muted); margin-top: 2px; }
+.store-card .stat.neg .v { color: var(--neg); }
+.store-card .stat.poison { background: rgba(236, 72, 153, 0.12); }
+.store-card .stat.poison .v { color: #ec4899; }
+.store-card .stat.poison .l { color: #ec4899; font-weight: 600; }
+.store-card .stat.rude { background: rgba(249, 115, 22, 0.12); }
+.store-card .stat.rude .v { color: #f97316; }
+.store-card .stat.rude .l { color: #f97316; font-weight: 600; }
+.store-card .channels {
+  display: flex; flex-wrap: wrap; gap: 4px;
+}
+.ch-pill {
+  font-size: 10px; padding: 2px 7px; border-radius: 8px;
+  background: var(--bg-elev); color: var(--text-muted);
+  font-weight: 500;
+}
+/* 채널별 브랜드 색상 (글자 색으로 구분) */
+.ch-pill.has.naver       { color: #03c75a; }  /* 네이버 초록 */
+.ch-pill.has.kakao       { color: #f9c200; }  /* 카카오 노랑 (어두운 톤) */
+.ch-pill.has.google      { color: #4285f4; }  /* 구글 파랑 */
+.ch-pill.has.baemin      { color: #2ac1bc; }  /* 배민 민트 */
+.ch-pill.has.coupangeats { color: #fa3838; }  /* 쿠팡이츠 빨강 */
+.ch-pill.has {
+  font-weight: 700;
+  background: var(--bg-elev);
+}
+body.theme-light .ch-pill.has.kakao { color: #b58c00; }
+
+/* Modal */
+.modal-overlay {
+  display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.7);
+  z-index: 100; padding: 20px; overflow-y: auto;
+}
+.modal-overlay.open { display: flex; align-items: flex-start; justify-content: center; }
+.modal {
+  background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px;
+  width: 100%; max-width: 900px; padding: 24px;
+}
+.modal-head {
+  display: flex; justify-content: space-between; align-items: flex-start;
+  margin-bottom: 16px; padding-bottom: 14px; border-bottom: 1px solid var(--border);
+}
+.modal-head h2 { margin: 0 0 4px; font-size: 20px; }
+.modal-head .addr { color: var(--text-muted); font-size: 13px; }
+.modal-close {
+  background: var(--bg-elev); border: 1px solid var(--border); color: var(--text-primary);
+  width: 32px; height: 32px; border-radius: 6px; cursor: pointer; font-size: 18px;
+}
+.modal-row { display: grid; grid-template-columns: 2fr 1fr; gap: 16px; margin-bottom: 16px; }
+@media (max-width: 700px) { .modal-row { grid-template-columns: 1fr; } }
+.modal-charts { background: var(--bg-elev); border-radius: 8px; padding: 12px; }
+.modal-channels { background: var(--bg-elev); border-radius: 8px; padding: 12px; }
+.modal-channels .ch {
+  display: flex; justify-content: space-between; padding: 6px 0;
+  font-size: 13px; border-bottom: 1px solid var(--border);
+}
+.modal-channels .ch:last-child { border-bottom: 0; }
+.modal-channels .ch a { color: var(--accent); text-decoration: none; font-size: 11px; }
+.modal-filter-row {
+  display: flex; flex-wrap: wrap; gap: 5px; align-items: center;
+  margin-bottom: 8px; padding: 8px 10px;
+  background: var(--bg-elev); border-radius: 8px; border: 1px solid var(--border);
+}
+.modal-chip {
+  padding: 3px 9px; border-radius: 11px; font-size: 11px;
+  background: var(--bg-card); border: 1px solid var(--border);
+  color: var(--text-secondary); cursor: pointer; user-select: none;
+  font-weight: 600;
+}
+.modal-chip:hover { color: var(--text-primary); }
+.modal-chip.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+.modal-divider {
+  width: 1px; height: 18px; background: var(--border); margin: 0 8px;
+}
+.modal-reviews { margin-top: 14px; }
+.modal-reviews .reviews-scroll {
+  max-height: 460px; overflow-y: auto;
+  padding-right: 6px;
+  border: 1px solid var(--border); border-radius: 8px;
+  background: var(--bg-elev);
+}
+.modal-reviews .reviews-scroll::-webkit-scrollbar { width: 8px; }
+.modal-reviews .reviews-scroll::-webkit-scrollbar-thumb {
+  background: var(--border); border-radius: 4px;
+}
+.modal-reviews .review-item {
+  background: var(--bg-card); border-bottom: 1px solid var(--border);
+  padding: 10px 14px;
+  font-size: 13px; line-height: 1.55;
+}
+.modal-reviews .review-item:last-child { border-bottom: 0; }
+.modal-reviews .review-item.poison {
+  background: rgba(239, 68, 68, 0.18);
+  border-left: 4px solid var(--neg);
+}
+body.theme-light .modal-reviews .review-item.poison {
+  background: #fee2e2;
+}
+.modal-reviews .review-item.poison .body::before {
+  content: '⚠ 배탈 의심 키워드';
+  display: inline-block;
+  font-size: 10px; font-weight: 700;
+  color: #fff; background: var(--neg);
+  padding: 1px 7px; border-radius: 4px;
+  margin-right: 6px; vertical-align: middle;
+}
+.modal-reviews .review-item .meta {
+  font-size: 11px; color: var(--text-muted); margin-bottom: 6px;
+  display: flex; gap: 8px; align-items: center; flex-wrap: wrap;
+}
+/* 채널명 브랜드 컬러 — 채널별 리뷰수 막대와 동일 톤 */
+.ch-color-naver       { color: #03c75a; font-weight: 700; }
+.ch-color-kakao       { color: #f9c200; font-weight: 700; }
+.ch-color-google      { color: #4285f4; font-weight: 700; }
+.ch-color-baemin      { color: #2ac1bc; font-weight: 700; }
+.ch-color-coupangeats { color: #fa3838; font-weight: 700; }
+body.theme-light .ch-color-kakao { color: #b58c00; }
+.modal-reviews .review-item .body {
+  white-space: pre-wrap; word-break: break-word;
+  color: var(--text-primary);
+}
+.sentiment-pos { color: var(--pos); }
+.sentiment-neg { color: var(--neg); }
+.sentiment-neu { color: var(--neu); }
+
+/* Guide */
+.guide-section { margin: 18px 0; }
+.guide-section h3 {
+  font-size: 14px; font-weight: 700; color: var(--accent);
+  margin: 0 0 8px; padding-bottom: 6px;
+  border-bottom: 1px solid var(--border);
+}
+.guide-section p { margin: 6px 0; color: var(--text-secondary); }
+.guide-section table {
+  width: 100%; border-collapse: collapse; margin: 8px 0; font-size: 12px;
+}
+.guide-section th, .guide-section td {
+  padding: 6px 10px; text-align: left;
+  border-bottom: 1px solid var(--border);
+}
+.guide-section th { color: var(--text-primary); font-weight: 600; background: var(--bg-elev); }
+.guide-section td { color: var(--text-secondary); }
+.guide-section code {
+  background: var(--bg-elev); padding: 1px 6px; border-radius: 4px;
+  font-size: 11px; color: var(--accent); font-family: ui-monospace, monospace;
+}
+.guide-section .pill {
+  display: inline-block; padding: 1px 8px; border-radius: 8px;
+  font-size: 11px; font-weight: 600; margin-right: 4px;
+}
+.guide-section .pill.red { background: var(--neg); color: #fff; }
+.guide-section .pill.yel { background: #facc15; color: #000; }
+
+/* Misc */
+.empty {
+  text-align: center; padding: 40px; color: var(--text-muted);
+  background: var(--bg-card); border: 1px dashed var(--border); border-radius: 10px;
+}
+footer {
+  margin-top: 40px; padding-top: 20px; border-top: 1px solid var(--border);
+  font-size: 12px; color: var(--text-muted); text-align: center;
+}
+.hidden { display: none !important; }
+
+/* ─── Tab System ─── */
+.tab-nav {
+  display: flex; gap: 4px; margin: 16px 0 20px;
+  border-bottom: 2px solid var(--border);
+}
+.tab-btn {
+  background: transparent; border: none; padding: 10px 20px;
+  font-size: 14px; font-weight: 600; color: var(--text-muted);
+  cursor: pointer; border-bottom: 3px solid transparent;
+  margin-bottom: -2px; transition: all .15s;
+}
+.tab-btn:hover { color: var(--text-primary); }
+.tab-btn.active {
+  color: var(--accent); border-bottom-color: var(--accent);
+}
+.tab-section { display: block; }
+.tab-section.hidden { display: none; }
+/* 일자별 탭 */
+.daily-table { border-collapse: collapse; width: 100%; font-size: 13px; }
+.daily-table th, .daily-table td { padding: 7px 12px; border-bottom: 1px solid var(--border); white-space: nowrap; }
+.daily-table thead th { color: var(--text-secondary); font-weight: 600; border-bottom: 2px solid var(--border); }
+.daily-table tbody tr:hover { background: var(--bg-elev); }
+.daily-table tfoot td { border-top: 2px solid var(--border); border-bottom: none; background: var(--bg-elev); }
+#daily-year, #daily-month { padding: 5px 10px; border-radius: 6px; background: var(--bg-elev); color: var(--text-primary); border: 1px solid var(--border); font-size: 13px; }
+
+/* ─── 전체 리뷰 탭 ─── */
+.reviews-toolbar {
+  background: var(--bg-card); border: 1px solid var(--border); border-radius: 10px;
+  padding: 14px 16px; margin-bottom: 14px; display: flex;
+  flex-direction: column; gap: 10px;
+}
+.reviews-toolbar .toolbar-row {
+  display: flex; gap: 8px; align-items: center; flex-wrap: wrap;
+}
+.reviews-toolbar input[type="text"] {
+  flex: 1; min-width: 200px; padding: 8px 12px; font-size: 13px;
+  background: var(--bg); border: 1px solid var(--border);
+  border-radius: 6px; color: var(--text-primary);
+}
+.reviews-toolbar select {
+  padding: 6px 10px; font-size: 12px;
+  background: var(--bg); border: 1px solid var(--border);
+  border-radius: 6px; color: var(--text-primary);
+}
+.reviews-status {
+  font-size: 12px; color: var(--text-muted); padding: 4px 0;
+}
+.reviews-status b { color: var(--accent); font-weight: 700; }
+
+/* ─── 게시판 스타일 1라인 + 펼치기 ─── */
+.review-list {
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: 8px; overflow: hidden;
+}
+.review-list-header {
+  display: grid;
+  grid-template-columns: 80px 70px minmax(180px, 220px) 1fr 50px 60px 24px;
+  gap: 10px; padding: 10px 14px; align-items: center;
+  background: rgba(255,255,255,.03); border-bottom: 1px solid var(--border);
+  font-size: 11px; font-weight: 600; color: var(--text-muted);
+  text-transform: uppercase; letter-spacing: .04em;
+}
+.review-row {
+  display: grid;
+  grid-template-columns: 80px 70px minmax(180px, 220px) 1fr 50px 60px 24px;
+  gap: 10px; padding: 10px 14px; align-items: center;
+  border-bottom: 1px solid var(--border);
+  cursor: pointer; transition: background .12s;
+  font-size: 12.5px;
+}
+.review-row:last-child { border-bottom: none; }
+.review-row:hover { background: rgba(255,255,255,.04); }
+.review-row.expanded { background: rgba(255,255,255,.05); }
+
+.review-row .col-date  { color: var(--text-muted); font-size: 11.5px; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.review-row .col-ch    { font-weight: 600; font-size: 11px; }
+.review-row .col-store { color: var(--text-primary); font-weight: 500;
+                          overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.review-row .col-store .store-region { color: var(--text-muted); font-weight: 400; font-size: 10.5px; }
+.review-row .col-text  { color: var(--text-secondary);
+                          overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.review-row .col-rating{ text-align: right; color: var(--text-muted); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.review-row .col-sent  { font-weight: 600; font-size: 11.5px; text-align: center; }
+.review-row .col-chev  { color: var(--text-muted); font-size: 10px; transition: transform .15s; text-align: center; }
+.review-row.expanded .col-chev { transform: rotate(90deg); }
+
+/* 펼쳐진 상세 패널 */
+.review-detail {
+  display: none; padding: 14px 18px 16px;
+  background: var(--bg); border-bottom: 1px solid var(--border);
+  border-left: 3px solid var(--accent);
+}
+.review-row.expanded + .review-detail { display: block; }
+.review-detail .det-meta {
+  font-size: 11px; color: var(--text-muted); margin-bottom: 10px;
+}
+.review-detail .det-meta b { color: var(--text-secondary); font-weight: 600; }
+.review-detail .det-text {
+  font-size: 13.5px; line-height: 1.65; color: var(--text-primary);
+  white-space: pre-wrap; word-break: break-word; margin-bottom: 12px;
+}
+.review-detail .det-bottom {
+  display: flex; justify-content: space-between; align-items: center;
+  flex-wrap: wrap; gap: 10px;
+}
+.review-detail .det-tags {
+  display: flex; gap: 6px; flex-wrap: wrap;
+}
+.review-detail .det-tag {
+  font-size: 11px; padding: 3px 10px; border-radius: 12px; font-weight: 500;
+  background: rgba(255,255,255,.08); color: var(--text-muted);
+}
+.review-detail .det-tag.poison    { background: rgba(251,146,60,.18); color: #fb923c; }
+.review-detail .det-tag.rude      { background: rgba(167,139,250,.18); color: #a78bfa; }
+.review-detail .det-tag.warn-red  { background: rgba(239,68,68,.18); color: var(--neg); }
+.review-detail .det-tag.warn-yellow { background: rgba(250,204,21,.18); color: #facc15; }
+.review-detail .det-store-btn {
+  background: var(--accent); color: #fff; border: none;
+  padding: 6px 14px; border-radius: 6px; font-size: 12px; font-weight: 600;
+  cursor: pointer;
+}
+.review-detail .det-store-btn:hover { opacity: .9; }
+
+/* 모바일: column 재배치 */
+@media (max-width: 760px) {
+  .review-list-header { display: none; }
+  .review-row {
+    grid-template-columns: auto 1fr auto auto;
+    grid-template-areas:
+      "ch date  rating sent"
+      "store store store store"
+      "text text text chev";
+    gap: 4px 8px; padding: 12px 14px;
+  }
+  .review-row .col-ch     { grid-area: ch; }
+  .review-row .col-date   { grid-area: date; }
+  .review-row .col-rating { grid-area: rating; text-align: right; }
+  .review-row .col-sent   { grid-area: sent; text-align: right; }
+  .review-row .col-store  { grid-area: store; font-size: 13px; }
+  .review-row .col-text   { grid-area: text; font-size: 12px; }
+  .review-row .col-chev   { grid-area: chev; }
+}
+
+.load-more-btn {
+  display: block; margin: 16px auto; padding: 10px 24px;
+  background: var(--accent); color: #fff; border: none; border-radius: 8px;
+  font-size: 13px; font-weight: 600; cursor: pointer;
+}
+.load-more-btn:hover { opacity: .9; }
+.load-more-btn:disabled { opacity: .4; cursor: not-allowed; }
+
+/* 페이지네이션 (게시판 스타일) */
+.rv-pagination {
+  display: flex; justify-content: center; align-items: center;
+  gap: 4px; margin: 20px 0 8px; flex-wrap: wrap;
+}
+.rv-pg-btn {
+  min-width: 32px; height: 32px; padding: 0 8px;
+  background: var(--bg-card); color: var(--text-secondary);
+  border: 1px solid var(--border); border-radius: 6px;
+  font-size: 12px; font-weight: 500; cursor: pointer;
+  display: inline-flex; align-items: center; justify-content: center;
+  transition: all .12s;
+}
+.rv-pg-btn:hover:not(:disabled):not(.active) {
+  background: var(--bg); border-color: var(--accent); color: var(--text-primary);
+}
+.rv-pg-btn.active {
+  background: var(--accent); color: #fff; border-color: var(--accent);
+  font-weight: 700; cursor: default;
+}
+.rv-pg-btn:disabled {
+  opacity: .35; cursor: not-allowed;
+}
+.rv-pg-btn.nav { font-weight: 600; padding: 0 10px; }
+.rv-pg-input {
+  width: 56px; height: 32px; text-align: center;
+  background: var(--bg); color: var(--text-primary);
+  border: 1px solid var(--border); border-radius: 6px;
+  font-size: 12px; font-variant-numeric: tabular-nums;
+}
+.rv-pg-jump-label { font-size: 11px; color: var(--text-muted); margin-left: 6px; }
+</style>
+</head>
+<body>
+<div class="container">
+
+<header>
+  <h1>육회바른연어 통합 리뷰 대시보드</h1>
+  <div class="meta">
+    <span id="meta-time">로딩 중…</span>
+    <span id="meta-window"></span>
+    <button class="theme-toggle" onclick="openGuide()">📘 용어·지표 해설</button>
+    <button class="theme-toggle" onclick="toggleTheme()">🌓 테마</button>
+  </div>
+</header>
+
+<!-- Tab Navigation -->
+<div class="tab-nav">
+  <button class="tab-btn active" data-tab="stores" onclick="switchTab('stores')">🏪 매장별 대시보드</button>
+  <button class="tab-btn" data-tab="reviews" onclick="switchTab('reviews')">📜 전체 리뷰</button>
+  <button class="tab-btn" data-tab="daily" onclick="switchTab('daily')">📅 일자별</button>
+</div>
+
+<!-- Tab: 매장별 대시보드 -->
+<div id="tab-stores" class="tab-section">
+
+<!-- KPI -->
+<div class="kpi-strip" id="kpi-strip"></div>
+
+<!-- Charts -->
+<div class="section">
+  <div class="charts-row">
+    <div class="chart-box compact">
+      <h3>채널별 리뷰 수</h3>
+      <canvas id="ch-bar"></canvas>
+    </div>
+    <div class="chart-box donut">
+      <h3>전체 감성 분포</h3>
+      <canvas id="sent-pie"></canvas>
+    </div>
+  </div>
+</div>
+
+<!-- 지역 + 기간 -->
+<div class="filter-row-inline">
+  <span class="label-mini">지역</span>
+  <span class="chip sm region-chip" data-region="all">전체</span>
+  <span class="chip sm region-chip" data-region="서울">서울</span>
+  <span class="chip sm region-chip" data-region="경기">경기</span>
+  <span class="chip sm region-chip" data-region="인천">인천</span>
+  <span class="chip sm region-chip" data-region="부산">부산</span>
+  <span class="chip sm region-chip" data-region="경상">경상</span>
+  <span class="chip sm region-chip" data-region="전라">전라</span>
+  <span class="chip sm region-chip" data-region="충청">충청</span>
+  <span class="chip sm region-chip" data-region="강원">강원</span>
+  <span class="chip sm region-chip" data-region="제주">제주</span>
+  <span class="divider"></span>
+  <span class="label-mini">기간</span>
+  <span class="chip sm period-chip" data-period="all">전체</span>
+  <span class="chip sm period-chip" data-period="1">1일</span>
+  <span class="chip sm period-chip" data-period="7">7일</span>
+  <span class="chip sm period-chip" data-period="30">30일</span>
+  <span class="chip sm period-chip" data-period="180">6개월</span>
+  <span class="chip sm period-chip" data-period="custom">직접지정</span>
+  <span id="custom-range" class="hidden" style="display:flex;gap:6px;align-items:center;">
+    <input type="date" id="period-from" class="sort-select" style="font-size:11px;padding:4px 6px;">
+    ~
+    <input type="date" id="period-to" class="sort-select" style="font-size:11px;padding:4px 6px;">
+  </span>
+</div>
+
+<!-- 채널 + 감성 (multi-select) -->
+<div class="filter-row-inline">
+  <span class="label-mini">채널</span>
+  <span class="chip sm channel-chip" data-channel="all">전체</span>
+  <span class="chip sm channel-chip" data-channel="naver">네이버</span>
+  <span class="chip sm channel-chip" data-channel="kakao">카카오</span>
+  <span class="chip sm channel-chip" data-channel="google">구글</span>
+  <span class="chip sm channel-chip" data-channel="baemin">배민</span>
+  <span class="chip sm channel-chip" data-channel="coupangeats">쿠팡이츠</span>
+  <span class="divider"></span>
+  <span class="label-mini">감성</span>
+  <span class="chip sm sent-chip" data-sent="all">전체</span>
+  <span class="chip sm sent-chip" data-sent="긍정" style="color:var(--pos);">긍정</span>
+  <span class="chip sm sent-chip" data-sent="중립" style="color:var(--neu);">중립</span>
+  <span class="chip sm sent-chip" data-sent="부정" style="color:var(--neg);">부정</span>
+  <span class="chip sm sent-chip" data-sent="배탈" style="color:#fb923c;">🤢 배탈</span>
+  <span class="divider"></span>
+  <span class="label-mini">주의</span>
+  <span class="chip sm concern-chip" data-concern="all">전체</span>
+  <span class="chip sm concern-chip" data-concern="warn-red" style="color:var(--neg);">⚠ 워닝(빨강)</span>
+  <span class="chip sm concern-chip" data-concern="warn-yellow" style="color:#facc15;">⚠ 워닝(노랑)</span>
+  <span class="chip sm concern-chip" data-concern="rude" style="color:#a78bfa;">🗣 불친절</span>
+  <span class="divider"></span>
+  <span class="label-mini">운영</span>
+  <span class="chip sm stype-chip" data-stype="all">전체</span>
+  <span class="chip sm stype-chip" data-stype="직영" style="color:#22c55e;">🏢 직영</span>
+  <span class="chip sm stype-chip" data-stype="가맹" style="color:#3b82f6;">🤝 가맹</span>
+</div>
+
+<!-- Warnings (지역/기간 바로 아래) -->
+<div class="section" id="warn-section" style="margin-top: 16px;">
+  <h2>🚨 워닝 <span class="count" id="warn-count">0</span></h2>
+  <div class="warn-grid" id="warn-grid"></div>
+</div>
+
+<!-- Stores -->
+<div class="section">
+  <h2>🏪 매장별 <span class="count" id="store-count">0</span></h2>
+  <div class="filter-bar">
+    <input type="text" id="search" placeholder="매장명/주소 검색…">
+    <span style="flex: 1"></span>
+    <select class="sort-select" id="sort">
+      <option value="reviews">리뷰 많은순</option>
+      <option value="recent_neg">최근 부정 많은순</option>
+      <option value="warning">워닝 우선</option>
+      <option value="rating_low">평점 낮은순</option>
+      <option value="rating_high">평점 높은순</option>
+      <option value="branch">매장명순</option>
+    </select>
+  </div>
+  <div class="store-grid" id="store-grid"></div>
+  <div class="empty hidden" id="store-empty">검색 결과가 없습니다.</div>
+</div>
+
+</div><!-- /#tab-stores -->
+
+<!-- Tab: 전체 리뷰 -->
+<div id="tab-reviews" class="tab-section hidden">
+  <div class="reviews-toolbar">
+    <!-- Row 1: 검색 + 정렬 -->
+    <div class="toolbar-row">
+      <input type="text" id="rv-search" placeholder="🔎 매장명 / 리뷰어 / 본문 검색…">
+      <select id="rv-sort">
+        <option value="date_desc">최신순</option>
+        <option value="date_asc">오래된순</option>
+        <option value="rating_desc">평점 높은순</option>
+        <option value="rating_asc">평점 낮은순</option>
+        <option value="store">매장명순</option>
+      </select>
+    </div>
+    <!-- Row 2: 기간 -->
+    <div class="toolbar-row">
+      <span class="label-mini">기간</span>
+      <span class="chip sm rv-period-chip active" data-rv-period="all">전체</span>
+      <span class="chip sm rv-period-chip" data-rv-period="1">1일</span>
+      <span class="chip sm rv-period-chip" data-rv-period="7">7일</span>
+      <span class="chip sm rv-period-chip" data-rv-period="30">30일</span>
+      <span class="chip sm rv-period-chip" data-rv-period="90">3개월</span>
+      <span class="chip sm rv-period-chip" data-rv-period="180">6개월</span>
+    </div>
+    <!-- Row 3: 지역 -->
+    <div class="toolbar-row">
+      <span class="label-mini">지역</span>
+      <span class="chip sm rv-region-chip active" data-rv-region="all">전체</span>
+      <span class="chip sm rv-region-chip" data-rv-region="서울">서울</span>
+      <span class="chip sm rv-region-chip" data-rv-region="경기">경기</span>
+      <span class="chip sm rv-region-chip" data-rv-region="인천">인천</span>
+      <span class="chip sm rv-region-chip" data-rv-region="부산">부산</span>
+      <span class="chip sm rv-region-chip" data-rv-region="경상">경상</span>
+      <span class="chip sm rv-region-chip" data-rv-region="전라">전라</span>
+      <span class="chip sm rv-region-chip" data-rv-region="충청">충청</span>
+      <span class="chip sm rv-region-chip" data-rv-region="강원">강원</span>
+      <span class="chip sm rv-region-chip" data-rv-region="제주">제주</span>
+    </div>
+    <!-- Row 4: 채널 + 감성 -->
+    <div class="toolbar-row">
+      <span class="label-mini">채널</span>
+      <span class="chip sm rv-channel-chip active" data-rv-channel="all">전체</span>
+      <span class="chip sm rv-channel-chip" data-rv-channel="naver">네이버</span>
+      <span class="chip sm rv-channel-chip" data-rv-channel="kakao">카카오</span>
+      <span class="chip sm rv-channel-chip" data-rv-channel="google">구글</span>
+      <span class="chip sm rv-channel-chip" data-rv-channel="baemin">배민</span>
+      <span class="chip sm rv-channel-chip" data-rv-channel="coupangeats">쿠팡이츠</span>
+      <span class="divider"></span>
+      <span class="label-mini">감성</span>
+      <span class="chip sm rv-sent-chip active" data-rv-sent="all">전체</span>
+      <span class="chip sm rv-sent-chip" data-rv-sent="긍정" style="color:var(--pos);">긍정</span>
+      <span class="chip sm rv-sent-chip" data-rv-sent="중립" style="color:var(--neu);">중립</span>
+      <span class="chip sm rv-sent-chip" data-rv-sent="부정" style="color:var(--neg);">부정</span>
+      <span class="chip sm rv-sent-chip" data-rv-sent="배탈" style="color:#fb923c;">🤢 배탈</span>
+    </div>
+    <!-- Row 5: 별점 + 주의 -->
+    <div class="toolbar-row">
+      <span class="label-mini">별점</span>
+      <span class="chip sm rv-rating-chip active" data-rv-rating="all">전체</span>
+      <span class="chip sm rv-rating-chip" data-rv-rating="1">★1</span>
+      <span class="chip sm rv-rating-chip" data-rv-rating="2">★2</span>
+      <span class="chip sm rv-rating-chip" data-rv-rating="3">★3</span>
+      <span class="chip sm rv-rating-chip" data-rv-rating="4">★4</span>
+      <span class="chip sm rv-rating-chip" data-rv-rating="5">★5</span>
+      <span class="divider"></span>
+      <span class="label-mini">주의</span>
+      <span class="chip sm rv-concern-chip active" data-rv-concern="all">전체</span>
+      <span class="chip sm rv-concern-chip" data-rv-concern="warn-red" style="color:var(--neg);">⚠ 워닝(빨강)</span>
+      <span class="chip sm rv-concern-chip" data-rv-concern="warn-yellow" style="color:#facc15;">⚠ 워닝(노랑)</span>
+      <span class="chip sm rv-concern-chip" data-rv-concern="rude" style="color:#a78bfa;">🗣 불친절</span>
+      <span class="divider"></span>
+      <span class="label-mini">운영</span>
+      <span class="chip sm rv-stype-chip active" data-rv-stype="all">전체</span>
+      <span class="chip sm rv-stype-chip" data-rv-stype="직영" style="color:#22c55e;">🏢 직영</span>
+      <span class="chip sm rv-stype-chip" data-rv-stype="가맹" style="color:#3b82f6;">🤝 가맹</span>
+    </div>
+    <!-- Row 6: 매장 선택 -->
+    <div class="toolbar-row">
+      <span class="label-mini">매장</span>
+      <select id="rv-store-select" style="flex:1;max-width:300px;">
+        <option value="all">전체 매장</option>
+      </select>
+      <span class="reviews-status" id="rv-status">로딩 중…</span>
+    </div>
+  </div>
+  <div class="review-list" id="rv-list"></div>
+  <div class="rv-pagination" id="rv-pagination"></div>
+  <div class="empty hidden" id="rv-empty">조건에 맞는 리뷰가 없습니다.</div>
+</div><!-- /#tab-reviews -->
+
+<!-- Tab: 일자별 -->
+<div id="tab-daily" class="tab-section hidden">
+  <div class="section">
+    <h2>📅 일자별 수집 건수</h2>
+    <div class="toolbar-row" style="margin-bottom:12px;">
+      <span class="label-mini">연도</span>
+      <select id="daily-year" class="rv-select"></select>
+      <span class="label-mini" style="margin-left:12px;">월</span>
+      <select id="daily-month" class="rv-select"></select>
+      <span class="reviews-status" id="daily-status" style="margin-left:14px;"></span>
+    </div>
+    <div id="daily-table-wrap" style="overflow-x:auto;"></div>
+  </div>
+</div>
+
+<footer>
+  데이터는 네이버지도 / 카카오맵 / 구글맵 / 배민 / 쿠팡이츠에서 수집됩니다.
+  매장명은 yby.co.kr/branch/find.php의 공식 매장 목록(249개)을 기준으로 통일됩니다.
+  <br>워닝: <b style="color:var(--neg)">빨강</b> = 최근 7일 부정 3건+ 또는 최근 30일 부정률 50%+ /
+  <b style="color:#facc15">노랑</b> = 최근 7일 부정 2건+ 또는 부정률 30%+
+</footer>
+</div>
+
+<!-- Modal -->
+<div class="modal-overlay" id="modal" onclick="if(event.target===this)closeModal()">
+  <div class="modal" id="modal-body"></div>
+</div>
+
+<!-- Guide Modal -->
+<div class="modal-overlay" id="guide-modal" onclick="if(event.target===this)closeGuide()">
+  <div class="modal" style="max-width:980px;">
+    <div class="modal-head">
+      <div>
+        <h2>📘 용어·지표 해설</h2>
+        <div class="addr">대시보드를 만들 때 사용한 데이터 출처·산식·임계값</div>
+      </div>
+      <button class="modal-close" onclick="closeGuide()">×</button>
+    </div>
+    <div id="guide-content" style="font-size:13px; line-height:1.7;"></div>
+  </div>
+</div>
+
+<script>
+let DATA = null;
+let chBar = null, sentPie = null, modalChart = null;
+let regionFilter = 'all';
+let periodDays = 'all';   // 기본 '전체' (active chip과 일치). 'all' | 1 | 7 | 30 | 180 | 'custom'
+let periodFrom = null, periodTo = null;  // Date — custom 모드용
+let channelFilter = new Set();   // 비어있거나 SOURCES 모두 = 전체
+let sentFilter    = new Set();   // 비어있거나 [긍정/중립/부정] 모두 = 전체
+let concernFilter = new Set();   // 비어있거나 CONCERNS 모두 = 전체
+const CONCERNS = ['warn-red', 'warn-yellow', 'rude'];
+let storeTypeFilter = 'all';     // all | 직영 | 가맹
+let sortKey = 'reviews';
+
+function isAllChannel() { return channelFilter.size === 0 || channelFilter.size === SOURCES.length; }
+function isAllSent()    { return sentFilter.size === 0 || (sentFilter.has('긍정') && sentFilter.has('중립') && sentFilter.has('부정')); }
+function isAllConcern() { return concernFilter.size === 0 || concernFilter.size === CONCERNS.length; }
+function storeMatchesConcern(s) {
+  // 매장이 선택된 주의 항목에 해당하면 true (OR 조합)
+  const ps = s._period || {};
+  if (concernFilter.has('warn-red')    && ps.warning === 'red') return true;
+  if (concernFilter.has('warn-yellow') && ps.warning === 'yellow') return true;
+  if (concernFilter.has('poison')      && (ps.poison || 0) > 0) return true;
+  if (concernFilter.has('rude')        && (ps.rude   || 0) > 0) return true;
+  return false;
+}
+
+const SOURCES = ['naver', 'kakao', 'google', 'baemin', 'coupangeats'];
+const SOURCE_LABEL = {
+  naver: '네이버', kakao: '카카오', google: '구글',
+  baemin: '배민', coupangeats: '쿠팡이츠',
+};
+const SOURCE_COLOR = {
+  naver: '#03c75a', kakao: '#fee500', google: '#4285f4',
+  baemin: '#2ac1bc', coupangeats: '#fa3838',
+};
+
+function toggleTheme() { document.body.classList.toggle('theme-light'); }
+
+function openGuide() {
+  document.getElementById('guide-content').innerHTML = GUIDE_HTML;
+  document.getElementById('guide-modal').classList.add('open');
+}
+function closeGuide() {
+  document.getElementById('guide-modal').classList.remove('open');
+}
+
+const GUIDE_HTML = `
+<div class="guide-section">
+  <h3>1. 데이터 출처 (5개 채널)</h3>
+  <table>
+    <tr><th>채널</th><th>방식</th><th>비고</th></tr>
+    <tr><td>네이버지도</td><td>매장 review/visitor 페이지 + 더보기</td><td>매장당 첫 10건 한계 (GraphQL endpoint 직접호출 보강 예정)</td></tr>
+    <tr><td>카카오맵</td><td><code>place-api.map.kakao.com</code> JSON endpoint 직접호출</td><td>cursor 페이지네이션, 무제한</td></tr>
+    <tr><td>구글맵</td><td>Playwright + 좌표 기반 검색 + 스크롤</td><td>한국 사용자가 구글에 후기 적게 남김 (매장당 평균 3.3건)</td></tr>
+    <tr><td>배민</td><td>(배달앱 세션 작업 중)</td><td>채널 CSV 들어오면 자동 통합</td></tr>
+    <tr><td>쿠팡이츠</td><td>(배달앱 세션 작업 중)</td><td>동일</td></tr>
+  </table>
+</div>
+
+<div class="guide-section">
+  <h3>2. 매장 마스터 · 매장명 통일</h3>
+  <p>매장 리스트는 <code>yby.co.kr/branch/find.php</code> 의 공식 매장 목록 <b>249개</b>를 기준으로 합니다. 모든 채널의 매장명은 <code>육회바른연어 ___점</code> 형식으로 정규화됩니다.</p>
+  <table>
+    <tr><th>채널</th><th>place_id 매핑 성공</th></tr>
+    <tr><td>네이버</td><td>248 / 249 (단축URL <code>naver.me</code>를 펼쳐 추출)</td></tr>
+    <tr><td>카카오</td><td>248 / 249 (검색 endpoint의 <code>confirmid</code> 사용 + 좌표 검증)</td></tr>
+    <tr><td>구글</td><td>239 / 249 (좌표 기반 검색 + "육회바른연어" 포함 첫 결과)</td></tr>
+  </table>
+</div>
+
+<div class="guide-section">
+  <h3>3. 감성·평점 산출 (predicted_rating)</h3>
+  <p>네이버 리뷰는 별점이 없어 LLM으로 예측한 별점(predicted_rating)을 사용합니다.</p>
+  <p>모델 = <b>KFC 리뷰 ~197K건으로 학습된 KcBERT-large</b> + <b>육회바른연어 카카오/구글 별점 ~1,300건으로 fine-tune</b></p>
+  <p>출력: 1~5점 → 감성 매핑 <code>{1,2: 부정, 3: 중립, 4,5: 긍정}</code></p>
+  <p>검증 정확도 (카카오 별점 기준): <b>3단계 감성 88.3%</b> / ±1점 이내 93.3% / 별점 정확 76.1%</p>
+</div>
+
+<div class="guide-section">
+  <h3>4. 워닝 임계 (옵션 A — 균형형, 절대 부정 카운트)</h3>
+  <p>비율이 아니라 <b>부정 리뷰 절대 개수</b>로 판정. 매장 평균 리뷰 수가 적어 비율은 노이즈가 큼.</p>
+  <table>
+    <tr><th>기간</th><th><span class="pill yel">노랑</span></th><th><span class="pill red">빨강</span></th><th>의미</th></tr>
+    <tr><td>1일</td><td>부정 ≥ 1건</td><td>부정 ≥ 2건</td><td>당일 부정 1건도 즉시 점검</td></tr>
+    <tr><td>7일</td><td>부정 ≥ 2건</td><td>부정 ≥ 4건</td><td>주간 패턴 감지</td></tr>
+    <tr><td>30일</td><td>부정 ≥ 3건</td><td>부정 ≥ 6건</td><td>월간 평균 초과</td></tr>
+    <tr><td>6개월</td><td>부정 ≥ 7건</td><td>부정 ≥ 15건</td><td>중기 누적 신호</td></tr>
+    <tr><td>전체</td><td>부정 ≥ 12건</td><td>부정 ≥ 25건</td><td>평생 누적</td></tr>
+  </table>
+  <p>매장 카드 <span class="pill red">⚠</span> 옆 숫자 = 선택 기간의 부정 리뷰 카운트.</p>
+</div>
+
+<div class="guide-section">
+  <h3>5. 지역 분류 (주소 prefix 기준)</h3>
+  <table>
+    <tr><th>지역</th><th>주소 시작</th></tr>
+    <tr><td>서울</td><td>서울</td></tr>
+    <tr><td>경기</td><td>경기</td></tr>
+    <tr><td>인천</td><td>인천</td></tr>
+    <tr><td>부산</td><td>부산</td></tr>
+    <tr><td>경상</td><td>대구 / 울산 / 경상 / 경남 / 경북</td></tr>
+    <tr><td>전라</td><td>광주 / 전라 / 전남 / 전북</td></tr>
+    <tr><td>충청</td><td>대전 / 세종 / 충청 / 충남 / 충북</td></tr>
+    <tr><td>강원</td><td>강원</td></tr>
+    <tr><td>제주</td><td>제주</td></tr>
+  </table>
+</div>
+
+<div class="guide-section">
+  <h3>6. 필터 (지역 / 기간 / 채널 / 감성)</h3>
+  <p><b>지역</b>: 단일 선택. <b>기간</b>: 1일 / 7일 / 30일 / 6개월 / 전체 / 직접지정. <b>채널</b>·<b>감성</b>: 다중 선택.</p>
+  <p>"전체" 클릭하면 모두 활성, 개별 chip 클릭하면 그것만 활성. 같은 chip을 다시 누르면 선택 해제.</p>
+  <p>모든 통계 (KPI / 차트 / 매장 카드 / 워닝)는 필터 선택에 따라 <b>실시간 재계산</b>됩니다.</p>
+</div>
+
+<div class="guide-section">
+  <h3>7. 차트</h3>
+  <p><b>채널별 리뷰 수</b> — 가로 막대, linear scale. <code>x축 max는 전체 데이터 기준 고정</code>이라 필터 바꿔도 막대 비례가 동일하게 비교됩니다. 0건 채널도 작은 stub 막대 + 라벨에 (0) 표시.</p>
+  <p><b>전체 감성 분포</b> — 도넛, 필터 적용된 매장의 긍정/중립/부정 합계.</p>
+  <p><b>매장 모달의 30일 추이</b> — 일별 리뷰 수 (하루 한 점).</p>
+</div>
+
+<div class="guide-section">
+  <h3>8. 매장 카드 정렬·필터</h3>
+  <table>
+    <tr><th>정렬</th><th>기준</th></tr>
+    <tr><td>리뷰 많은순</td><td>선택 기간 내 리뷰 수 (기본)</td></tr>
+    <tr><td>최근 부정 많은순</td><td>최근 7일 부정 카운트</td></tr>
+    <tr><td>워닝 우선</td><td>빨강 → 노랑 → 정상</td></tr>
+    <tr><td>평점 낮은순 / 높은순</td><td>선택 기간 평균 평점</td></tr>
+    <tr><td>매장명순</td><td>가나다순</td></tr>
+  </table>
+</div>
+
+<div class="guide-section">
+  <h3>9. 데이터 갱신 흐름</h3>
+  <p>1. 채널별 크롤러가 <code>~/yookhoe-review/data/channels/*.csv</code>에 저장</p>
+  <p>2. <code>merge_yukhoe_all.py</code> 가 채널별 CSV → 통합 <code>yookhoe_reviews_latest.csv</code></p>
+  <p>3. <code>dashboard_yukhoe_build.py</code> 가 <code>dashboard.json</code> + <code>index.html</code> 생성</p>
+  <p>4. <code>dashboard_yukhoe_deploy.sh</code> 가 GitHub Pages에 push → 라이브 갱신</p>
+</div>
+
+<div class="guide-section">
+  <h3>10. 중복 제거 (dedup)</h3>
+  <p>채널별 dedup 키:</p>
+  <table>
+    <tr><th>채널</th><th>키</th></tr>
+    <tr><td>네이버 / 카카오 / 구글</td><td><code>source | reviewer_name | review_date | store_name</code></td></tr>
+    <tr><td>배민 / 쿠팡이츠</td><td><code>source | store | reviewer | review_text[:100]</code> (날짜 제외 — 상대날짜 변환 불안정)</td></tr>
+  </table>
+</div>
+`;
+
+function fmtNum(n) { return (n ?? 0).toLocaleString('ko-KR'); }
+
+// ── 채널별 최종 갱신일 (헤더) ──
+const DAILY_CH = [['naver','네이버'],['kakao','카카오'],['google','구글'],['baemin','배민'],['coupangeats','쿠팡이츠']];
+function renderChannelUpdated() {
+  const CU = (typeof DATA !== 'undefined' && DATA.channel_updated) || {};
+  const now = Date.now();
+  const parts = DAILY_CH.map(([src, label]) => {
+    const info = CU[src] || {};
+    const syn = info.synced;               // 'YYYY-MM-DD HH:MM'
+    if (!syn) return `${label} <span style="color:var(--text-muted)">–</span>`;
+    const md = syn.substring(5, 10);       // MM-DD
+    const age = (now - new Date(syn.replace(' ', 'T')).getTime()) / 86400000;
+    const col = age > 2 ? 'var(--neg)' : (age > 1.2 ? '#facc15' : 'var(--text-secondary)');
+    return `${label} <b style="color:${col}">${md}</b>`;
+  });
+  const el = document.getElementById('meta-time');
+  if (el) el.innerHTML = '채널 갱신 · ' + parts.join(' &nbsp;·&nbsp; ');
+}
+
+// ── 일자별 탭 ──
+let dailyInited = false;
+function initDaily() {
+  const dc = (DATA && DATA.daily_counts) || {};
+  const ySel = document.getElementById('daily-year');
+  const mSel = document.getElementById('daily-month');
+  if (!ySel || !mSel) return;
+  const years = [...new Set(Object.keys(dc).map(d => d.substring(0, 4)))].sort();
+  if (!years.length) { document.getElementById('daily-status').textContent = '데이터 없음'; return; }
+  const now = new Date(DATA.generated_at);
+  const curY = String(now.getFullYear());
+  const curM = String(now.getMonth() + 1).padStart(2, '0');
+  ySel.innerHTML = years.map(y => `<option value="${y}">${y}년</option>`).join('');
+  mSel.innerHTML = Array.from({length: 12}, (_, i) => `<option value="${String(i+1).padStart(2,'0')}">${i+1}월</option>`).join('');
+  ySel.value = years.includes(curY) ? curY : years[years.length - 1];
+  mSel.value = curM;
+  ySel.onchange = renderDailyTable;
+  mSel.onchange = renderDailyTable;
+  dailyInited = true;
+  renderDailyTable();
+}
+function renderDailyTable() {
+  const dc = (DATA && DATA.daily_counts) || {};
+  const y = document.getElementById('daily-year').value;
+  const m = document.getElementById('daily-month').value;
+  const prefix = `${y}-${m}-`;
+  const rows = Object.keys(dc).filter(d => d.startsWith(prefix)).sort();
+  const wrap = document.getElementById('daily-table-wrap');
+  const status = document.getElementById('daily-status');
+  if (!rows.length) { wrap.innerHTML = ''; status.textContent = '해당 월에 수집된 리뷰가 없습니다.'; return; }
+  const totals = {naver:0, kakao:0, google:0, baemin:0, coupangeats:0};
+  let grand = 0, body = '';
+  const WD = ['일','월','화','수','목','금','토'];
+  for (const d of rows) {
+    const row = dc[d] || {};
+    let rowTotal = 0;
+    const tds = DAILY_CH.map(([src]) => {
+      const v = row[src] || 0; totals[src] += v; rowTotal += v;
+      return `<td style="text-align:right">${v ? fmtNum(v) : '<span style="color:var(--text-muted)">·</span>'}</td>`;
+    }).join('');
+    grand += rowTotal;
+    const wd = WD[new Date(d).getDay()];
+    body += `<tr><td>${Number(d.substring(8,10))}일 <span style="color:var(--text-muted)">(${wd})</span></td>${tds}<td style="text-align:right;font-weight:700">${fmtNum(rowTotal)}</td></tr>`;
+  }
+  const head = DAILY_CH.map(([, label]) => `<th style="text-align:right">${label}</th>`).join('');
+  const foot = DAILY_CH.map(([src]) => `<td style="text-align:right;font-weight:700">${fmtNum(totals[src])}</td>`).join('');
+  wrap.innerHTML = `<table class="daily-table"><thead><tr><th style="text-align:left">일자</th>${head}<th style="text-align:right">합계</th></tr></thead>`
+    + `<tbody>${body}</tbody>`
+    + `<tfoot><tr><td style="font-weight:700">월 합계</td>${foot}<td style="text-align:right;font-weight:800">${fmtNum(grand)}</td></tr></tfoot></table>`;
+  status.textContent = `${rows.length}일 · 총 ${fmtNum(grand)}건`;
+}
+
+async function load() {
+  // 캐시 무효화 — 매 페이지 로드마다 fresh fetch
+  const resp = await fetch('dashboard.json?t=' + Date.now(), { cache: 'no-store' });
+  DATA = await resp.json();
+  render();
+}
+
+function render() {
+  renderChannelUpdated();
+  // renderStores 가 KPI/차트/워닝 모두 동기 갱신함 (지역+기간 필터 반영)
+  renderStores();
+}
+
+function renderKPIs(stores) {
+  // stores 인자 — 지역 필터 적용된 매장. period는 _period에 이미 들어있음
+  const list = stores || DATA.stores;
+  let totalReviews = 0, sumRating = 0, ratingCount = 0;
+  let storesWithData = 0;
+  let storesWithPoison = 0;   // 배탈 키워드 1건 이상 매장 수
+  let storesWithRude = 0;     // 불친절 키워드 1건 이상 매장 수
+  const chCount = {};
+  for (const src of SOURCES) chCount[src] = 0;
+  for (const s of list) {
+    const ps = s._period;
+    const r = ps ? ps.reviews : s.totals.reviews;
+    totalReviews += r;
+    if (r > 0) storesWithData++;
+    const ar = ps ? ps.avg_rating : s.totals.avg_rating;
+    if (ar) { sumRating += ar; ratingCount++; }
+    if (ps && ps.byChannel) {
+      for (const src of SOURCES) chCount[src] += (ps.byChannel[src] || 0);
+    }
+    if (ps && ps.poison > 0) storesWithPoison++;
+    if (ps && ps.rude > 0) storesWithRude++;
+  }
+  const avg = ratingCount ? (sumRating / ratingCount).toFixed(2) : '—';
+  const activeCh = SOURCES.filter(c => chCount[c] > 0).length;
+
+  const html = [
+    {label: '총 리뷰', value: fmtNum(totalReviews)},
+    {label: '매장 수', value: `${fmtNum(storesWithData)} / ${list.length}`},
+    {label: '평균 평점', value: avg},
+    {label: '워닝 (빨강)', value: '0', cls: 'warn-red'},   // renderWarnings에서 갱신
+    {label: '워닝 (노랑)', value: '0', cls: 'warn-yel'},
+    {label: '⚠ 배탈 매장', value: fmtNum(storesWithPoison), cls: 'poison'},
+    {label: '🗣 불친절 매장', value: fmtNum(storesWithRude), cls: 'rude'},
+    {label: '활성 채널', value: activeCh + ' / 5'},
+  ];
+  document.getElementById('kpi-strip').innerHTML = html.map(k =>
+    `<div class="kpi ${k.cls || ''}"><div class="label">${k.label}</div><div class="value">${k.value}</div></div>`
+  ).join('');
+}
+
+function renderWarnings() {
+  // 동적 워닝 — 현재 선택된 지역+기간+주의 적용
+  const dynWarns = [];
+  for (const s of DATA.stores) {
+    if (regionFilter !== 'all' && s.region !== regionFilter) continue;
+    if (storeTypeFilter !== 'all' && (s.store_type || '가맹') !== storeTypeFilter) continue;
+    if (!isAllConcern() && !storeMatchesConcern(s)) continue;
+    const ps = s._period || applyPeriodToStore(s);
+    if (ps.warning) {
+      // 기간 내 부정 샘플 추출 (recent_samples 중 기간에 들어가는 것)
+      let from = null, to = null;
+      if (periodDays === 'custom') { from = periodFrom; to = periodTo; }
+      else if (periodDays !== 'all') {
+        to = new Date(DATA.generated_at);
+        from = new Date(to); from.setDate(from.getDate() - Number(periodDays));
+      }
+      // 부정 sample (최근순 10건 사전 추출됨) — 기간 필터 적용
+      const samples = (s.negative_samples || []).filter(r => {
+        if (!from && !to) return true;
+        const d = new Date(r.date);
+        if (from && d < from) return false;
+        if (to && d > to) return false;
+        return true;
+      }).slice(0, 3);
+      dynWarns.push({
+        level: ps.warning, store_name: s.store_name, branch: s.branch,
+        reason: ps.warning_reason, samples: samples,
+      });
+    }
+  }
+  dynWarns.sort((a, b) => (a.level === 'red' ? 0 : 1) - (b.level === 'red' ? 0 : 1));
+
+  document.getElementById('warn-count').textContent = dynWarns.length;
+  const grid = document.getElementById('warn-grid');
+  if (!dynWarns.length) {
+    grid.innerHTML = '<div class="empty" style="grid-column: 1 / -1;">선택 기간/지역에 워닝 매장 없음.</div>';
+    return;
+  }
+  grid.innerHTML = dynWarns.map(w => `
+    <div class="warn-card ${w.level}" onclick="openStore('${w.store_name.replace(/'/g, "\\'")}')">
+      <div class="head">
+        <div class="branch">${w.branch || w.store_name}</div>
+        <span class="badge">${w.level === 'red' ? '🔴 위험' : '⚠ 경고'}</span>
+      </div>
+      <div class="reason">${w.reason}</div>
+      ${w.samples.length ? w.samples.slice(0,2).map(s => {
+        const t = String(s.text || '');
+        const short = t.length > 100 ? t.slice(0, 100) + '…' : t;
+        return `
+        <div class="sample">
+          <div class="meta"><span class="ch-color-${s.channel}">${SOURCE_LABEL[s.channel] || s.channel}</span> · ${s.date} ${s.rating ? '· ★' + s.rating : ''}</div>
+          ${escapeHtml(short)}
+        </div>`;
+      }).join('') : ''}
+    </div>
+  `).join('');
+  // KPI 워닝 카운트도 갱신
+  const redN = dynWarns.filter(w => w.level === 'red').length;
+  const yelN = dynWarns.filter(w => w.level === 'yellow').length;
+  const kpiR = document.querySelector('#kpi-strip .kpi.warn-red .value');
+  const kpiY = document.querySelector('#kpi-strip .kpi.warn-yel .value');
+  if (kpiR) kpiR.textContent = redN.toLocaleString('ko-KR');
+  if (kpiY) kpiY.textContent = yelN.toLocaleString('ko-KR');
+}
+
+function renderCharts(stores) {
+  // stores 인자가 없으면 전체 — 필터 적용된 매장 + 기간 통계 사용
+  const list = stores || DATA.stores;
+  // 채널별 리뷰 수: 각 매장의 _period.byChannel 합산 (없으면 totals)
+  const chCount = {};
+  for (const src of SOURCES) chCount[src] = 0;
+  for (const s of list) {
+    if (s._period && s._period.byChannel) {
+      for (const src of SOURCES) chCount[src] += (s._period.byChannel[src] || 0);
+    } else {
+      for (const src of SOURCES) chCount[src] += (s.channels?.[src]?.count || 0);
+    }
+  }
+
+  const ctx1 = document.getElementById('ch-bar').getContext('2d');
+  if (chBar) chBar.destroy();
+  const fmtN = n => n.toLocaleString('ko-KR');
+  // 라벨에는 실제 값 (0 포함) — 항상 5채널 모두 표시
+  const labels = SOURCES.map(c => `${SOURCE_LABEL[c]} (${fmtN(chCount[c])})`);
+  const rawVals = SOURCES.map(c => chCount[c]);
+  // ★ x축 max를 전체 데이터(필터 무관) 기준으로 고정
+  //   → 지역/기간 필터 바꿔도 막대 비례가 일정하게 비교됨
+  const globalMax = Math.max(...SOURCES.map(c => DATA.channel_stats[c].reviews), 1);
+  // 0건 채널은 시각적 stub (전체 max의 1.5%) — 라벨로 0임을 알림
+  const minStub = globalMax * 0.015;
+  const displayVals = rawVals.map(v => v > 0 ? v : minStub);
+  const useLog = false;
+  chBar = new Chart(ctx1, {
+    type: 'bar',
+    data: {
+      labels: labels,
+      datasets: [{
+        label: '리뷰 수',
+        data: displayVals,
+        // 0인 채널은 살짝 흐리게 (스텁이라는 시각 신호)
+        backgroundColor: SOURCES.map((c, i) =>
+          rawVals[i] > 0 ? SOURCE_COLOR[c] : SOURCE_COLOR[c] + '55'),  // alpha 33%
+        borderRadius: 4,
+      }],
+    },
+    options: {
+      indexAxis: 'y',
+      responsive: true, maintainAspectRatio: false,
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          callbacks: {
+            label: (item) => `리뷰 ${fmtN(rawVals[item.dataIndex])}건`,
+          },
+        },
+      },
+      scales: {
+        x: {
+          beginAtZero: true,
+          min: 0,
+          max: globalMax,                    // ★ 전체 max 고정 — 필터 변경해도 동일 스케일
+          type: 'linear',
+          ticks: { color: getCss('--text-muted'), font: { size: 10 } },
+          grid: { color: getCss('--border') },
+        },
+        y: {
+          ticks: {
+            color: getCss('--text-secondary'),
+            font: { size: 11 },
+            autoSkip: false,        // 5개 라벨 절대 생략 X
+            maxTicksLimit: 10,
+          },
+          grid: { display: false },
+        },
+      },
+    },
+  });
+
+  // 감성 파이 — 필터+기간 적용된 합계
+  let sumPos = 0, sumNeu = 0, sumNeg = 0;
+  for (const s of list) {
+    if (s._period) {
+      sumPos += s._period.pos || 0; sumNeu += s._period.neu || 0; sumNeg += s._period.neg || 0;
+    } else {
+      sumPos += s.totals.positive || 0; sumNeu += s.totals.neutral || 0; sumNeg += s.totals.negative || 0;
+    }
+  }
+  const ctx2 = document.getElementById('sent-pie').getContext('2d');
+  if (sentPie) sentPie.destroy();
+  sentPie = new Chart(ctx2, {
+    type: 'doughnut',
+    data: {
+      labels: ['긍정', '중립', '부정'],
+      datasets: [{
+        data: [sumPos, sumNeu, sumNeg],
+        backgroundColor: [getCss('--pos'), getCss('--neu'), getCss('--neg')],
+        borderWidth: 0,
+      }],
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      cutout: '55%',  // 도넛 두께 ↑
+      plugins: {
+        legend: {
+          position: 'right',
+          labels: {
+            color: getCss('--text-secondary'),
+            font: { size: 13 },
+            padding: 14,
+            boxWidth: 14,
+          },
+        },
+      },
+    },
+  });
+}
+
+function getCss(name) {
+  return getComputedStyle(document.body).getPropertyValue(name).trim();
+}
+
+// 기간 필터 적용 — 매장 데이터에 _periodStats 임시 필드 추가
+function applyPeriodToStore(s) {
+  const meta = s.all_reviews_meta || [];
+  let from = null, to = null;
+  if (periodDays === 'custom') {
+    from = periodFrom; to = periodTo;
+  } else if (periodDays !== 'all') {
+    to = new Date(DATA.generated_at);
+    from = new Date(to);
+    from.setDate(from.getDate() - Number(periodDays));
+  }
+
+  let filtered = meta;
+  if (from || to) {
+    filtered = meta.filter(r => {
+      const d = new Date(r.d);
+      if (from && d < from) return false;
+      if (to && d > to) return false;
+      return true;
+    });
+  }
+  // 채널/감성 multi-select 필터
+  if (!isAllChannel()) {
+    filtered = filtered.filter(r => channelFilter.has(r.c));
+  }
+  if (!isAllSent()) {
+    filtered = filtered.filter(r => {
+      if (sentFilter.has('배탈') && r.p === 1) return true;   // 배탈 = 배탈의심
+      if (sentFilter.has('부정') && r.p === 1) return true;   // 부정에 배탈 포함
+      return sentFilter.has(r.s);
+    });
+  }
+
+  const stats = {
+    reviews: filtered.length,
+    pos: filtered.filter(r => r.s === '긍정').length,
+    neg: filtered.filter(r => r.s === '부정').length,
+    neu: filtered.filter(r => r.s === '중립').length,
+    poison: filtered.filter(r => r.p === 1).length,   // 배탈 의심 리뷰 수
+    rude:   filtered.filter(r => r.u === 1).length,   // 불친절 의심 리뷰 수
+  };
+  const ratings = filtered.map(r => r.r).filter(r => r > 0);
+  stats.avg_rating = ratings.length
+    ? Math.round((ratings.reduce((a,b)=>a+b,0) / ratings.length) * 100) / 100
+    : null;
+  // 채널별 카운트 (기간 적용)
+  stats.byChannel = {};
+  for (const src of SOURCES) {
+    stats.byChannel[src] = filtered.filter(r => r.c === src).length;
+  }
+  // 워닝 — 옵션 A "균형형" (절대 부정 카운트, 비율 X)
+  const days = periodDays === 'all' ? 9999 : periodDays === 'custom'
+    ? (from && to ? Math.max(1, Math.round((to - from) / 86400000)) : 30)
+    : Number(periodDays);
+  let yelNeg, redNeg, label;
+  if      (days <= 1)   { yelNeg = 1;  redNeg = 2;  label = '1일'; }
+  else if (days <= 7)   { yelNeg = 2;  redNeg = 4;  label = '7일'; }
+  else if (days <= 30)  { yelNeg = 3;  redNeg = 6;  label = '30일'; }
+  else if (days <= 180) { yelNeg = 7;  redNeg = 15; label = '6개월'; }
+  else                  { yelNeg = 12; redNeg = 25; label = '전체'; }
+
+  let warning = null, reason = null;
+  if (stats.neg >= redNeg) {
+    warning = 'red';
+    reason = `${label} 부정 ${stats.neg}건 (≥${redNeg} = 빨강 임계)`;
+  } else if (stats.neg >= yelNeg) {
+    warning = 'yellow';
+    reason = `${label} 부정 ${stats.neg}건 (≥${yelNeg} = 노랑 임계)`;
+  }
+  stats.warning = warning;
+  stats.warning_reason = reason;
+  stats.days = days;
+  return stats;
+}
+
+function renderStores() {
+  const q = document.getElementById('search').value.trim().toLowerCase();
+  let stores = DATA.stores.slice();
+  if (q) {
+    stores = stores.filter(s =>
+      s.store_name.toLowerCase().includes(q) ||
+      s.branch.toLowerCase().includes(q) ||
+      (s.address || '').toLowerCase().includes(q)
+    );
+  }
+  if (regionFilter !== 'all') {
+    stores = stores.filter(s => s.region === regionFilter);
+  }
+  // 운영형태(직영/가맹) 필터
+  if (storeTypeFilter !== 'all') {
+    stores = stores.filter(s => (s.store_type || '가맹') === storeTypeFilter);
+  }
+
+  // 기간 통계 캐시 무효화 후 재계산 (필터 변경 시 항상 fresh)
+  DATA.stores.forEach(s => { s._period = applyPeriodToStore(s); });
+  // 주의(concern) 필터 — store grid에 반영
+  if (!isAllConcern()) {
+    stores = stores.filter(s => storeMatchesConcern(s));
+  }
+  // 차트 (지역+기간+주의+운영형태 적용된 매장으로) + KPI + 워닝 동기 갱신
+  // ★ 순서 중요: KPI 먼저(워닝 placeholder=0) → renderWarnings 가 KPI 워닝 셀 덮어씀
+  let filteredAll = DATA.stores.slice();
+  if (regionFilter !== 'all') filteredAll = filteredAll.filter(s => s.region === regionFilter);
+  if (storeTypeFilter !== 'all') filteredAll = filteredAll.filter(s => (s.store_type || '가맹') === storeTypeFilter);
+  if (!isAllConcern()) {
+    filteredAll = filteredAll.filter(s => storeMatchesConcern(s));
+  }
+  renderCharts(filteredAll);
+  renderKPIs(filteredAll);
+  renderWarnings();
+  // 헤더 메타 동적 갱신
+  const days = periodDays === 'all' ? '전체' :
+               periodDays === 'custom' ? '직접지정' : `${periodDays}일`;
+  const region = regionFilter === 'all' ? '전국' : regionFilter;
+  document.getElementById('meta-window').textContent = `(${region} · ${days})`;
+
+  stores.sort((a, b) => {
+    if (sortKey === 'reviews') return b._period.reviews - a._period.reviews;
+    if (sortKey === 'recent_neg') return (b.recent7_negative || 0) - (a.recent7_negative || 0);
+    if (sortKey === 'warning') {
+      const w = {red: 0, yellow: 1};
+      return (w[a.warning] ?? 2) - (w[b.warning] ?? 2);
+    }
+    if (sortKey === 'rating_low')  return (a._period.avg_rating || 999) - (b._period.avg_rating || 999);
+    if (sortKey === 'rating_high') return (b._period.avg_rating || 0) - (a._period.avg_rating || 0);
+    if (sortKey === 'branch') return a.branch.localeCompare(b.branch, 'ko');
+    return 0;
+  });
+
+  document.getElementById('store-count').textContent = stores.length;
+
+  const grid = document.getElementById('store-grid');
+  document.getElementById('store-empty').classList.toggle('hidden', stores.length > 0);
+  grid.innerHTML = stores.map(s => storeCardHtml(s)).join('');
+}
+
+function storeCardHtml(s) {
+  const ps = s._period || {reviews: s.totals.reviews, avg_rating: s.totals.avg_rating,
+                            neg: s.totals.negative, byChannel: {}, warning: null};
+  const dynW = ps.warning;  // 기간 기반 동적 워닝
+  const wcls = dynW === 'red' ? 'has-warn-red' : (dynW === 'yellow' ? 'has-warn-yel' : '');
+
+  // 워닝 아이콘 — 동적 (선택 기간 기준)
+  let warnIco = '';
+  if (dynW === 'red')      warnIco = `<span class="warn-ico red" title="${ps.warning_reason || ''}">⚠ ${ps.neg}</span>`;
+  else if (dynW === 'yellow') warnIco = `<span class="warn-ico yel" title="${ps.warning_reason || ''}">⚠ ${ps.neg}</span>`;
+  else if ((ps.neg || 0) > 0)
+    warnIco = `<span class="warn-ico yel" title="기간 내 부정 ${ps.neg}건" style="opacity:.6">⚠ ${ps.neg}</span>`;
+
+  const channels = SOURCES.map(src => {
+    const cnt = ps.byChannel[src] ?? (s.channels[src]?.count || 0);
+    const has = cnt > 0;
+    return `<span class="ch-pill ${has ? 'has' : ''} ${src}">${SOURCE_LABEL[src]}${has ? ' '+cnt : ''}</span>`;
+  }).join('');
+
+  return `
+    <div class="store-card ${wcls}" onclick="openStore('${s.store_name.replace(/'/g, "\\'")}')">
+      <div class="name">
+        ${warnIco}
+        <span class="branch-name">${s.branch}${s.data_range_first ? ` <span style="font-size:10px;color:var(--text-muted);font-weight:400;">${s.data_range_first}~${s.data_range_last}</span>` : ''}</span>
+        <span class="region-tag">${s.region || ''}</span>
+        <span class="stype-tag" style="font-size:10px;padding:1px 6px;border-radius:8px;font-weight:600;margin-left:4px;${(s.store_type==='직영')?'background:rgba(34,197,94,.18);color:#22c55e;':'background:rgba(59,130,246,.15);color:#3b82f6;'}">${s.store_type==='직영'?'🏢 직영':'🤝 가맹'}</span>
+      </div>
+      <div class="addr">${s.address || ''}</div>
+      <div class="stats">
+        <div class="stat"><div class="v">${fmtNum(ps.reviews)}</div><div class="l">리뷰</div></div>
+        <div class="stat"><div class="v">${ps.avg_rating ? '★'+ps.avg_rating : '—'}</div><div class="l">평점</div></div>
+        <div class="stat ${ps.neg ? 'neg' : ''}"><div class="v">${fmtNum(ps.neg)}</div><div class="l">부정</div></div>
+        <div class="stat ${(ps.poison||0) > 0 ? 'poison' : ''}"><div class="v">${fmtNum(ps.poison || 0)}</div><div class="l">배탈</div></div>
+        <div class="stat ${(ps.rude||0) > 0 ? 'rude' : ''}"><div class="v">${fmtNum(ps.rude || 0)}</div><div class="l">불친절</div></div>
+      </div>
+      <div class="channels">${channels}</div>
+    </div>
+  `;
+}
+
+// 모달 내부 필터 state
+let modalFilter = { period: 'all', sentiment: 'all', channel: 'all', store: null };
+
+function modalAllSamples(s) {
+  // recent + negative + channel(채널별 최신) + poison 합치고 dedup (매장 모달용 통합 풀)
+  const all = [
+    ...(s.recent_samples || []),
+    ...(s.negative_samples || []),
+    ...(s.channel_samples || []),
+    ...(s.poison_samples || []),
+    ...(s.rude_samples || []),
+  ];
+  const seen = new Set();
+  const out = [];
+  for (const r of all) {
+    const k = `${r.date}|${r.channel}|${r.reviewer}|${(r.text||'').slice(0,80)}`;
+    if (seen.has(k)) continue;
+    seen.add(k);
+    out.push(r);
+  }
+  // 날짜 내림차순
+  out.sort((a, b) => (a.date < b.date ? 1 : -1));
+  return out;
+}
+
+function applyModalFilter(samples) {
+  let from = null, to = null;
+  if (modalFilter.period !== 'all') {
+    to = new Date(DATA.generated_at);
+    from = new Date(to);
+    from.setDate(from.getDate() - Number(modalFilter.period));
+  }
+  return samples.filter(r => {
+    if (modalFilter.sentiment !== 'all' && r.sentiment !== modalFilter.sentiment) return false;
+    if (modalFilter.channel !== 'all' && r.channel !== modalFilter.channel) return false;
+    if (from || to) {
+      const d = new Date(r.date);
+      if (from && d < from) return false;
+      if (to && d > to) return false;
+    }
+    return true;
+  });
+}
+
+function renderModalReviews() {
+  const s = modalFilter.store;
+  if (!s) return;
+  const filtered = applyModalFilter(modalAllSamples(s));
+  const cont = document.getElementById('modal-reviews-list');
+  if (!cont) return;
+  cont.innerHTML = filtered.length
+    ? filtered.map(r => `
+        <div class="review-item ${r.poison ? 'poison' : ''}">
+          <div class="meta">
+            <span class="ch-color-${r.channel}">${SOURCE_LABEL[r.channel] || r.channel}</span> · ${r.date}
+            ${r.rating ? ` · ★${r.rating}` : ''}
+            ${r.sentiment ? ` · <span class="sentiment-${r.sentiment==='긍정'?'pos':r.sentiment==='부정'?'neg':'neu'}">${r.sentiment}</span>` : ''}
+            ${r.reviewer ? ` · ${r.reviewer}` : ''}
+          </div>
+          <div class="body">${escapeHtml(r.text)}</div>
+        </div>`).join('')
+    : '<div class="empty">필터 조건에 맞는 리뷰 없음.</div>';
+  document.getElementById('modal-review-count').textContent = `${filtered.length}건`;
+}
+
+function setModalFilter(kind, val) {
+  modalFilter[kind] = val;
+  document.querySelectorAll(`.modal-chip[data-kind="${kind}"]`).forEach(c => {
+    c.classList.toggle('active', c.dataset.val === String(val));
+  });
+  renderModalReviews();
+}
+
+function openStore(storeName) {
+  const s = DATA.stores.find(x => x.store_name === storeName);
+  if (!s) return;
+  // 모달 필터 초기화 + store 저장
+  modalFilter = { period: 'all', sentiment: 'all', channel: 'all', store: s };
+  const body = document.getElementById('modal-body');
+  body.innerHTML = `
+    <div class="modal-head">
+      <div>
+        <h2>${s.branch}${s.data_range_first ? ` <span style="font-size:12px;color:var(--text-muted);font-weight:400;">(${s.data_range_first} ~ ${s.data_range_last})</span>` : ''}</h2>
+        <div class="addr">${s.store_name} · ${s.address || ''}</div>
+      </div>
+      <button class="modal-close" onclick="closeModal()">×</button>
+    </div>
+    <div class="kpi-strip" style="grid-template-columns: repeat(4,1fr); margin-bottom: 16px;">
+      <div class="kpi" title="최신 리뷰 중심으로 수집해 실제 리뷰 수와 다를 수 있습니다.">
+        <div class="label">총 리뷰 <span style="color:var(--text-muted);font-size:10px;cursor:help;">ⓘ</span></div>
+        <div class="value">${fmtNum(s.totals.reviews)}</div>
+        <div style="font-size:10px;color:var(--text-muted);margin-top:4px;line-height:1.3;">최신 리뷰 중심 수집 · 실제 수와 다를 수 있음</div>
+      </div>
+      <div class="kpi"><div class="label">평균 평점</div><div class="value">${s.totals.avg_rating ? '★'+s.totals.avg_rating : '—'}</div></div>
+      <div class="kpi"><div class="label">긍정 / 부정</div><div class="value" style="font-size:18px"><span style="color:var(--pos)">${s.totals.positive}</span> / <span style="color:var(--neg)">${s.totals.negative}</span></div></div>
+      <div class="kpi ${s.warning ? (s.warning==='red'?'warn-red':'warn-yel') : ''}"><div class="label">워닝</div><div class="value" style="font-size:18px">${s.warning || '정상'}</div></div>
+    </div>
+    <div class="modal-row">
+      <div class="modal-charts"><h3 style="margin:0 0 8px;font-size:13px">최근 ${DATA.data_window_days}일 일별 리뷰</h3><canvas id="m-trend" height="160"></canvas></div>
+      <div class="modal-channels"><h3 style="margin:0 0 8px;font-size:13px">채널별 링크</h3>
+        ${SOURCES.map(src => {
+          const c = s.channels[src] || {};
+          const hasData = (c.count || 0) > 0;
+          const ratingTag = c.avg_rating
+            ? ` · ★${c.avg_rating}${c.rating_predicted ? '<sup style="color:var(--text-muted);font-size:9px;font-weight:400;" title="네이버는 별점이 없어 KcBERT 모델로 예측된 평점입니다 (정확도 88.3%)">(예측)</sup>' : ''}`
+            : '';
+          return `<div class="ch">
+            <span><span class="ch-color-${src}">${SOURCE_LABEL[src]}</span> · ${c.count || 0}건${ratingTag}</span>
+            ${c.url ? `<a href="${c.url}" target="_blank" rel="noopener">열기 ↗</a>`
+              : (hasData ? '<span style="color:var(--text-muted)">데이터만</span>'
+                         : '<span style="color:var(--text-muted)">미수집</span>')}
+          </div>`;
+        }).join('')}
+      </div>
+    </div>
+    <div class="modal-reviews">
+      <h3 style="margin:14px 0 8px;font-size:13px">
+        리뷰 <span id="modal-review-count" style="color:var(--text-muted);font-weight:400;">${modalAllSamples(s).length}건</span>
+      </h3>
+      <div class="modal-filter-row">
+        <span class="label-mini" style="color:var(--accent);">감성</span>
+        <span class="modal-chip active" data-kind="sentiment" data-val="all" onclick="setModalFilter('sentiment','all')">전체</span>
+        <span class="modal-chip" data-kind="sentiment" data-val="긍정" onclick="setModalFilter('sentiment','긍정')" style="color:var(--pos);">긍정</span>
+        <span class="modal-chip" data-kind="sentiment" data-val="중립" onclick="setModalFilter('sentiment','중립')" style="color:var(--neu);">중립</span>
+        <span class="modal-chip" data-kind="sentiment" data-val="부정" onclick="setModalFilter('sentiment','부정')" style="color:var(--neg);">부정</span>
+        <span class="modal-divider"></span>
+        <span class="label-mini" style="color:var(--accent);">채널</span>
+        <span class="modal-chip active" data-kind="channel" data-val="all" onclick="setModalFilter('channel','all')">전체</span>
+        ${SOURCES.map(src => `<span class="modal-chip ch-color-${src}" data-kind="channel" data-val="${src}" onclick="setModalFilter('channel','${src}')">${SOURCE_LABEL[src]}</span>`).join('')}
+        <span class="modal-divider"></span>
+        <span class="label-mini" style="color:var(--accent);">기간</span>
+        <span class="modal-chip active" data-kind="period" data-val="all" onclick="setModalFilter('period','all')">전체</span>
+        <span class="modal-chip" data-kind="period" data-val="1" onclick="setModalFilter('period','1')">1일</span>
+        <span class="modal-chip" data-kind="period" data-val="7" onclick="setModalFilter('period','7')">7일</span>
+        <span class="modal-chip" data-kind="period" data-val="30" onclick="setModalFilter('period','30')">30일</span>
+        <span class="modal-chip" data-kind="period" data-val="180" onclick="setModalFilter('period','180')">6개월</span>
+      </div>
+      <div class="reviews-scroll" id="modal-reviews-list"></div>
+    </div>
+  `;
+  document.getElementById('modal').classList.add('open');
+
+  // 차트
+  const ctx = document.getElementById('m-trend').getContext('2d');
+  if (modalChart) modalChart.destroy();
+  modalChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: s.trend_30d.map(t => t.date.substring(5)),
+      datasets: [{
+        label: '리뷰',
+        data: s.trend_30d.map(t => t.count),
+        borderColor: getCss('--accent'),
+        backgroundColor: 'rgba(228,0,43,0.15)',
+        fill: true, tension: 0.25, pointRadius: 2,
+      }],
+    },
+    options: { responsive: true, plugins: { legend: { display: false } },
+               scales: { y: { beginAtZero: true, ticks: { color: getCss('--text-secondary') } },
+                         x: { ticks: { color: getCss('--text-secondary') } } } },
+  });
+
+  // 모달 내부 리뷰 렌더링 (필터 적용)
+  renderModalReviews();
+}
+
+function closeModal() {
+  document.getElementById('modal').classList.remove('open');
+  if (modalChart) { modalChart.destroy(); modalChart = null; }
+}
+
+function escapeHtml(s) {
+  return String(s || '').replace(/[&<>"']/g, c =>
+    ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])
+  );
+}
+
+// 이벤트
+document.getElementById('search').addEventListener('input', renderStores);
+document.getElementById('sort').addEventListener('change', e => { sortKey = e.target.value; renderStores(); });
+
+// 지역 chip
+document.querySelectorAll('.region-chip').forEach(chip => {
+  chip.addEventListener('click', () => {
+    document.querySelectorAll('.region-chip').forEach(c => c.classList.remove('active'));
+    chip.classList.add('active');
+    regionFilter = chip.dataset.region;
+    renderStores();
+  });
+});
+document.querySelector('.region-chip[data-region="all"]').classList.add('active');
+
+// 기간 chip
+document.querySelectorAll('.period-chip').forEach(chip => {
+  chip.addEventListener('click', () => {
+    document.querySelectorAll('.period-chip').forEach(c => c.classList.remove('active'));
+    chip.classList.add('active');
+    periodDays = chip.dataset.period;
+    const cust = document.getElementById('custom-range');
+    if (periodDays === 'custom') {
+      cust.classList.remove('hidden');
+      // 기본값 — 30일 전 ~ 오늘
+      const to = new Date(DATA.generated_at);
+      const from = new Date(to); from.setDate(from.getDate() - 30);
+      const fromInput = document.getElementById('period-from');
+      const toInput = document.getElementById('period-to');
+      if (!fromInput.value) fromInput.value = from.toISOString().substring(0,10);
+      if (!toInput.value)   toInput.value   = to.toISOString().substring(0,10);
+      periodFrom = new Date(fromInput.value);
+      periodTo   = new Date(toInput.value);
+    } else {
+      cust.classList.add('hidden');
+    }
+    renderStores();
+  });
+});
+document.querySelector('.period-chip[data-period="all"]').classList.add('active');
+
+// 채널 multi-select chip
+function syncChannelChipsUI() {
+  document.querySelectorAll('.channel-chip').forEach(c => {
+    const v = c.dataset.channel;
+    if (v === 'all') c.classList.toggle('active', isAllChannel());
+    else             c.classList.toggle('active', !isAllChannel() && channelFilter.has(v));
+  });
+}
+document.querySelectorAll('.channel-chip').forEach(chip => {
+  chip.addEventListener('click', () => {
+    const v = chip.dataset.channel;
+    if (v === 'all') {
+      channelFilter.clear();   // 전체 = 아무것도 안 선택 (=모두)
+    } else {
+      // 모두 선택 상태에서 개별 클릭 → 해당 매장만 활성으로
+      if (isAllChannel()) {
+        channelFilter.clear();
+        channelFilter.add(v);
+      } else if (channelFilter.has(v)) {
+        channelFilter.delete(v);
+      } else {
+        channelFilter.add(v);
+      }
+    }
+    syncChannelChipsUI();
+    renderStores();
+  });
+});
+syncChannelChipsUI();
+
+// 감성 multi-select chip
+function syncSentChipsUI() {
+  document.querySelectorAll('.sent-chip').forEach(c => {
+    const v = c.dataset.sent;
+    if (v === 'all') c.classList.toggle('active', isAllSent());
+    else             c.classList.toggle('active', !isAllSent() && sentFilter.has(v));
+  });
+}
+document.querySelectorAll('.sent-chip').forEach(chip => {
+  chip.addEventListener('click', () => {
+    const v = chip.dataset.sent;
+    if (v === 'all') {
+      sentFilter.clear();
+    } else {
+      if (isAllSent()) {
+        sentFilter.clear(); sentFilter.add(v);
+      } else if (sentFilter.has(v)) {
+        sentFilter.delete(v);
+      } else {
+        sentFilter.add(v);
+      }
+    }
+    syncSentChipsUI();
+    renderStores();
+  });
+});
+syncSentChipsUI();
+
+// 주의(concern) multi-select chip
+function syncConcernChipsUI() {
+  document.querySelectorAll('.concern-chip').forEach(c => {
+    const v = c.dataset.concern;
+    if (v === 'all') c.classList.toggle('active', isAllConcern());
+    else             c.classList.toggle('active', !isAllConcern() && concernFilter.has(v));
+  });
+}
+document.querySelectorAll('.concern-chip').forEach(chip => {
+  chip.addEventListener('click', () => {
+    const v = chip.dataset.concern;
+    if (v === 'all') {
+      concernFilter.clear();
+    } else {
+      if (isAllConcern()) {
+        concernFilter.clear(); concernFilter.add(v);
+      } else if (concernFilter.has(v)) {
+        concernFilter.delete(v);
+      } else {
+        concernFilter.add(v);
+      }
+    }
+    syncConcernChipsUI();
+    renderStores();
+  });
+});
+syncConcernChipsUI();
+
+// 운영형태(직영/가맹) 단일 선택 chip
+document.querySelectorAll('.stype-chip').forEach(chip => {
+  chip.addEventListener('click', () => {
+    storeTypeFilter = chip.dataset.stype;
+    document.querySelectorAll('.stype-chip').forEach(c =>
+      c.classList.toggle('active', c.dataset.stype === storeTypeFilter));
+    renderStores();
+  });
+});
+document.querySelector('.stype-chip[data-stype="all"]').classList.add('active');
+
+document.getElementById('period-from').addEventListener('change', e => {
+  periodFrom = new Date(e.target.value); renderStores();
+});
+document.getElementById('period-to').addEventListener('change', e => {
+  periodTo = new Date(e.target.value); renderStores();
+});
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') { closeModal(); closeGuide(); }
+});
+
+// ═══════════════════════════════════════════════════════════
+//  탭 시스템 + 전체 리뷰 뷰
+// ═══════════════════════════════════════════════════════════
+
+let REVIEWS_DATA = null;          // reviews_all.json (lazy load)
+let reviewsLoading = false;
+let rvFilter = {
+  search: '',
+  period: 'all',                  // all | 1 | 7 | 30 | 90 | 180
+  region: 'all',
+  channel: 'all',                 // all | naver | kakao | google | baemin | coupangeats
+  sentiment: 'all',
+  rating: 'all',                  // all | 1 | 2 | 3 | 4 | 5
+  concern: 'all',                 // all | warn-red | warn-yellow | poison | rude
+  stype: 'all',                   // all | 직영 | 가맹
+  store: 'all',
+  sort: 'date_desc',
+};
+let rvPageSize = 50;
+let rvCurrentPage = 1;
+let rvFilteredCache = [];
+
+function switchTab(name) {
+  document.querySelectorAll('.tab-btn').forEach(b =>
+    b.classList.toggle('active', b.dataset.tab === name));
+  document.querySelectorAll('.tab-section').forEach(s =>
+    s.classList.toggle('hidden', s.id !== `tab-${name}`));
+  if (name === 'reviews' && !REVIEWS_DATA && !reviewsLoading) {
+    loadReviews();
+  }
+  if (name === 'daily' && !dailyInited) initDaily();
+}
+
+async function loadReviews() {
+  reviewsLoading = true;
+  document.getElementById('rv-status').textContent = '리뷰 데이터 로딩 중… (약 11MB)';
+  try {
+    const res = await fetch('reviews_all.json?t=' + Date.now(), { cache: 'no-store' });
+    REVIEWS_DATA = await res.json();
+    populateStoreSelect();
+    renderReviews();
+  } catch (e) {
+    document.getElementById('rv-status').textContent = '❌ 로딩 실패: ' + e.message;
+  } finally {
+    reviewsLoading = false;
+  }
+}
+
+function populateStoreSelect() {
+  const select = document.getElementById('rv-store-select');
+  const stores = [...new Set(REVIEWS_DATA.reviews.map(r => r.s))].sort((a,b) => a.localeCompare(b,'ko'));
+  for (const s of stores) {
+    const opt = document.createElement('option');
+    opt.value = s;
+    opt.textContent = s;
+    select.appendChild(opt);
+  }
+}
+
+function applyReviewsFilter() {
+  if (!REVIEWS_DATA) return [];
+  const q = rvFilter.search.trim().toLowerCase();
+  let from = null;
+  if (rvFilter.period !== 'all') {
+    const days = Number(rvFilter.period);
+    from = new Date(REVIEWS_DATA.generated_at);
+    from.setDate(from.getDate() - days);
+  }
+  let arr = REVIEWS_DATA.reviews.filter(r => {
+    if (q) {
+      const hay = (r.s + ' ' + (r.rv||'') + ' ' + (r.t||'')).toLowerCase();
+      if (!hay.includes(q)) return false;
+    }
+    if (from) {
+      const d = new Date(r.d);
+      if (d < from) return false;
+    }
+    if (rvFilter.region   !== 'all' && r.rg !== rvFilter.region) return false;
+    if (rvFilter.channel  !== 'all' && r.ch !== rvFilter.channel) return false;
+    if (rvFilter.sentiment !== 'all') {
+      if (rvFilter.sentiment === '배탈') { if (r.p !== 1) return false; }          // 배탈 = 배탈의심만
+      else if (rvFilter.sentiment === '부정') { if (r.se !== '부정' && r.p !== 1) return false; }  // 부정 = 부정 + 배탈
+      else if (r.se !== rvFilter.sentiment) return false;
+    }
+    if (rvFilter.rating   !== 'all') {
+      if (!r.r || Math.round(r.r) !== Number(rvFilter.rating)) return false;
+    }
+    if (rvFilter.store    !== 'all' && r.s !== rvFilter.store) return false;
+    if (rvFilter.stype !== 'all' && (r.tp || '가맹') !== rvFilter.stype) return false;
+    if (rvFilter.concern  !== 'all') {
+      if (rvFilter.concern === 'warn-red'    && r.w !== 'red')    return false;
+      if (rvFilter.concern === 'warn-yellow' && r.w !== 'yellow') return false;
+      if (rvFilter.concern === 'poison' && r.p !== 1) return false;
+      if (rvFilter.concern === 'rude'   && r.u !== 1) return false;
+    }
+    return true;
+  });
+  // 정렬
+  if (rvFilter.sort === 'date_desc')   arr.sort((a,b) => (a.d < b.d ? 1 : -1));
+  else if (rvFilter.sort === 'date_asc') arr.sort((a,b) => (a.d > b.d ? 1 : -1));
+  else if (rvFilter.sort === 'rating_desc') arr.sort((a,b) => (b.r||0) - (a.r||0));
+  else if (rvFilter.sort === 'rating_asc')  arr.sort((a,b) => (a.r||999) - (b.r||999));
+  else if (rvFilter.sort === 'store')      arr.sort((a,b) => a.s.localeCompare(b.s,'ko'));
+  return arr;
+}
+
+function renderReviews() {
+  if (!REVIEWS_DATA) return;
+  rvFilteredCache = applyReviewsFilter();
+  rvCurrentPage = 1;                       // 필터 변경 시 1페이지로 초기화
+  document.getElementById('rv-empty').classList.toggle(
+    'hidden', rvFilteredCache.length > 0);
+  paintReviewRows();
+}
+
+function paintReviewRows() {
+  const list = document.getElementById('rv-list');
+  const total = REVIEWS_DATA.total;
+  const filtered = rvFilteredCache.length;
+  const totalPages = Math.max(1, Math.ceil(filtered / rvPageSize));
+  if (rvCurrentPage > totalPages) rvCurrentPage = totalPages;
+
+  const start = (rvCurrentPage - 1) * rvPageSize;
+  const end   = Math.min(start + rvPageSize, filtered);
+  const items = rvFilteredCache.slice(start, end);
+
+  // 상태바
+  document.getElementById('rv-status').innerHTML =
+    `총 <b>${fmtNum(total)}</b>건 · 필터 <b>${fmtNum(filtered)}</b>건` +
+    (filtered > 0
+      ? ` · ${start + 1}~${end} 표시 (${rvCurrentPage}/${totalPages} 페이지)`
+      : '');
+
+  // 헤더 + 리스트
+  const header = `
+    <div class="review-list-header">
+      <div>날짜</div><div>채널</div><div>매장</div>
+      <div>본문 미리보기</div><div style="text-align:right">평점</div>
+      <div style="text-align:center">감성</div><div></div>
+    </div>`;
+  list.innerHTML = header + items.map((r, i) => reviewRowHtml(r, start + i)).join('');
+
+  renderPagination(totalPages);
+}
+
+function renderPagination(totalPages) {
+  const cont = document.getElementById('rv-pagination');
+  if (totalPages <= 1) { cont.innerHTML = ''; return; }
+  // 표시할 페이지 번호 범위 (현재 페이지 ±5, 최대 11개)
+  const cur = rvCurrentPage;
+  let from = Math.max(1, cur - 5);
+  let to   = Math.min(totalPages, from + 10);
+  from = Math.max(1, to - 10);
+
+  const btn = (label, page, opts = {}) => {
+    const cls = ['rv-pg-btn'];
+    if (opts.nav)    cls.push('nav');
+    if (opts.active) cls.push('active');
+    const dis = opts.disabled ? 'disabled' : '';
+    return `<button class="${cls.join(' ')}" ${dis}
+            onclick="goToPage(${page})">${label}</button>`;
+  };
+  let html = '';
+  // 처음 / 이전
+  html += btn('« 처음', 1,        { nav: true, disabled: cur === 1 });
+  html += btn('‹ 이전', cur - 1,  { nav: true, disabled: cur === 1 });
+  // 중간 점프 표시
+  if (from > 1) html += '<span class="rv-pg-jump-label">…</span>';
+  for (let p = from; p <= to; p++) {
+    html += btn(String(p), p, { active: p === cur });
+  }
+  if (to < totalPages) html += '<span class="rv-pg-jump-label">…</span>';
+  // 다음 / 마지막
+  html += btn('다음 ›', cur + 1,        { nav: true, disabled: cur === totalPages });
+  html += btn('마지막 »', totalPages,    { nav: true, disabled: cur === totalPages });
+  // 직접 이동
+  html += `<input type="number" class="rv-pg-input" id="rv-pg-jump"
+            min="1" max="${totalPages}" value="${cur}"
+            onkeydown="if(event.key==='Enter')jumpPage()">`;
+  html += `<span class="rv-pg-jump-label">/ ${totalPages}</span>`;
+  cont.innerHTML = html;
+}
+
+function goToPage(page) {
+  rvCurrentPage = Math.max(1, page);
+  paintReviewRows();
+  // 상단으로 스크롤
+  document.getElementById('tab-reviews').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function jumpPage() {
+  const v = Number(document.getElementById('rv-pg-jump').value);
+  if (v >= 1) goToPage(v);
+}
+
+function reviewRowHtml(r, idx) {
+  const sentClass = r.se === '긍정' ? 'pos' : r.se === '부정' ? 'neg' : 'neu';
+  const ratingTxt = r.r ? `★${r.r}` : '—';
+  const dateShort = r.d.substring(5);  // MM-DD (year omit)
+  const escName = r.s.replace(/'/g, "\\'");
+  const tags = [];
+  if (r.w === 'red')    tags.push('<span class="det-tag warn-red">⚠ 워닝(빨강)</span>');
+  if (r.w === 'yellow') tags.push('<span class="det-tag warn-yellow">⚠ 워닝(노랑)</span>');
+  if (r.p === 1) tags.push('<span class="det-tag poison">🤢 배탈</span>');
+  if (r.u === 1) tags.push('<span class="det-tag rude">🗣 불친절</span>');
+  return `
+    <div class="review-row" data-rv-idx="${idx}" onclick="toggleReviewRow(${idx})">
+      <div class="col-date">${dateShort}</div>
+      <div class="col-ch ch-color-${r.ch}">${SOURCE_LABEL[r.ch] || r.ch}</div>
+      <div class="col-store" title="${escapeHtml(r.s)}">${escapeHtml(r.br || r.s)} <span class="store-region">· ${r.rg || ''}</span></div>
+      <div class="col-text">${escapeHtml(r.t)}</div>
+      <div class="col-rating">${ratingTxt}</div>
+      <div class="col-sent sentiment-${sentClass}">${r.se || ''}</div>
+      <div class="col-chev">▶</div>
+    </div>
+    <div class="review-detail" id="rv-detail-${idx}">
+      <div class="det-meta">
+        <b>${SOURCE_LABEL[r.ch] || r.ch}</b> · <b>${r.d}</b>
+        ${r.r ? ` · <b>★${r.r}</b>` : ''}
+        ${r.se ? ` · <span class="sentiment-${sentClass}"><b>${r.se}</b></span>` : ''}
+        ${r.rv ? ` · 리뷰어 <b>${escapeHtml(r.rv)}</b>` : ''}
+      </div>
+      <div class="det-text">${escapeHtml(r.t)}</div>
+      <div class="det-bottom">
+        <div class="det-tags">${tags.join('')}</div>
+        <button class="det-store-btn" onclick="event.stopPropagation();openStore('${escName}')">매장 전체 보기 →</button>
+      </div>
+    </div>`;
+}
+
+function toggleReviewRow(idx) {
+  const row = document.querySelector(`.review-row[data-rv-idx="${idx}"]`);
+  if (!row) return;
+  row.classList.toggle('expanded');
+}
+
+// 검색 debounce
+let rvSearchTimer = null;
+document.getElementById('rv-search').addEventListener('input', e => {
+  clearTimeout(rvSearchTimer);
+  rvSearchTimer = setTimeout(() => {
+    rvFilter.search = e.target.value;
+    renderReviews();
+  }, 250);
+});
+document.getElementById('rv-sort').addEventListener('change', e => {
+  rvFilter.sort = e.target.value;
+  renderReviews();
+});
+document.getElementById('rv-store-select').addEventListener('change', e => {
+  rvFilter.store = e.target.value;
+  renderReviews();
+});
+
+// 공통 chip 핸들러 (single-select: 같은 그룹 안에서 하나만 active)
+// klass: chip CSS class · attrCamel: chip의 dataset key (camelCase) · stateKey: rvFilter의 key
+function bindRvChips(klass, attrCamel, stateKey) {
+  document.querySelectorAll(klass).forEach(chip => {
+    chip.addEventListener('click', () => {
+      const v = chip.dataset[attrCamel];
+      rvFilter[stateKey] = v;
+      document.querySelectorAll(klass).forEach(c =>
+        c.classList.toggle('active', c.dataset[attrCamel] === v));
+      renderReviews();
+    });
+  });
+}
+bindRvChips('.rv-period-chip',  'rvPeriod',  'period');
+bindRvChips('.rv-region-chip',  'rvRegion',  'region');
+bindRvChips('.rv-channel-chip', 'rvChannel', 'channel');
+bindRvChips('.rv-sent-chip',    'rvSent',    'sentiment');
+bindRvChips('.rv-rating-chip',  'rvRating',  'rating');
+bindRvChips('.rv-concern-chip', 'rvConcern', 'concern');
+bindRvChips('.rv-stype-chip',   'rvStype',   'stype');
+
+load();
+</script>
+<script>function __embedInit(){var x=(location.hash||"").replace("#","");if(x==="stores"||x==="reviews"||x==="daily"){switchTab(x);}var q=new URLSearchParams(location.search);if(q.get("embed")!=null||window.self!==window.top){var hd=document.querySelector("header");if(hd)hd.style.display="none";var tn=document.querySelector(".tab-nav");if(tn)tn.style.display="none";document.body.style.paddingTop="6px";}var st=q.get("store");if(st){var tryFill=function(n){var el=document.getElementById("rv-search");if(el){el.value=st;el.dispatchEvent(new Event("input",{bubbles:true}));if(typeof renderReviews==="function")try{renderReviews();}catch(e){}}if(n>0)setTimeout(function(){tryFill(n-1);},700);};tryFill(6);}}window.addEventListener("load",__embedInit);window.addEventListener("hashchange",function(){var x=(location.hash||"").replace("#","");if(x==="stores"||x==="reviews"||x==="daily"){switchTab(x);}});</script>
+<!-- __GATE: 로그인 오버레이 -->
+<div id="loginGate" style="position:fixed;inset:0;z-index:99999;display:flex;align-items:center;justify-content:center;background:#0f1117;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;">
+  <div style="width:340px;max-width:90vw;background:#1a1d27;border:1px solid #2e3340;border-radius:14px;padding:32px 28px;box-shadow:0 20px 60px rgba(0,0,0,.5);">
+    <div style="text-align:center;margin-bottom:22px;">
+      <div style="font-size:15px;color:#9aa0a6;letter-spacing:.5px;">육회바른연어</div>
+      <div style="font-size:20px;font-weight:700;color:#e8eaed;margin-top:4px;">통합 리뷰 대시보드</div>
+      <div style="width:34px;height:3px;background:#E4002B;border-radius:2px;margin:12px auto 0;"></div>
+    </div>
+    <input id="lgEmail" type="email" placeholder="이메일" autocomplete="username" style="width:100%;box-sizing:border-box;padding:11px 13px;margin-bottom:10px;background:#2a2e3c;border:1px solid #3a3f4f;border-radius:8px;color:#e8eaed;font-size:14px;outline:none;">
+    <input id="lgPw" type="password" placeholder="비밀번호" autocomplete="current-password" style="width:100%;box-sizing:border-box;padding:11px 13px;margin-bottom:14px;background:#2a2e3c;border:1px solid #3a3f4f;border-radius:8px;color:#e8eaed;font-size:14px;outline:none;">
+    <button id="lgBtn" style="width:100%;padding:11px;background:#E4002B;border:none;border-radius:8px;color:#fff;font-size:15px;font-weight:600;cursor:pointer;">로그인</button>
+    <div id="lgErr" style="display:none;margin-top:12px;font-size:13px;color:#ef4444;text-align:center;line-height:1.5;"></div>
+    <div style="text-align:center;margin-top:16px;"><a id="lgForgot" href="#" style="font-size:12.5px;color:#9aa0a6;text-decoration:none;">비밀번호를 잊으셨나요?</a></div>
+  </div>
+</div>
+<button id="logoutBtn" style="display:none;position:fixed;bottom:16px;right:16px;z-index:9999;padding:7px 14px;background:#222632;border:1px solid #2e3340;border-radius:8px;color:#9aa0a6;font-size:12px;cursor:pointer;">로그아웃</button>
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
+import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, sendPasswordResetEmail, signOut } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
+import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
+const app = initializeApp({
+  apiKey: "AIzaSyCjS_5OGvVkil8Co8CQcBzJsibTbODI7oI",
+  authDomain: "yukhoe-monitor.firebaseapp.com",
+  projectId: "yukhoe-monitor",
+  storageBucket: "yukhoe-monitor.firebasestorage.app",
+  messagingSenderId: "258650657300",
+  appId: "1:258650657300:web:384788969111e840718d01"
+});
+const auth = getAuth(app);
+const db = getFirestore(app);
+const gate = document.getElementById('loginGate');
+const logoutBtn = document.getElementById('logoutBtn');
+const emailEl = document.getElementById('lgEmail');
+const pwEl = document.getElementById('lgPw');
+const errEl = document.getElementById('lgErr');
+const btn = document.getElementById('lgBtn');
+const forgot = document.getElementById('lgForgot');
+function showErr(msg, ok) { errEl.style.color = ok ? '#10b981' : '#ef4444'; errEl.textContent = msg; errEl.style.display = 'block'; }
+function errMsg(e) {
+  var c = (e && e.code) || '';
+  if (c.indexOf('invalid-cred') !== -1 || c.indexOf('wrong-password') !== -1 || c.indexOf('user-not-found') !== -1) return '이메일 또는 비밀번호가 올바르지 않습니다.';
+  if (c.indexOf('too-many') !== -1) return '시도가 너무 많습니다. 잠시 후 다시 시도하세요.';
+  if (c.indexOf('invalid-email') !== -1) return '이메일 형식이 올바르지 않습니다.';
+  return '오류: ' + ((e && e.message) || e);
+}
+async function loadDoc(id) {
+  const meta = await getDoc(doc(db, 'dashboard', id));
+  if (!meta.exists()) return null;
+  const m = meta.data();
+  if (!m.chunks) return m.json || null;
+  let parts = [];
+  for (let i = 0; i < m.chunks; i++) {
+    const c = await getDoc(doc(db, 'dashboard_chunks', id + '_' + i));
+    parts.push(((c.data() || {}).data) || '');
+  }
+  const b64 = parts.join('');
+  if (!m.gzip) return b64;
+  const bin = atob(b64);
+  const bytes = new Uint8Array(bin.length);
+  for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+  const stream = new Blob([bytes]).stream().pipeThrough(new DecompressionStream('gzip'));
+  return await new Response(stream).text();
+}
+onAuthStateChanged(auth, async (user) => {
+  if (user) {
+    try {
+      const r = await Promise.all([loadDoc('reviews_dashboard'), loadDoc('reviews_all')]);
+      window.__GATE.setData('reviews_dashboard', r[0]);
+      window.__GATE.setData('reviews_all', r[1]);
+      window.__GATE.unlock();
+      gate.style.display = 'none';
+      logoutBtn.style.display = 'block';
+    } catch (e) { showErr('데이터 로드 오류: ' + ((e && e.message) || e)); }
+  } else { gate.style.display = 'flex'; logoutBtn.style.display = 'none'; }
+});
+async function doLogin() {
+  errEl.style.display = 'none'; btn.disabled = true; btn.textContent = '로그인 중…';
+  try { await signInWithEmailAndPassword(auth, emailEl.value.trim(), pwEl.value); }
+  catch (e) { showErr(errMsg(e)); }
+  finally { btn.disabled = false; btn.textContent = '로그인'; }
+}
+btn.addEventListener('click', doLogin);
+pwEl.addEventListener('keydown', (e) => { if (e.key === 'Enter') doLogin(); });
+emailEl.addEventListener('keydown', (e) => { if (e.key === 'Enter') pwEl.focus(); });
+forgot.addEventListener('click', async (e) => {
+  e.preventDefault();
+  const em = emailEl.value.trim();
+  if (!em) { showErr('비밀번호 재설정: 이메일을 먼저 입력하세요.'); return; }
+  try { await sendPasswordResetEmail(auth, em); showErr('재설정 메일을 보냈습니다: ' + em, true); }
+  catch (e2) { showErr(errMsg(e2)); }
+});
+logoutBtn.addEventListener('click', () => { signOut(auth).then(() => location.reload()); });
+</script>
+</body>
+</html>
