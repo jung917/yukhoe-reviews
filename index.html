@@ -2207,8 +2207,7 @@ onAuthStateChanged(auth, async (user) => {
       logoutBtn.style.display = 'block';
       pwChgBtn.style.display = 'block';
     } catch (e) { showErr('데이터 로드 오류: ' + ((e && e.message) || e)); }
-  } else { gate.style.display = 'flex'; logoutBtn.style.display = 'none';
-    pwChgBtn.style.display = 'none'; }
+  } else { gate.style.display = 'flex'; logoutBtn.style.display = 'none'; pwChgBtn.style.display = 'none'; }
 });
 async function doLogin() {
   errEl.style.display = 'none'; btn.disabled = true; btn.textContent = '로그인 중…';
