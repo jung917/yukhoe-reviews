@@ -2152,7 +2152,7 @@ load();
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
 import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, sendPasswordResetEmail, signOut, updatePassword } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
-import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
+import { getFirestore, doc, getDoc, setDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
 const app = initializeApp({
   apiKey: "AIzaSyCjS_5OGvVkil8Co8CQcBzJsibTbODI7oI",
   authDomain: "yukhoe-monitor.firebaseapp.com",
@@ -2249,7 +2249,7 @@ async function doPwChange() {
   pwChgOk.disabled = true; pwChgOk.textContent = '변경 중…';
   try {
     await updatePassword(auth.currentUser, a);
-    try { await setDoc(doc(db, 'pw_status', auth.currentUser.uid), { mustChange: false }, { merge: true }); } catch (_) {}
+    try { await setDoc(doc(db, 'pw_status', auth.currentUser.uid), { mustChange: false, changedAt: serverTimestamp(), email: auth.currentUser.email }, { merge: true }); } catch (_) {}
     document.getElementById('pwChgNotice').style.display = 'none';
     pwMsg('비밀번호가 변경되었습니다.', true);
     setTimeout(() => { pwChgModal.style.display = 'none'; }, 1200);
