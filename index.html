@@ -2138,6 +2138,7 @@ load();
 <div id="pwChgModal" style="display:none;position:fixed;inset:0;z-index:100000;align-items:center;justify-content:center;background:rgba(0,0,0,.55);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;">
   <div style="width:320px;max-width:90vw;background:#1a1d27;border:1px solid #2e3340;border-radius:14px;padding:26px 24px;box-shadow:0 20px 60px rgba(0,0,0,.5);">
     <div style="font-size:16px;font-weight:700;color:#e8eaed;margin-bottom:4px;">비밀번호 변경</div>
+    <div id="pwChgNotice" style="display:none;margin:8px 0 14px;padding:10px 12px;background:#3a1d24;border:1px solid #E4002B;border-radius:8px;color:#ffd0d8;font-size:12.5px;line-height:1.55;">임시 비밀번호로 로그인하셨습니다.<br>보안을 위해 지금 새 비밀번호로 변경해 주세요.</div>
     <div id="pwChgWho" style="font-size:12px;color:#9aa0a6;margin-bottom:16px;"></div>
     <input id="pwNew1" type="password" placeholder="새 비밀번호 (6자 이상)" autocomplete="new-password" style="width:100%;box-sizing:border-box;padding:10px 12px;margin-bottom:9px;background:#2a2e3c;border:1px solid #3a3f4f;border-radius:8px;color:#e8eaed;font-size:14px;outline:none;">
     <input id="pwNew2" type="password" placeholder="새 비밀번호 확인" autocomplete="new-password" style="width:100%;box-sizing:border-box;padding:10px 12px;margin-bottom:13px;background:#2a2e3c;border:1px solid #3a3f4f;border-radius:8px;color:#e8eaed;font-size:14px;outline:none;">
@@ -2151,7 +2152,7 @@ load();
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
 import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, sendPasswordResetEmail, signOut, updatePassword } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
-import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
+import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
 const app = initializeApp({
   apiKey: "AIzaSyCjS_5OGvVkil8Co8CQcBzJsibTbODI7oI",
   authDomain: "yukhoe-monitor.firebaseapp.com",
@@ -2206,6 +2207,7 @@ onAuthStateChanged(auth, async (user) => {
       gate.style.display = 'none';
       logoutBtn.style.display = 'block';
       pwChgBtn.style.display = 'block';
+      try { const _st = await getDoc(doc(db, 'pw_status', user.uid)); if (_st.exists() && _st.data().mustChange) openPwChange(true); } catch (_) {}
     } catch (e) { showErr('데이터 로드 오류: ' + ((e && e.message) || e)); }
   } else { gate.style.display = 'flex'; logoutBtn.style.display = 'none'; pwChgBtn.style.display = 'none'; }
 });
@@ -2232,11 +2234,13 @@ const pwNew2 = document.getElementById('pwNew2');
 const pwChgMsg = document.getElementById('pwChgMsg');
 const pwChgOk = document.getElementById('pwChgOk');
 function pwMsg(m, ok) { pwChgMsg.style.color = ok ? '#10b981' : '#ef4444'; pwChgMsg.textContent = m; pwChgMsg.style.display = 'block'; }
-pwChgBtn.addEventListener('click', () => {
+function openPwChange(force) {
   pwNew1.value = ''; pwNew2.value = ''; pwChgMsg.style.display = 'none';
   document.getElementById('pwChgWho').textContent = (auth.currentUser && auth.currentUser.email) || '';
+  document.getElementById('pwChgNotice').style.display = force ? 'block' : 'none';
   pwChgModal.style.display = 'flex'; pwNew1.focus();
-});
+}
+pwChgBtn.addEventListener('click', () => openPwChange(false));
 document.getElementById('pwChgCancel').addEventListener('click', () => { pwChgModal.style.display = 'none'; });
 async function doPwChange() {
   const a = pwNew1.value, b = pwNew2.value;
@@ -2245,6 +2249,8 @@ async function doPwChange() {
   pwChgOk.disabled = true; pwChgOk.textContent = '변경 중…';
   try {
     await updatePassword(auth.currentUser, a);
+    try { await setDoc(doc(db, 'pw_status', auth.currentUser.uid), { mustChange: false }, { merge: true }); } catch (_) {}
+    document.getElementById('pwChgNotice').style.display = 'none';
     pwMsg('비밀번호가 변경되었습니다.', true);
     setTimeout(() => { pwChgModal.style.display = 'none'; }, 1200);
   } catch (e) {
