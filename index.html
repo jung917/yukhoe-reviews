@@ -296,6 +296,8 @@ body.theme-light .filter-row-inline .label-mini { background: #fee2e2; }
 .ch-pill.has.google      { color: #4285f4; }  /* 구글 파랑 */
 .ch-pill.has.baemin      { color: #2ac1bc; }  /* 배민 민트 */
 .ch-pill.has.coupangeats { color: #fa3838; }  /* 쿠팡이츠 빨강 */
+.ch-pill.has.yogiyo      { color: #ee1c6b; }  /* 요기요 핑크 */
+.ch-pill.has.ddangyo     { color: #7c4dff; }  /* 땡겨요 보라 */
 .ch-pill.has {
   font-weight: 700;
   background: var(--bg-elev);
@@ -390,6 +392,8 @@ body.theme-light .modal-reviews .review-item.poison {
 .ch-color-google      { color: #4285f4; font-weight: 700; }
 .ch-color-baemin      { color: #2ac1bc; font-weight: 700; }
 .ch-color-coupangeats { color: #fa3838; font-weight: 700; }
+.ch-color-yogiyo      { color: #ee1c6b; font-weight: 700; }
+.ch-color-ddangyo     { color: #7c4dff; font-weight: 700; }
 body.theme-light .ch-color-kakao { color: #b58c00; }
 .modal-reviews .review-item .body {
   white-space: pre-wrap; word-break: break-word;
@@ -699,6 +703,8 @@ footer {
   <span class="chip sm channel-chip" data-channel="google">구글</span>
   <span class="chip sm channel-chip" data-channel="baemin">배민</span>
   <span class="chip sm channel-chip" data-channel="coupangeats">쿠팡이츠</span>
+  <span class="chip sm channel-chip" data-channel="yogiyo">요기요</span>
+  <span class="chip sm channel-chip" data-channel="ddangyo">땡겨요</span>
   <span class="divider"></span>
   <span class="label-mini">감성</span>
   <span class="chip sm sent-chip" data-sent="all">전체</span>
@@ -793,6 +799,8 @@ footer {
       <span class="chip sm rv-channel-chip" data-rv-channel="google">구글</span>
       <span class="chip sm rv-channel-chip" data-rv-channel="baemin">배민</span>
       <span class="chip sm rv-channel-chip" data-rv-channel="coupangeats">쿠팡이츠</span>
+      <span class="chip sm rv-channel-chip" data-rv-channel="yogiyo">요기요</span>
+      <span class="chip sm rv-channel-chip" data-rv-channel="ddangyo">땡겨요</span>
       <span class="divider"></span>
       <span class="label-mini">감성</span>
       <span class="chip sm rv-sent-chip active" data-rv-sent="all">전체</span>
@@ -904,14 +912,14 @@ function storeMatchesConcern(s) {
   return false;
 }
 
-const SOURCES = ['naver', 'kakao', 'google', 'baemin', 'coupangeats'];
+const SOURCES = ['naver', 'kakao', 'google', 'baemin', 'coupangeats', 'yogiyo', 'ddangyo'];
 const SOURCE_LABEL = {
   naver: '네이버', kakao: '카카오', google: '구글',
-  baemin: '배민', coupangeats: '쿠팡이츠',
+  baemin: '배민', coupangeats: '쿠팡이츠', yogiyo: '요기요', ddangyo: '땡겨요',
 };
 const SOURCE_COLOR = {
   naver: '#03c75a', kakao: '#fee500', google: '#4285f4',
-  baemin: '#2ac1bc', coupangeats: '#fa3838',
+  baemin: '#2ac1bc', coupangeats: '#fa3838', yogiyo: '#ee1c6b', ddangyo: '#7c4dff',
 };
 
 function toggleTheme() { document.body.classList.toggle('theme-light'); }
@@ -1034,7 +1042,7 @@ const GUIDE_HTML = `
 function fmtNum(n) { return (n ?? 0).toLocaleString('ko-KR'); }
 
 // ── 채널별 최종 갱신일 (헤더) ──
-const DAILY_CH = [['naver','네이버'],['kakao','카카오'],['google','구글'],['baemin','배민'],['coupangeats','쿠팡이츠']];
+const DAILY_CH = [['naver','네이버'],['kakao','카카오'],['google','구글'],['baemin','배민'],['coupangeats','쿠팡이츠'],['yogiyo','요기요'],['ddangyo','땡겨요']];
 function renderChannelUpdated() {
   const CU = (typeof DATA !== 'undefined' && DATA.channel_updated) || {};
   const now = Date.now();
@@ -1081,7 +1089,7 @@ function renderDailyTable() {
   const wrap = document.getElementById('daily-table-wrap');
   const status = document.getElementById('daily-status');
   if (!rows.length) { wrap.innerHTML = ''; status.textContent = '해당 월에 수집된 리뷰가 없습니다.'; return; }
-  const totals = {naver:0, kakao:0, google:0, baemin:0, coupangeats:0};
+  const totals = {naver:0, kakao:0, google:0, baemin:0, coupangeats:0, yogiyo:0, ddangyo:0};
   let grand = 0, body = '';
   const WD = ['일','월','화','수','목','금','토'];
   for (const d of rows) {
