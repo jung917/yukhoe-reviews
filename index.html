@@ -2187,23 +2187,44 @@ function errMsg(e) {
   if (c.indexOf('invalid-email') !== -1) return '이메일 형식이 올바르지 않습니다.';
   return '오류: ' + ((e && e.message) || e);
 }
+/* 2026-10-21: 저장본(IndexedDB). 판(크기·압축 길이·갱신 시각)이 같으면 청크를 다시 읽지 않는다.
+   예전엔 방문마다 리뷰 자료 청크 약 35건을 새로 읽어 Firestore 읽기 한도(하루 5만)를 갉아먹었다. */
+function cxIdb() { return new Promise(function (res, rej) {
+  var q = indexedDB.open('ybyGate', 1);
+  q.onupgradeneeded = function () { q.result.createObjectStore('d'); };
+  q.onsuccess = function () { res(q.result); }; q.onerror = function () { rej(q.error); }; }); }
+async function cacheGet(k) { try { var d = await cxIdb(); return await new Promise(function (res) {
+  var r = d.transaction('d', 'readonly').objectStore('d').get(k);
+  r.onsuccess = function () { res(r.result || null); }; r.onerror = function () { res(null); }; }); } catch (e) { return null; } }
+async function cachePut(k, v, id) { try { var d = await cxIdb(); var st = d.transaction('d', 'readwrite').objectStore('d');
+  st.put(v, k); var all = st.getAllKeys();
+  all.onsuccess = function () { (all.result || []).forEach(function (x) { if (String(x).indexOf(id + ':') === 0 && x !== k) st.delete(x); }); };
+} catch (e) {} }
 async function loadDoc(id) {
   const meta = await getDoc(doc(db, 'dashboard', id));
   if (!meta.exists()) return null;
   const m = meta.data();
   if (!m.chunks) return m.json || null;
+  const ver = id + ':' + (m.size || 0) + '_' + (m.b64len || 0) + '_' + (m.updated || '');
+  const hit = await cacheGet(ver);
+  if (hit) return hit;
   let parts = [];
   for (let i = 0; i < m.chunks; i++) {
     const c = await getDoc(doc(db, 'dashboard_chunks', id + '_' + i));
     parts.push(((c.data() || {}).data) || '');
   }
   const b64 = parts.join('');
-  if (!m.gzip) return b64;
-  const bin = atob(b64);
-  const bytes = new Uint8Array(bin.length);
-  for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
-  const stream = new Blob([bytes]).stream().pipeThrough(new DecompressionStream('gzip'));
-  return await new Response(stream).text();
+  let out;
+  if (!m.gzip) out = b64;
+  else {
+    const bin = atob(b64);
+    const bytes = new Uint8Array(bin.length);
+    for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+    const stream = new Blob([bytes]).stream().pipeThrough(new DecompressionStream('gzip'));
+    out = await new Response(stream).text();
+  }
+  cachePut(ver, out, id);
+  return out;
 }
 onAuthStateChanged(auth, async (user) => {
   if (user) {
