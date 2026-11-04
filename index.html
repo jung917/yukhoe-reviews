@@ -395,7 +395,7 @@ body.theme-light .modal-reviews .review-item.fresh {
   background: #cffafe;
 }
 .modal-reviews .review-item.fresh .body::before {
-  content: '👃 신선도 의심 키워드';
+  content: '👃 냄새 의심 키워드';
   display: inline-block;
   font-size: 10px; font-weight: 700;
   color: #fff; background: #06b6d4;
@@ -733,13 +733,13 @@ footer {
   <span class="chip sm sent-chip" data-sent="중립" style="color:var(--neu);">중립</span>
   <span class="chip sm sent-chip" data-sent="부정" style="color:var(--neg);">부정</span>
   <span class="chip sm sent-chip" data-sent="배탈" style="color:#fb923c;">🤢 배탈</span>
-  <span class="chip sm sent-chip" data-sent="신선도" style="color:#06b6d4;">👃 신선도</span>
+  <span class="chip sm sent-chip" data-sent="신선도" style="color:#06b6d4;">👃 냄새</span>
+  <span class="chip sm sent-chip" data-sent="불친절" style="color:#a78bfa;">🗣 불친절</span>
   <span class="divider"></span>
   <span class="label-mini">주의</span>
   <span class="chip sm concern-chip" data-concern="all">전체</span>
   <span class="chip sm concern-chip" data-concern="warn-red" style="color:var(--neg);">⚠ 워닝(빨강)</span>
   <span class="chip sm concern-chip" data-concern="warn-yellow" style="color:#facc15;">⚠ 워닝(노랑)</span>
-  <span class="chip sm concern-chip" data-concern="rude" style="color:#a78bfa;">🗣 불친절</span>
   <span class="divider"></span>
   <span class="label-mini">운영</span>
   <span class="chip sm stype-chip" data-stype="all">전체</span>
@@ -830,7 +830,7 @@ footer {
       <span class="chip sm rv-sent-chip" data-rv-sent="중립" style="color:var(--neu);">중립</span>
       <span class="chip sm rv-sent-chip" data-rv-sent="부정" style="color:var(--neg);">부정</span>
       <span class="chip sm rv-sent-chip" data-rv-sent="배탈" style="color:#fb923c;">🤢 배탈</span>
-      <span class="chip sm rv-sent-chip" data-rv-sent="신선도" style="color:#06b6d4;">👃 신선도</span>
+      <span class="chip sm rv-sent-chip" data-rv-sent="신선도" style="color:#06b6d4;">👃 냄새</span>
     </div>
     <!-- Row 5: 별점 + 주의 -->
     <div class="toolbar-row">
@@ -918,7 +918,7 @@ let periodFrom = null, periodTo = null;  // Date — custom 모드용
 let channelFilter = new Set();   // 비어있거나 SOURCES 모두 = 전체
 let sentFilter    = new Set();   // 비어있거나 [긍정/중립/부정] 모두 = 전체
 let concernFilter = new Set();   // 비어있거나 CONCERNS 모두 = 전체
-const CONCERNS = ['warn-red', 'warn-yellow', 'rude'];
+const CONCERNS = ['warn-red', 'warn-yellow'];
 let storeTypeFilter = 'all';     // all | 직영 | 가맹
 let sortKey = 'reviews';
 
@@ -931,7 +931,6 @@ function storeMatchesConcern(s) {
   if (concernFilter.has('warn-red')    && ps.warning === 'red') return true;
   if (concernFilter.has('warn-yellow') && ps.warning === 'yellow') return true;
   if (concernFilter.has('poison')      && (ps.poison || 0) > 0) return true;
-  if (concernFilter.has('rude')        && (ps.rude   || 0) > 0) return true;
   return false;
 }
 
@@ -1181,7 +1180,7 @@ function renderKPIs(stores) {
     {label: '워닝 (빨강)', value: '0', cls: 'warn-red'},   // renderWarnings에서 갱신
     {label: '워닝 (노랑)', value: '0', cls: 'warn-yel'},
     {label: '🤢 배탈 매장', value: fmtNum(storesWithPoison), cls: 'poison'},
-    {label: '👃 신선도 매장', value: fmtNum(storesWithFresh), cls: 'fresh'},
+    {label: '👃 냄새 매장', value: fmtNum(storesWithFresh), cls: 'fresh'},
     {label: '🗣 불친절 매장', value: fmtNum(storesWithRude), cls: 'rude'},
     {label: '활성 채널', value: activeCh + ' / 5'},
   ];
@@ -1400,7 +1399,8 @@ function applyPeriodToStore(s) {
   if (!isAllSent()) {
     filtered = filtered.filter(r => {
       if (sentFilter.has('배탈') && r.p === 1) return true;   // 배탈 = 배탈의심
-      if (sentFilter.has('신선도') && r.fr === 1) return true; // 신선도 = 신선도의심(냄새 등)
+      if (sentFilter.has('신선도') && r.fr === 1) return true; // 냄새(신선도) 의심
+      if (sentFilter.has('불친절') && r.u === 1) return true;  // 불친절 의심
       if (sentFilter.has('부정') && r.p === 1) return true;   // 부정에 배탈 포함
       return sentFilter.has(r.s);
     });
@@ -1543,7 +1543,7 @@ function storeCardHtml(s) {
         <div class="stat"><div class="v">${ps.avg_rating ? '★'+ps.avg_rating : '—'}</div><div class="l">평점</div></div>
         <div class="stat ${ps.neg ? 'neg' : ''}"><div class="v">${fmtNum(ps.neg)}</div><div class="l">부정</div></div>
         <div class="stat ${(ps.poison||0) > 0 ? 'poison' : ''}"><div class="v">${fmtNum(ps.poison || 0)}</div><div class="l">배탈</div></div>
-        <div class="stat ${(ps.fresh||0) > 0 ? 'fresh' : ''}"><div class="v">${fmtNum(ps.fresh || 0)}</div><div class="l">신선도</div></div>
+        <div class="stat ${(ps.fresh||0) > 0 ? 'fresh' : ''}"><div class="v">${fmtNum(ps.fresh || 0)}</div><div class="l">냄새</div></div>
         <div class="stat ${(ps.rude||0) > 0 ? 'rude' : ''}"><div class="v">${fmtNum(ps.rude || 0)}</div><div class="l">불친절</div></div>
       </div>
       <div class="channels">${channels}</div>
@@ -2083,7 +2083,7 @@ function reviewRowHtml(r, idx) {
   if (r.w === 'red')    tags.push('<span class="det-tag warn-red">⚠ 워닝(빨강)</span>');
   if (r.w === 'yellow') tags.push('<span class="det-tag warn-yellow">⚠ 워닝(노랑)</span>');
   if (r.p === 1) tags.push('<span class="det-tag poison">🤢 배탈</span>');
-  if (r.fr === 1) tags.push('<span class="det-tag fresh">👃 신선도</span>');
+  if (r.fr === 1) tags.push('<span class="det-tag fresh">👃 냄새</span>');
   if (r.u === 1) tags.push('<span class="det-tag rude">🗣 불친절</span>');
   return `
     <div class="review-row" data-rv-idx="${idx}" onclick="toggleReviewRow(${idx})">
