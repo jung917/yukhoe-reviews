@@ -106,6 +106,8 @@ header h1::before {
 .kpi.poison    { border-color: #ec4899; }
 .kpi.rude      .value { color: #f97316; }   /* 불친절 = 오렌지 */
 .kpi.rude      { border-color: #f97316; }
+.kpi.fresh     .value { color: #06b6d4; }   /* 신선도 = 시안 */
+.kpi.fresh     { border-color: #06b6d4; }
 
 /* Section heading */
 .section { margin: 32px 0; }
@@ -282,6 +284,9 @@ body.theme-light .filter-row-inline .label-mini { background: #fee2e2; }
 .store-card .stat.rude { background: rgba(249, 115, 22, 0.12); }
 .store-card .stat.rude .v { color: #f97316; }
 .store-card .stat.rude .l { color: #f97316; font-weight: 600; }
+.store-card .stat.fresh { background: rgba(6, 182, 212, 0.12); }
+.store-card .stat.fresh .v { color: #06b6d4; }
+.store-card .stat.fresh .l { color: #06b6d4; font-weight: 600; }
 .store-card .channels {
   display: flex; flex-wrap: wrap; gap: 4px;
 }
@@ -379,6 +384,21 @@ body.theme-light .modal-reviews .review-item.poison {
   display: inline-block;
   font-size: 10px; font-weight: 700;
   color: #fff; background: var(--neg);
+  padding: 1px 7px; border-radius: 4px;
+  margin-right: 6px; vertical-align: middle;
+}
+.modal-reviews .review-item.fresh {
+  background: rgba(6, 182, 212, 0.16);
+  border-left: 4px solid #06b6d4;
+}
+body.theme-light .modal-reviews .review-item.fresh {
+  background: #cffafe;
+}
+.modal-reviews .review-item.fresh .body::before {
+  content: '👃 신선도 의심 키워드';
+  display: inline-block;
+  font-size: 10px; font-weight: 700;
+  color: #fff; background: #06b6d4;
   padding: 1px 7px; border-radius: 4px;
   margin-right: 6px; vertical-align: middle;
 }
@@ -555,6 +575,7 @@ footer {
   background: rgba(255,255,255,.08); color: var(--text-muted);
 }
 .review-detail .det-tag.poison    { background: rgba(251,146,60,.18); color: #fb923c; }
+.review-detail .det-tag.fresh     { background: rgba(6,182,212,.18); color: #06b6d4; }
 .review-detail .det-tag.rude      { background: rgba(167,139,250,.18); color: #a78bfa; }
 .review-detail .det-tag.warn-red  { background: rgba(239,68,68,.18); color: var(--neg); }
 .review-detail .det-tag.warn-yellow { background: rgba(250,204,21,.18); color: #facc15; }
@@ -712,6 +733,7 @@ footer {
   <span class="chip sm sent-chip" data-sent="중립" style="color:var(--neu);">중립</span>
   <span class="chip sm sent-chip" data-sent="부정" style="color:var(--neg);">부정</span>
   <span class="chip sm sent-chip" data-sent="배탈" style="color:#fb923c;">🤢 배탈</span>
+  <span class="chip sm sent-chip" data-sent="신선도" style="color:#06b6d4;">👃 신선도</span>
   <span class="divider"></span>
   <span class="label-mini">주의</span>
   <span class="chip sm concern-chip" data-concern="all">전체</span>
@@ -808,6 +830,7 @@ footer {
       <span class="chip sm rv-sent-chip" data-rv-sent="중립" style="color:var(--neu);">중립</span>
       <span class="chip sm rv-sent-chip" data-rv-sent="부정" style="color:var(--neg);">부정</span>
       <span class="chip sm rv-sent-chip" data-rv-sent="배탈" style="color:#fb923c;">🤢 배탈</span>
+      <span class="chip sm rv-sent-chip" data-rv-sent="신선도" style="color:#06b6d4;">👃 신선도</span>
     </div>
     <!-- Row 5: 별점 + 주의 -->
     <div class="toolbar-row">
@@ -1131,6 +1154,7 @@ function renderKPIs(stores) {
   let storesWithData = 0;
   let storesWithPoison = 0;   // 배탈 키워드 1건 이상 매장 수
   let storesWithRude = 0;     // 불친절 키워드 1건 이상 매장 수
+  let storesWithFresh = 0;    // 신선도 키워드 1건 이상 매장 수
   const chCount = {};
   for (const src of SOURCES) chCount[src] = 0;
   for (const s of list) {
@@ -1145,6 +1169,7 @@ function renderKPIs(stores) {
     }
     if (ps && ps.poison > 0) storesWithPoison++;
     if (ps && ps.rude > 0) storesWithRude++;
+    if (ps && ps.fresh > 0) storesWithFresh++;
   }
   const avg = ratingCount ? (sumRating / ratingCount).toFixed(2) : '—';
   const activeCh = SOURCES.filter(c => chCount[c] > 0).length;
@@ -1155,7 +1180,8 @@ function renderKPIs(stores) {
     {label: '평균 평점', value: avg},
     {label: '워닝 (빨강)', value: '0', cls: 'warn-red'},   // renderWarnings에서 갱신
     {label: '워닝 (노랑)', value: '0', cls: 'warn-yel'},
-    {label: '⚠ 배탈 매장', value: fmtNum(storesWithPoison), cls: 'poison'},
+    {label: '🤢 배탈 매장', value: fmtNum(storesWithPoison), cls: 'poison'},
+    {label: '👃 신선도 매장', value: fmtNum(storesWithFresh), cls: 'fresh'},
     {label: '🗣 불친절 매장', value: fmtNum(storesWithRude), cls: 'rude'},
     {label: '활성 채널', value: activeCh + ' / 5'},
   ];
@@ -1374,6 +1400,7 @@ function applyPeriodToStore(s) {
   if (!isAllSent()) {
     filtered = filtered.filter(r => {
       if (sentFilter.has('배탈') && r.p === 1) return true;   // 배탈 = 배탈의심
+      if (sentFilter.has('신선도') && r.fr === 1) return true; // 신선도 = 신선도의심(냄새 등)
       if (sentFilter.has('부정') && r.p === 1) return true;   // 부정에 배탈 포함
       return sentFilter.has(r.s);
     });
@@ -1386,6 +1413,7 @@ function applyPeriodToStore(s) {
     neu: filtered.filter(r => r.s === '중립').length,
     poison: filtered.filter(r => r.p === 1).length,   // 배탈 의심 리뷰 수
     rude:   filtered.filter(r => r.u === 1).length,   // 불친절 의심 리뷰 수
+    fresh:  filtered.filter(r => r.fr === 1).length,  // 신선도 의심 리뷰 수
   };
   const ratings = filtered.map(r => r.r).filter(r => r > 0);
   stats.avg_rating = ratings.length
@@ -1515,6 +1543,7 @@ function storeCardHtml(s) {
         <div class="stat"><div class="v">${ps.avg_rating ? '★'+ps.avg_rating : '—'}</div><div class="l">평점</div></div>
         <div class="stat ${ps.neg ? 'neg' : ''}"><div class="v">${fmtNum(ps.neg)}</div><div class="l">부정</div></div>
         <div class="stat ${(ps.poison||0) > 0 ? 'poison' : ''}"><div class="v">${fmtNum(ps.poison || 0)}</div><div class="l">배탈</div></div>
+        <div class="stat ${(ps.fresh||0) > 0 ? 'fresh' : ''}"><div class="v">${fmtNum(ps.fresh || 0)}</div><div class="l">신선도</div></div>
         <div class="stat ${(ps.rude||0) > 0 ? 'rude' : ''}"><div class="v">${fmtNum(ps.rude || 0)}</div><div class="l">불친절</div></div>
       </div>
       <div class="channels">${channels}</div>
@@ -1533,6 +1562,7 @@ function modalAllSamples(s) {
     ...(s.channel_samples || []),
     ...(s.poison_samples || []),
     ...(s.rude_samples || []),
+    ...(s.fresh_samples || []),
   ];
   const seen = new Set();
   const out = [];
@@ -1574,7 +1604,7 @@ function renderModalReviews() {
   if (!cont) return;
   cont.innerHTML = filtered.length
     ? filtered.map(r => `
-        <div class="review-item ${r.poison ? 'poison' : ''}">
+        <div class="review-item ${r.poison ? 'poison' : (r.fresh ? 'fresh' : '')}">
           <div class="meta">
             <span class="ch-color-${r.channel}">${SOURCE_LABEL[r.channel] || r.channel}</span> · ${r.date}
             ${r.rating ? ` · ★${r.rating}` : ''}
@@ -1929,7 +1959,8 @@ function applyReviewsFilter() {
     if (rvFilter.channel  !== 'all' && r.ch !== rvFilter.channel) return false;
     if (rvFilter.sentiment !== 'all') {
       if (rvFilter.sentiment === '배탈') { if (r.p !== 1) return false; }          // 배탈 = 배탈의심만
-      else if (rvFilter.sentiment === '부정') { if (r.se !== '부정' && r.p !== 1) return false; }  // 부정 = 부정 + 배탈
+      else if (rvFilter.sentiment === '신선도') { if (r.fr !== 1) return false; }   // 신선도 = 신선도의심만
+      else if (rvFilter.sentiment === '부정') { if (r.se !== '부정' && r.p !== 1 && r.fr !== 1) return false; }  // 부정 = 부정 + 배탈 + 신선도
       else if (r.se !== rvFilter.sentiment) return false;
     }
     if (rvFilter.rating   !== 'all') {
@@ -2052,6 +2083,7 @@ function reviewRowHtml(r, idx) {
   if (r.w === 'red')    tags.push('<span class="det-tag warn-red">⚠ 워닝(빨강)</span>');
   if (r.w === 'yellow') tags.push('<span class="det-tag warn-yellow">⚠ 워닝(노랑)</span>');
   if (r.p === 1) tags.push('<span class="det-tag poison">🤢 배탈</span>');
+  if (r.fr === 1) tags.push('<span class="det-tag fresh">👃 신선도</span>');
   if (r.u === 1) tags.push('<span class="det-tag rude">🗣 불친절</span>');
   return `
     <div class="review-row" data-rv-idx="${idx}" onclick="toggleReviewRow(${idx})">
