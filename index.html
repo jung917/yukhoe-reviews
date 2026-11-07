@@ -2232,7 +2232,7 @@ async function cachePut(k, v, id) { try { var d = await cxIdb(); var st = d.tran
   st.put(v, k); var all = st.getAllKeys();
   all.onsuccess = function () { (all.result || []).forEach(function (x) { if (String(x).indexOf(id + ':') === 0 && x !== k) st.delete(x); }); };
 } catch (e) {} }
-async function loadDoc(id) {
+async function loadDoc(id, retried) {
   const meta = await getDoc(doc(db, 'dashboard', id));
   if (!meta.exists()) return null;
   const m = meta.data();
@@ -2242,7 +2242,8 @@ async function loadDoc(id) {
   if (hit) return hit;
   let parts = [];
   for (let i = 0; i < m.chunks; i++) {
-    const c = await getDoc(doc(db, 'dashboard_chunks', id + '_' + i));
+    const c = await getDoc(doc(db, 'dashboard_chunks', id + '_' + (m.gen ? m.gen + '_' : '') + i));
+    if (!c.exists()) { if (!retried) return loadDoc(id, true); throw new Error('자료 조각이 없습니다: ' + id + '_' + i); }
     parts.push(((c.data() || {}).data) || '');
   }
   const b64 = parts.join('');
