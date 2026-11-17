@@ -1556,21 +1556,24 @@ let modalFilter = { period: 'all', sentiment: 'all', channel: 'all', store: null
 
 function modalAllSamples(s) {
   // recent + negative + channel(채널별 최신) + poison 합치고 dedup (매장 모달용 통합 풀)
+  // 배탈·냄새 목록에서 온 리뷰는 표시를 달아 둔다(감성 줄 배탈·냄새 필터용, 2026-11-17)
   const all = [
     ...(s.recent_samples || []),
     ...(s.negative_samples || []),
     ...(s.channel_samples || []),
-    ...(s.poison_samples || []),
+    ...(s.poison_samples || []).map(r => ({...r, poison: true})),
     ...(s.rude_samples || []),
-    ...(s.fresh_samples || []),
+    ...(s.fresh_samples || []).map(r => ({...r, fresh: true})),
   ];
-  const seen = new Set();
+  const seen = new Map();
   const out = [];
   for (const r of all) {
     const k = `${r.date}|${r.channel}|${r.reviewer}|${(r.text||'').slice(0,80)}`;
-    if (seen.has(k)) continue;
-    seen.add(k);
-    out.push(r);
+    const prev = seen.get(k);
+    if (prev) { if (r.poison) prev.poison = true; if (r.fresh) prev.fresh = true; continue; }
+    const c = {...r};
+    seen.set(k, c);
+    out.push(c);
   }
   // 날짜 내림차순
   out.sort((a, b) => (a.date < b.date ? 1 : -1));
@@ -1585,7 +1588,9 @@ function applyModalFilter(samples) {
     from.setDate(from.getDate() - Number(modalFilter.period));
   }
   return samples.filter(r => {
-    if (modalFilter.sentiment !== 'all' && r.sentiment !== modalFilter.sentiment) return false;
+    if (modalFilter.sentiment === '배탈') { if (!r.poison) return false; }
+    else if (modalFilter.sentiment === '냄새') { if (!r.fresh) return false; }
+    else if (modalFilter.sentiment !== 'all' && r.sentiment !== modalFilter.sentiment) return false;
     if (modalFilter.channel !== 'all' && r.channel !== modalFilter.channel) return false;
     if (from || to) {
       const d = new Date(r.date);
@@ -1677,6 +1682,8 @@ function openStore(storeName) {
         <span class="modal-chip" data-kind="sentiment" data-val="긍정" onclick="setModalFilter('sentiment','긍정')" style="color:var(--pos);">긍정</span>
         <span class="modal-chip" data-kind="sentiment" data-val="중립" onclick="setModalFilter('sentiment','중립')" style="color:var(--neu);">중립</span>
         <span class="modal-chip" data-kind="sentiment" data-val="부정" onclick="setModalFilter('sentiment','부정')" style="color:var(--neg);">부정</span>
+        <span class="modal-chip" data-kind="sentiment" data-val="배탈" onclick="setModalFilter('sentiment','배탈')" style="color:#fb923c;">🤢 배탈 ${(s.poison_samples||[]).length}</span>
+        <span class="modal-chip" data-kind="sentiment" data-val="냄새" onclick="setModalFilter('sentiment','냄새')" style="color:#06b6d4;">👃 냄새 ${(s.fresh_samples||[]).length}</span>
         <span class="modal-divider"></span>
         <span class="label-mini" style="color:var(--accent);">채널</span>
         <span class="modal-chip active" data-kind="channel" data-val="all" onclick="setModalFilter('channel','all')">전체</span>
